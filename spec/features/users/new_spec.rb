@@ -111,15 +111,15 @@ RSpec.describe "User registration form" do
 
     expect(page).to have_button("Create User")
     expect(page).to have_content("Email has already been taken")
-    
+
     expect(find_field('Name').value).to eq("Carl Vermeil")
     expect(find_field('Address').value).to eq("456 South St")
     expect(find_field('City').value).to eq("Boulder")
     expect(find_field('State').value).to eq("CO")
-    expect(find_field('Zip').value).to eq(80304)
-    expect(find_field('Email').value).to eq("")
-    expect(find_field('Password').value).to eq("")
-    expect(find_field('Password confirmation').value).to eq("")
+    expect(find_field('Zip').value).to eq("80304")
+    expect(find_field('Email').value).to eq(nil)
+    expect(find_field('Password').value).to eq(nil)
+    expect(find_field('Password confirmation').value).to eq(nil)
   end
 
   it "keeps a user logged in after registering" do
