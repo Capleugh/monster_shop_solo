@@ -35,6 +35,31 @@ RSpec.describe "User registration form" do
     expect(user.email).to eq("alison123@gmail.com")
   end
 
+  it "it does not create new users if any combination of fields are blank" do
+    visit '/'
+
+    within(:css, 'nav') do
+      click_on "Register"
+    end
+
+    expect(current_path).to eq('/users/register')
+
+    fill_in :name, with: "Alison Vermeil"
+    fill_in :address, with: ""
+    fill_in :city, with: ""
+    fill_in :state, with: "CO"
+    fill_in :zip, with: 80516
+    fill_in :email, with: "alison123@gmail.com"
+    fill_in :password, with: "password123"
+    fill_in :password_confirmation, with: "password123"
+
+    click_button "Create User"
+
+    expect(page).to have_button("Create User")
+    expect(page).to have_content("Address can't be blank and City can't be blank")
+    expect(page).to_not have_content("Welcome Alison Vermeil, you are now registered and logged in.")
+  end
+
   it "does not create a new user when all fields are complete and passwords do not match" do
     visit '/'
 
@@ -84,4 +109,6 @@ RSpec.describe "User registration form" do
 
     expect(page).to have_content("Hello, Alison Vermeil!")
   end
+
+
 end
