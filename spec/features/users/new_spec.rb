@@ -28,12 +28,17 @@ RSpec.describe "User registration form" do
     user = User.last
 
     expect(user.name).to eq("Alison Vermeil")
+    expect(user.address).to eq("123 Main St")
+    expect(user.city).to eq("Denver")
+    expect(user.state).to eq("CO")
+    expect(user.zip).to eq(80516)
+    expect(user.email).to eq("alison123@gmail.com")
   end
 
   it "does not create a new user when all fields are complete and passwords do not match" do
     visit '/'
 
-    within(:css, 'nav') do
+    within ".topnav" do
       click_on "Register"
     end
 
