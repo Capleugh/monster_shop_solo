@@ -8,7 +8,7 @@ RSpec.describe "User registration form" do
       click_on "Register"
     end
 
-    expect(current_path).to eq('/register')
+    expect(current_path).to eq('/users/register')
 
     fill_in :name, with: "Alison Vermeil"
     fill_in :address, with: "123 Main St"
