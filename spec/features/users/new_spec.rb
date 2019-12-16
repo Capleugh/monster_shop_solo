@@ -23,7 +23,7 @@ RSpec.describe "User registration form" do
 
     expect(current_path).to eq('/profile')
 
-    expect(page).to have_content("You are now registered and logged in.")
+    expect(page).to have_content("Welcome Alison Vermeil, you are now registered and logged in.")
 
     user = User.last
 
@@ -52,6 +52,11 @@ RSpec.describe "User registration form" do
 
     expect(page).to have_content("Password confirmation doesn't match Password")
     expect(page).to have_button("Create User")
-    expect(page).to_not have_content("You are now registered and logged in.")
+    expect(page).to_not have_content("Welcome Alison Vermeil, you are now registered and logged in.")
+  end
+
+  xit "keeps a user logged in after registering" do
+
+
   end
 end

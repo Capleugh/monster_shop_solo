@@ -9,12 +9,10 @@ class UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      flash[:success] = "You are now registered and logged in."
+      flash[:success] = "Welcome #{user.name}, you are now registered and logged in."
       redirect_to "/profile"
     else
       flash[:notice] = user.errors.full_messages.to_sentence
-
-      # flash[:notice] = "Your passwords do not match."
       render :new
     end
   end
