@@ -11,4 +11,19 @@ RSpec.describe User do
     it {should validate_uniqueness_of :email}
     it {should validate_presence_of :password}
   end
+
+  describe 'roles' do
+    it 'can be created as a regular user' do
+
+    end
+    xit 'can be created as a merchant employee' do
+
+    end
+    xit 'can be created as a merchant admin' do
+
+    end
+    xit 'can be created as an admin' do
+
+    end
+  end
 end
