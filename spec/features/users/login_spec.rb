@@ -24,6 +24,7 @@ RSpec.describe 'Logging in', type: :feature do
   describe 'As a Merchant Employee User' do
     it 'can login with valid credentials' do
       merchant_employee = create(:user, role: 1)
+
       visit '/'
 
       click_link('Login')
@@ -31,18 +32,19 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/login')
 
       fill_in :email, with: merchant_employee.email
-      fill_in :password, with: 'password1'
+      fill_in :password, with: 'password2'
       click_on('Submit')
 
       expect(current_path).to eq('/merchant/dashboard')
       expect(page).to have_content("Welcome back, #{merchant_employee.name} you are now logged in!")
-      expect(page).to have_content("Hello, #{merchant_employee.name}!")
+      expect(page).to have_content("Hello, #{merchant_employee.name}! Welcome to your Merchant Dashboard!")
     end
   end
 
   describe 'As a Merchant Admin User' do
-    xit 'can login with valid credentials' do
-      merchant_admin = create(:user, role: 1)
+    it 'can login with valid credentials' do
+      merchant_admin = create(:user, role: 2)
+
       visit '/'
 
       click_link('Login')
@@ -50,12 +52,32 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/login')
 
       fill_in :email, with: merchant_admin.email
-      fill_in :password, with: 'password1'
+      fill_in :password, with: 'password3'
       click_on('Submit')
 
       expect(current_path).to eq('/merchant/dashboard')
       expect(page).to have_content("Welcome back, #{merchant_admin.name} you are now logged in!")
-      expect(page).to have_content("Hello, #{merchant_admin.name}!")
+      expect(page).to have_content("Hello, #{merchant_admin.name}! Welcome to your Merchant Dashboard!")
+    end
+  end
+
+  describe 'As an Admin User' do
+    it 'can login with valid credentials' do
+      admin = create(:user, role: 3)
+
+      visit '/'
+
+      click_link('Login')
+
+      expect(current_path).to eq('/login')
+
+      fill_in :email, with: admin.email
+      fill_in :password, with: 'password4'
+      click_on('Submit')
+
+      expect(current_path).to eq('/admin/dashboard')
+      expect(page).to have_content("Welcome back, #{admin.name} you are now logged in!")
+      expect(page).to have_content("Hello, #{admin.name}! Welcome to your Admin Dashboard!")
     end
   end
 end
