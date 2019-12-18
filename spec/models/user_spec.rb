@@ -11,4 +11,34 @@ RSpec.describe User do
     it {should validate_uniqueness_of :email}
     it {should validate_presence_of :password}
   end
+
+  describe 'roles' do
+    it 'can be created as a regular user' do
+     user = create(:user, role: 0)
+
+     expect(user.role).to eq('default')
+     expect(user.default?).to be_truthy
+    end
+
+    it 'can be created as a merchant employee' do
+      user = create(:user, role: 1)
+
+      expect(user.role).to eq('merchant_employee')
+      expect(user.merchant_employee?).to be_truthy
+    end
+
+    it 'can be created as a merchant admin' do
+      user = create(:user, role: 2)
+
+      expect(user.role).to eq('merchant_admin')
+      expect(user.merchant_admin?).to be_truthy
+    end
+
+    it 'can be created as an admin' do
+      user = create(:user, role: 3)
+
+      expect(user.role).to eq('admin')
+      expect(user.admin?).to be_truthy
+    end
+  end
 end
