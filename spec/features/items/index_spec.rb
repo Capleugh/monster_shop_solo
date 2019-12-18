@@ -49,6 +49,12 @@ RSpec.describe "Items Index Page" do
 
       expect(page).to_not have_css("#item-#{@dog_bone.id}")
 
+      within "#item-#{@pull_toy.id}" do
+        click_on('img')
+      end
+
+      expect(current_path).to eq("/items/#{@pull_toy.id}")
+
       # within "#item-#{@dog_bone.id}" do
       #   expect(page).to have_link(@dog_bone.name)
       #   expect(page).to have_content(@dog_bone.description)
