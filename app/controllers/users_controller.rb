@@ -20,6 +20,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    user = current_user
+
+    if user.update(user_params)
+      flash[:success] = "Your information has been updated."
+      redirect_to profile_path
+    else
+      flash[:notice] = user.errors.full_messages.to_sentence + ". Please fill out all required fields."
+      @user = current_user
+      render :edit
+    end
+  end
+
   private
     def user_params
       params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
