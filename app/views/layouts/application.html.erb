@@ -22,6 +22,7 @@
       <% elsif current_merchant_employee?%>
         <%= link_to "Log Out", '/logout', method: :delete %>
         <%= link_to 'My Profile', '/profile' %>
+        <%= link_to 'Merchant Dashboard', merchant_dashboard_path %>
         <%= link_to "Logged in as #{current_user.name}", '/profile' %>
       <% else %>
         <%= link_to "Register", "/users/register" %>
