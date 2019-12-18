@@ -19,6 +19,19 @@ RSpec.describe 'Logging in', type: :feature do
       expect(page).to have_content("Welcome back, #{user_1.name} you are now logged in!")
       expect(page).to have_content("Hello, #{user_1.name}!")
     end
+
+    describe "if I am already logged in and visit the login path" do
+      it "I am redirected to my profile page" do
+        user = create(:user, role: 0)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit '/login'
+
+        expect(current_path).to eq('/profile')
+        expect(page).to have_content("You are already logged in.")
+      end
+    end
   end
 
   describe 'As a Merchant Employee User' do
@@ -32,7 +45,7 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/login')
 
       fill_in :email, with: merchant_employee.email
-      fill_in :password, with: 'password2'
+      fill_in :password, with: 'password3'
       click_on('Submit')
 
       expect(current_path).to eq('/merchant/dashboard')
@@ -52,7 +65,7 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/login')
 
       fill_in :email, with: merchant_admin.email
-      fill_in :password, with: 'password3'
+      fill_in :password, with: 'password4'
       click_on('Submit')
 
       expect(current_path).to eq('/merchant/dashboard')
@@ -72,7 +85,7 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/login')
 
       fill_in :email, with: admin.email
-      fill_in :password, with: 'password4'
+      fill_in :password, with: 'password5'
       click_on('Submit')
 
       expect(current_path).to eq('/admin/dashboard')
@@ -81,13 +94,3 @@ RSpec.describe 'Logging in', type: :feature do
     end
   end
 end
-# User Story 13, User can Login
-#
-# As a visitor
-# When I visit the login path
-# I see a field to enter my email address and password
-# When I submit valid information
-# If I am a regular user, I am redirected to my profile page
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that I am logged in
