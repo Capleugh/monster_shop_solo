@@ -14,7 +14,6 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-
     if !user
       flash[:error] = "Sorry, your credentials are bad."
       render :new
@@ -33,6 +32,14 @@ class SessionsController < ApplicationController
         render :new
       end
     end
+  end
+
+
+  def destroy
+    session.delete(:user_id)
+    session.delete(:cart)
+    flash[:notice] = "Goodbye, you are now logged out."
+    redirect_to '/'
   end
 
   private
@@ -56,4 +63,5 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       flash[:success] = "Welcome back, #{user.name} you are now logged in!"
     end
+
 end
