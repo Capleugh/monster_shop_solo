@@ -64,41 +64,72 @@ RSpec.describe 'Site Navigation' do
 
   describe 'As a Regular User' do
     it 'I see visitor links, a /profile and /logout link. No register and login link, as well as my name' do
-      user = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p')
+      user = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 0)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit '/'
 
       within '.topnav' do
-        expect(page).to have_link('My Profile')
         click_on('My Profile')
         expect(current_path).to eq("/profile")
 
-        expect(page).to have_link('Log Out')
         click_on('Log Out')
         expect(current_path).to eq('/')
 
-        expect(page).to have_link('Home')
         click_on('Home')
         expect(current_path).to eq('/')
 
-        expect(page).to have_link('All Merchants')
         click_on('All Merchants')
         expect(current_path).to eq('/merchants')
 
-        expect(page).to have_link('All Items')
         click_on('All Items')
         expect(current_path).to eq('/items')
 
-        expect(page).to have_link('Cart:')
         click_on('Cart:')
         expect(current_path).to eq('/cart')
 
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
+
+        expect(page).to have_content("Logged in as #{user.name}")
       end
-      expect(page).to have_content("Logged in as #{user.name}")
+    end
+
+    it 'I see user links and  a link to merchant dashboard at /merchant' do
+      merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+      visit '/'
+
+      within '.topnav' do
+        click_on('My Profile')
+        expect(current_path).to eq("/profile")
+
+        click_on('Log Out')
+        expect(current_path).to eq('/')
+
+        click_on('Home')
+        expect(current_path).to eq('/')
+
+        click_on('All Merchants')
+        expect(current_path).to eq('/merchants')
+
+        click_on('All Items')
+        expect(current_path).to eq('/items')
+
+        click_on('Cart:')
+        expect(current_path).to eq('/cart')
+
+        click_on('Merchant Dashboard')
+        expect(current_path).to eq(merchant_dashboard_path)
+
+        expect(page).to_not have_link('Register')
+        expect(page).to_not have_link('Login')
+
+        expect(page).to have_content("Logged in as #{merchant_employee.name}")
+      end
     end
   end
 end
