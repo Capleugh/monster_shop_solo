@@ -15,18 +15,23 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
 
-    if authenticated_default_user?(user)
-      successful_login(user)
-      redirect_to '/profile'
-    elsif authenticated_merchant?(user)
-      successful_login(user)
-      redirect_to '/merchant/dashboard'
-    elsif authenticated_admin?(user)
-      successful_login(user)
-      redirect_to '/admin/dashboard'
-    else
+    if !user
       flash[:error] = "Sorry, your credentials are bad."
       render :new
+    else
+      if authenticated_default_user?(user)
+        successful_login(user)
+        redirect_to '/profile'
+      elsif authenticated_merchant?(user)
+        successful_login(user)
+        redirect_to '/merchant/dashboard'
+      elsif authenticated_admin?(user)
+        successful_login(user)
+        redirect_to '/admin/dashboard'
+      else
+        flash[:error] = "Sorry, your credentials are bad."
+        render :new
+      end
     end
   end
 

@@ -22,6 +22,34 @@ RSpec.describe 'Logging in', type: :feature do
       expect(page).to have_content("Welcome back, #{@user.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@user.name}!")
     end
+    
+    it "I cannot log in with invalid email and the flash message associated with this failure is intentionally vague" do
+
+      visit '/login'
+
+      fill_in :email, with: 'unregistered email'
+      fill_in :password, with: 'password'
+      click_on('Submit')
+
+      expect(current_path).to eq('/login')
+      expect(page).to have_link('Login')
+      expect(page).to have_content('Sorry, your credentials are bad.')
+      # is the conditional in the session controller appropriate?
+    end
+
+    it "I cannot log in with invalid password and the flash message associated with this failure is intentionally vague" do
+
+      visit '/login'
+
+      fill_in :email, with: @user.email
+      fill_in :password, with: 'password1'
+      click_on('Submit')
+
+      expect(current_path).to eq('/login')
+      expect(page).to have_link('Login')
+      expect(page).to have_content('Sorry, your credentials are bad.')
+    end
+
 
     describe "if I am already logged in and visit the login path" do
       it "I am redirected to my profile page" do
@@ -57,6 +85,19 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/merchant/dashboard')
       expect(page).to have_content("Welcome back, #{@merchant_employee.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@merchant_employee.name}! Welcome to your Merchant Dashboard!")
+    end
+
+    it "I cannot log in with invalid password and the flash message associated with this failure is intentionally vague" do
+
+      visit '/login'
+
+      fill_in :email, with: @merchant_employee.email
+      fill_in :password, with: 'password1'
+      click_on('Submit')
+
+      expect(current_path).to eq('/login')
+      expect(page).to have_link('Login')
+      expect(page).to have_content('Sorry, your credentials are bad.')
     end
 
     describe "if I am already logged in and visit the login path" do
@@ -95,6 +136,19 @@ RSpec.describe 'Logging in', type: :feature do
       expect(page).to have_content("Hello, #{@merchant_admin.name}! Welcome to your Merchant Dashboard!")
     end
 
+    it "I cannot log in with invalid password and the flash message associated with this failure is intentionally vague" do
+
+      visit '/login'
+
+      fill_in :email, with: @merchant_admin.email
+      fill_in :password, with: 'password1'
+      click_on('Submit')
+
+      expect(current_path).to eq('/login')
+      expect(page).to have_link('Login')
+      expect(page).to have_content('Sorry, your credentials are bad.')
+    end
+
     describe "if I am already logged in and visit the login path" do
       it "I am redirected to my merchant dashboard page" do
 
@@ -115,7 +169,7 @@ RSpec.describe 'Logging in', type: :feature do
     end
 
     it 'can login with valid credentials' do
-      
+
       visit '/'
 
       click_link('Login')
@@ -129,6 +183,19 @@ RSpec.describe 'Logging in', type: :feature do
       expect(current_path).to eq('/admin/dashboard')
       expect(page).to have_content("Welcome back, #{@admin.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@admin.name}! Welcome to your Admin Dashboard!")
+    end
+
+    it "I cannot log in with invalid password and the flash message associated with this failure is intentionally vague" do
+
+      visit '/login'
+
+      fill_in :email, with: @admin.email
+      fill_in :password, with: 'password1'
+      click_on('Submit')
+
+      expect(current_path).to eq('/login')
+      expect(page).to have_link('Login')
+      expect(page).to have_content('Sorry, your credentials are bad.')
     end
 
     describe "if I am already logged in and visit the login path" do
