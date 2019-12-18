@@ -3,6 +3,12 @@ class SessionsController < ApplicationController
     if current_default?
       flash[:error] = "You are already logged in."
       redirect_to(profile_path)
+    elsif current_merchant_employee? || current_merchant_admin?
+      flash[:error] = "You are already logged in."
+      redirect_to(merchant_dashboard_path)
+    elsif current_admin?
+      flash[:error] = "You are already logged in."
+      redirect_to(admin_dashboard_path)
     end
   end
 
