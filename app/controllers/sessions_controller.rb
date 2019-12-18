@@ -1,11 +1,14 @@
 class SessionsController < ApplicationController
   def new
-
+    if current_default?
+      flash[:error] = "You are already logged in."
+      redirect_to(profile_path)
+    end
   end
 
   def create
     user = User.find_by(email: params[:email])
-    # binding.pry
+
     if user.authenticate(params[:password]) && user.default?
       session[:user_id] = user.id
       flash[:success] = "Welcome back, #{user.name} you are now logged in!"
