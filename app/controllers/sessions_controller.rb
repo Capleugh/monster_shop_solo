@@ -9,9 +9,6 @@ class SessionsController < ApplicationController
     elsif current_admin?
       flash[:error] = "You are already logged in."
       redirect_to(admin_dashboard_path)
-    # else
-    #   flash[:error] = "Sorry, your credentials are bad."
-    #   render :new
     end
   end
 
@@ -24,7 +21,7 @@ class SessionsController < ApplicationController
     else
       if authenticated_default_user?(user)
         successful_login(user)
-        redirect_to '/profile' 
+        redirect_to '/profile'
       elsif authenticated_merchant?(user)
         successful_login(user)
         redirect_to '/merchant/dashboard'
