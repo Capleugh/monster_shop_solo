@@ -26,7 +26,9 @@ class UsersController < ApplicationController
 
   def update
     user = current_user
-
+    #require "pry"; binding.pry
+    # user.update_attributes(update_user_params)
+    require "pry"; binding.pry
     if user.update(user_params)
       flash[:success] = "Your information has been updated."
       redirect_to profile_path
@@ -40,5 +42,9 @@ class UsersController < ApplicationController
   private
     def user_params
       params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    end
+
+    def update_user_params
+      params.permit(:name, :address, :city, :state, :zip, :email)
     end
 end
