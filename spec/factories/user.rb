@@ -6,8 +6,6 @@ FactoryBot.define do
     sequence(:state) { |n| "CO #{n}" }
     sequence(:zip) { |n| "8012#{n}" }
     sequence(:email) { |n| "johndoe#{n}@gmail.com " }
-    # sequence(:password) { |n| "password#{n}" }
-    # sequence(:password_confirmation) { |n| "password#{n}" }
     password {"password"}
     password_confirmation {"password"}
     role {0}
