@@ -231,13 +231,10 @@ RSpec.describe 'Site Navigation' do
           visit '/cart'
           expect(page).to have_content("The page you were looking for doesn't exist.")
 
-          visit '/merchants'
-          expect(page).to have_content("The page you were looking for doesn't exist.")
-
           visit '/merchant/dashboard'
           expect(page).to have_content("The page you were looking for doesn't exist.")
         end
-      end 
+      end
     end
   end
 end
