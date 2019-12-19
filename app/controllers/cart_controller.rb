@@ -20,8 +20,7 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
-  def increment_decrement
-    require "pry"; binding.pry
+  def update
     if params[:increment_decrement] == "increment"
       cart.add_quantity(params[:item_id]) unless cart.limit_reached?(params[:item_id])
     elsif params[:increment_decrement] == "decrement"
