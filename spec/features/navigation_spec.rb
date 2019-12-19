@@ -187,12 +187,4 @@ RSpec.describe 'Site Navigation' do
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
-
-#
-# User Story 9, Admin Navigation Restrictions
-#
-# As an Admin
-# When I try to access any path that begins with the following, then I see a 404 error:
-# - '/merchant'
-# - '/cart'
 end
