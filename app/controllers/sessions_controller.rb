@@ -34,11 +34,10 @@ class SessionsController < ApplicationController
     end
   end
 
-
   def destroy
     session.delete(:user_id)
     session.delete(:cart)
-    flash[:notice] = "Goodbye, you are now logged out."
+    flash[:success] = "Goodbye, you are now logged out."
     redirect_to '/'
   end
 
@@ -63,5 +62,4 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       flash[:success] = "Welcome back, #{user.name} you are now logged in!"
     end
-
 end

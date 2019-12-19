@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :require_not_admin
+
   def add_item
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
@@ -29,4 +31,22 @@ class CartController < ApplicationController
     end
     redirect_to "/cart"
   end
+
+  private
+
+  def require_not_admin
+    render file: '/public/404'unless !current_admin?
+  end
+
+  # def require_default
+  #   render file: "/public/404" unless current_default?
+  # end
+  #
+  # def require_merchant_employee
+  #   render file: "/public/404" unless current_merchant_employee?
+  # end
+  #
+  # def require_merchant_admin
+  #   render file: "/public/404" unless current_merchant_admin?
+  # end
 end
