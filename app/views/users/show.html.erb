@@ -1,1 +1,10 @@
 <h1>Hello, <%= @user.name %>!</h1>
+
+<p><b>Name:</b> <%= @user.name %> </p>
+<p><b>Address:</b> <%= @user.address %> </p>
+<p><b>City:</b> <%= @user.city %> </p>
+<p><b>State:</b> <%= @user.state %> </p>
+<p><b>Zip:</b> <%= @user.zip %> </p>
+<p><b>Email:</b> <%= @user.email %> </p>
+
+<%= link_to 'Edit My Info', profile_edit_path %>
