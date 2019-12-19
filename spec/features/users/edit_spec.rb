@@ -6,16 +6,13 @@ RSpec.describe "As a registered user" do
       @user = create(:user, role: 0)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
-
     end
 
     it "by filling out a form with my changes" do
-      # user = create(:user, role: 0)
+
       original_address = "1 Lane"
       original_city = "Den 1"
       original_state = "CO 1"
-
-      # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit '/profile'
 
