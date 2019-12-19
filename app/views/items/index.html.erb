@@ -8,13 +8,13 @@
   <h3>Statistics</h3>
     Best Sellers:
     <% x = 1 %>
-    <% Item.top_five_items.each do |item, quantity| %>
+    <% @items.top_five_items.each do |item, quantity| %>
     <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
     <% x +=1 %>
     <% end %>
     Worst Sellers:
     <% x = 1 %>
-    <% Item.bottom_five_items.each do |item, quantity| %>
+    <% @items.bottom_five_items.each do |item, quantity| %>
     <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
     <% x +=1 %>
     <% end %>
