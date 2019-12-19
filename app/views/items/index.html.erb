@@ -9,7 +9,7 @@
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <img src= <%= item.image %>>
+      <a href=<%= "/items/#{item.id}" %>> <img alt="img" src= <%= item.image %>></a>
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
