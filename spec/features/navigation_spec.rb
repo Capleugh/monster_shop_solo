@@ -170,4 +170,29 @@ RSpec.describe 'Site Navigation' do
       end
     end
   end
+
+    describe "As an Admin User" do
+    it 'does not allow an Admin User to navigate to any path that begins with /cart or /merchant' do
+      admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit '/cart'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+
+      visit '/merchants'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+
+      visit '/merchant/dashboard'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
+
+#
+# User Story 9, Admin Navigation Restrictions
+#
+# As an Admin
+# When I try to access any path that begins with the following, then I see a 404 error:
+# - '/merchant'
+# - '/cart'
 end
