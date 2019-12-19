@@ -170,4 +170,65 @@ RSpec.describe 'Site Navigation' do
       end
     end
   end
+
+  # describe "As a visitor" do
+  #   it "when I try to access any path that begins with /merchant, /admin, or /profile as a visitor, I see a 404 error" do
+  #
+  #     # visit('/merchant')
+  #     #
+  #     #
+  #     # expect(page).to have_content("The page you were looking for doesn't exist.")
+  #     #
+  #     # visit('/admin')
+  #     #
+  #     #
+  #     # expect(page).to have_content("The page you were looking for doesn't exist.")
+  #     #
+  #
+  #     visit('/profile')
+  #
+  #
+  #     expect(page).to have_content("The page you were looking for doesn't exist.")
+    # end
+
+  # end
+
+  describe 'As a Regular User' do
+    it 'when I try to access any path that begins with /merchant or /admin, I see a 404 error' do
+
+      user = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 0)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit '/merchant/dashboard'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+
+      visit '/admin/dashboard'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
+
+  describe 'As a Merchant Employee User' do
+    it 'when I try to access any path that begins with /merchant or /admin, I see a 404 error' do
+
+      merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+      visit '/admin/dashboard'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
+
+  describe 'As a Merchant Admin User' do
+    it 'when I try to access any path that begins with /merchant or /admin, I see a 404 error' do
+
+      merchant_admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 2)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
+
+      visit '/admin/dashboard'
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
 end
