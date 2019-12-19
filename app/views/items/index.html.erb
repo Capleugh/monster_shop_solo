@@ -4,6 +4,21 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+<section>
+  <h3>Statistics</h3>
+    Best Sellers:
+    <% x = 1 %>
+    <% @items.top_five_items.each do |item, quantity| %>
+    <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
+    <% x +=1 %>
+    <% end %>
+    Worst Sellers:
+    <% x = 1 %>
+    <% @items.bottom_five_items.each do |item, quantity| %>
+    <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
+    <% x +=1 %>
+    <% end %>
+</section>
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>

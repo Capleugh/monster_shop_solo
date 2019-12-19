@@ -28,4 +28,22 @@ class Item <ApplicationRecord
   def self.find_active_items
     where(active?: true)
   end
+
+  def self.top_five_items
+    all_items = self.joins(:orders).where(active?: true).group('items.id').sum(:quantity)
+    item_objects = {}
+    all_items.each do |id, quantity|
+      item_objects[Item.find(id)] = quantity
+    end
+    item_objects.sort_by { |item, quantity| -quantity }.first(5).to_h
+  end
+
+  def self.bottom_five_items
+    all_items = self.joins(:orders).where(active?: true).group('items.id').sum(:quantity)
+    item_objects = {}
+    all_items.each do |id, quantity|
+      item_objects[Item.find(id)] = quantity
+    end
+    item_objects.sort_by { |item, quantity| quantity }.first(5).to_h
+  end
 end
