@@ -175,19 +175,12 @@ RSpec.describe 'Site Navigation' do
     it "when I try to access any path that begins with /merchant, /admin, or /profile as a visitor, I see a 404 error" do
 
       visit('/merchant/dashboard')
-
-
       expect(page).to have_content("The page you were looking for doesn't exist.")
 
       visit('/admin/dashboard')
-
-
       expect(page).to have_content("The page you were looking for doesn't exist.")
 
-
       visit('/profile')
-
-
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
