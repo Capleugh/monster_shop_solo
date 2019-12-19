@@ -39,19 +39,19 @@ RSpec.describe("Order Statistics") do
           price: item.price
           })
       end
+      visit '/items'
+      
+      expect(page).to have_content("1. #{item_6.name} Quantity: 15")
+      expect(page).to have_content("2. #{item_1.name} Quantity: 10")
+      expect(page).to have_content("3. #{item_2.name} Quantity: 9")
+      expect(page).to have_content("4. #{item_3.name} Quantity: 8")
+      expect(page).to have_content("5. #{item_4.name} Quantity: 7")
 
-      expect(page).to have_content("1. #{@item_6.name}  Quantity: 15")
-      expect(page).to have_content("1. #{@item_1.name}  Quantity: 10")
-      expect(page).to have_content("1. #{@item_2.name}  Quantity: 9")
-      expect(page).to have_content("1. #{@item_3.name}  Quantity: 8")
-      expect(page).to have_content("1. #{@item_4.name}  Quantity: 7")
-
-      expect(page).to have_content("1. #{@item_5.name}  Quantity: 6")
-      expect(page).to have_content("1. #{@item_7.name}  Quantity: 4")
-      expect(page).to have_content("1. #{@item_8.name}  Quantity: 3")
-      expect(page).to have_content("1. #{@item_9.name}  Quantity: 2")
-      expect(page).to have_content("1. #{@item_10.name}  Quantity: 1")
-    
+      expect(page).to have_content("5. #{item_5.name} Quantity: 6")
+      expect(page).to have_content("4. #{item_7.name} Quantity: 4")
+      expect(page).to have_content("3. #{item_8.name} Quantity: 3")
+      expect(page).to have_content("2. #{item_9.name} Quantity: 2")
+      expect(page).to have_content("1. #{item_10.name} Quantity: 1")
     end
   end
 end
