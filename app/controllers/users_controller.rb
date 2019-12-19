@@ -5,7 +5,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
+    if !current_user
+      require_user
+    else
+      @user = current_user
+    end
   end
 
   def create
@@ -24,5 +28,9 @@ class UsersController < ApplicationController
   private
     def user_params
       params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    end
+
+    def require_user
+      render file: "/public/404" unless current_user
     end
 end
