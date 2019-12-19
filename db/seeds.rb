@@ -1,5 +1,3 @@
-# require 'factory_bot_rails'
-#require '/spec/factories/user.rb'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -22,11 +20,15 @@ tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never po
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+# pull_toy1 = dog_shop.items.create(name: "Pull Toy1", description: "Great pull toy!", price: 12, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 20)
+# pull_toy2 = dog_shop.items.create(name: "Pull Toy2", description: "Great pull toy!", price: 15, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 80)
+# pull_toy3 = dog_shop.items.create(name: "Pull Toy3", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
+# pull_toy4 = dog_shop.items.create(name: "Pull Toy4", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
+# pull_toy5 = dog_shop.items.create(name: "Pull Toy5", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
+# pull_toy6 = dog_shop.items.create(name: "Pull Toy6", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
+# pull_toy7 = dog_shop.items.create(name: "Pull Toy7", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
+# pull_toy8 = dog_shop.items.create(name: "Pull Toy8", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
 
-# default = create(:user, role: 0, email: 'default', password: 'default')
-# merchant_employee = create(:user, role: 1, email: 'merchant_employee', password: 'merchant_employee')
-# merchant_admin = create(:user, role: 2, email: 'merchant_admin', password: 'merchant_admin')
-# admin = create(:user, role: 3, email: 'admin', password: 'admin')
 user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email', password: 'p', password_confirmation: 'p', role: 0)
 merchant_employee = User.create(name: 'merchant_employee', address: 'merchant_employee_address', city: 'merchant_employee_city', state: 'merchant_employee_state', zip: 12345, email: 'merchant_employee_email', password: 'p', password_confirmation: 'p', role: 1)
 merchant_admin = User.create(name: 'merchant_admin', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email', password: 'p', password_confirmation: 'p', role: 2)
