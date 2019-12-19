@@ -53,5 +53,55 @@ describe Item, type: :model do
       result = Item.find_active_items
       expect(result.count).to eq(1)
     end
+
+    it "finds top five items sold by quantity" do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
+      item_4 = create(:item)
+      item_5 = create(:item)
+      item_6 = create(:item)
+      item_7 = create(:item)
+      item_8 = create(:item)
+      item_9 = create(:item)
+      item_10 = create(:item)
+      order_1 = create(:order)
+      order_2 = create(:order)
+      order_3 = create(:order)
+      cart_1 = {item_1 => 10, item_2 => 9, item_3 => 8, item_6 => 5}
+      cart_2 = {item_4 => 7, item_5 => 6, item_6 => 5}
+      cart_3 = {item_7 => 4, item_8 => 3, item_9 => 2, item_10 => 1, item_6 => 5}
+
+      cart_1.each do |item,quantity|
+        order_1.item_orders.create({
+          item: item,
+          quantity: quantity,
+          price: item.price
+          })
+      end
+      cart_2.each do |item,quantity|
+        order_2.item_orders.create({
+          item: item,
+          quantity: quantity,
+          price: item.price
+          })
+      end
+      cart_3.each do |item,quantity|
+        order_3.item_orders.create({
+          item: item,
+          quantity: quantity,
+          price: item.price
+          })
+      end
+      result = Item.top_five_items.to_a.first
+      expect(result).to eq([item_6, 15])
+      result = Item.top_five_items.to_a.last
+      expect(result).to eq([item_4, 7])
+
+      result = Item.bottom_five_items.to_a.first
+      expect(result).to eq([item_10, 1])
+      result = Item.bottom_five_items.to_a.last
+      expect(result).to eq([item_5, 6])
+    end
   end
 end
