@@ -99,4 +99,45 @@ RSpec.describe "As a registered user" do
       expect(page).to have_content("Address can't be blank. Please fill out all required fields.")
     end
   end
+
+  describe "I can edit my password" do
+    before :each do
+      @user = create(:user, role: 0)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    end
+
+    it "by filling out the edit password form correctly" do
+
+      visit profile_path
+
+      click_link "Edit My Password"
+
+      expect(current_path).to eq('/profile/edit/password')
+
+      fill_in :new_password, with: "newpassword"
+      fill_in :confirm_new_password, with: "newpassword"
+
+      click_button 'Submit'
+
+      expect(current_path). to eq(profile_path)
+      expect(page).to have_content("Your password has been updated.")
+    end
+
+    xit "displays an error message if my new password and new password confirmation do not match" do
+      visit profile_path
+
+      click_link "Edit My Password"
+
+      expect(current_path).to eq('/profile/edit/password')
+
+      fill_in :new_password, with: "newpassword"
+      fill_in :confirm_new_password, with: "notthesamepassword"
+
+      click_button 'Submit'
+
+      expect(page).to have_button('Submit')
+      expect(page).to have_content('Passwords do not match. Please try again.')
+    end
+  end
 end
