@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
+
   def new
     @user = User.new(user_params)
   end
 
   def show
-    @user = current_user
+    if !current_user
+      require_user
+    else
+      @user = current_user
+    end
   end
 
   def create
@@ -54,5 +59,9 @@ class UsersController < ApplicationController
       flash.now[:error] = "Password is incorrect. Please try again."
       @user = current_user
       render :edit
+    end 
+  
+    def require_user
+      render file: "/public/404" unless current_user
     end
 end

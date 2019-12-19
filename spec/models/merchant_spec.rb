@@ -50,6 +50,5 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to match_array(["Hershey", "Denver"])
     end
-
   end
 end
