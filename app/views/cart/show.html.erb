@@ -31,9 +31,9 @@
       <td>
         <center>
           <p>
-          <%= button_to 'Add', "/cart/#{item.id}?increment_decrement=increment", method: :patch %>
+          <%= button_to 'Increase', "/cart/#{item.id}?increment_decrement=increment", method: :patch %>
           <%=quantity%>
-          <%= button_to 'Remove', "/cart/#{item.id}?increment_decrement=decrement", method: :patch %>
+          <%= button_to 'Decrease', "/cart/#{item.id}?increment_decrement=decrement", method: :patch %>
           </p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
