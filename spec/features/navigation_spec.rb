@@ -131,5 +131,43 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Logged in as #{merchant_employee.name}")
       end
     end
+
+    it 'I see user links, link to admin dashboard and link to see all users. No link to cart.' do
+      admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 3)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit '/'
+
+      within '.topnav' do
+        click_on('My Profile')
+        expect(current_path).to eq("/profile")
+
+        click_on('Log Out')
+        expect(current_path).to eq('/')
+
+        click_on('Home')
+        expect(current_path).to eq('/')
+
+        click_on('All Merchants')
+        expect(current_path).to eq('/merchants')
+
+        click_on('All Items')
+        expect(current_path).to eq('/items')
+
+        click_on('Admin Dashboard')
+        expect(current_path).to eq(admin_dashboard_path)
+
+        click_on('All Users')
+        expect(current_path).to eq('/admin/users')
+          #consider testing for all users on this page here
+
+        expect(page).to_not have_link('Register')
+        expect(page).to_not have_link('Login')
+        expect(page).to_not have_link('Cart:')
+
+        expect(page).to have_content("Logged in as #{admin.name}")
+      end
+    end
   end
 end
