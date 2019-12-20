@@ -118,7 +118,7 @@ RSpec.describe 'Cart show' do
         visit "/items/#{pencil.id}"
         click_on "Add To Cart"
         visit '/cart'
-
+        #expect(page).to_not have_link("Checkout")
         expect(page).to have_content("You must register or log in to checkout.")
       end
     end

@@ -13,7 +13,7 @@ class CartController < ApplicationController
       @items = cart.items
     else
       @items = cart.items
-      flash.now[:notice] = "You must register or log in to checkout."
+      flash.now[:error] = "You must register or log in to checkout."
     end
   end
 
