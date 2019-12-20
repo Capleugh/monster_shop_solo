@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
 
   has_many :orders
+  belongs_to :merchant, optional: true
 
   has_secure_password
 

@@ -13,6 +13,7 @@ RSpec.describe User do
 
   describe "relationships" do
     it {should have_many :orders}
+    it {should belong_to(:merchant).optional}
   end
 
   end

@@ -2,15 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "As a merchant employee or merchant admin" do
   describe "when I visit my merchant dashboard" do
-    xit "I see the name and full address of the merchant I work for" do
-      merchant_employee = create(:user, role: 1)
+    it "I see the name and full address of the merchant I work for" do
       bike_shop = create(:merchant)
-
-      bike_shop.merchant_employees << merchant_employee
+      merchant_employee = create(:user, role: 1, merchant: bike_shop)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-      visit merchants_path
+      visit merchant_dashboard_path
 
       expect(page).to have_content(bike_shop.name)
       expect(page).to have_content(bike_shop.address)
@@ -22,13 +20,13 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
   describe "when I visit my merchant dashboard" do
     xit "I see the name and full address of the merchant I work for" do
-      merchant_admin = create(:user, role: 2)
       bike_shop = create(:merchant)
+      merchant_admin = create(:user, role: 2, merchant: bike_shop)
 
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-      visit merchants_path
+      visit merchant_dashboard_path
 
       expect(page).to have_content(bike_shop.name)
       expect(page).to have_content(bike_shop.address)
