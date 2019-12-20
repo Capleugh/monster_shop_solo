@@ -8,3 +8,9 @@
 <p><b>Email:</b> <%= @user.email %> </p>
 
 <%= link_to 'Edit My Info', profile_edit_path %>
+<br>
+<% if @user.user_order_count <= 0 %>
+  <%= link_to 'You have no orders', '/profile' %>
+<% else %>
+<%= link_to 'My Orders', '/profile/orders' %>
+<% end %>
