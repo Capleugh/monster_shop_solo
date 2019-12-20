@@ -7,4 +7,5 @@
 <p><b>Zip:</b> <%= @user.zip %> </p>
 <p><b>Email:</b> <%= @user.email %> </p>
 
-<%= link_to 'Edit My Info', profile_edit_path %>
+<%= link_to 'Edit My Info', "/profile/edit?info_password=info", method: :get %>
+<%= link_to 'Edit My Password', "/profile/edit?info_password=password", method: :get %>

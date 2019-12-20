@@ -27,15 +27,18 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    if params[:info_password] == "info"
+      render :info_edit
+    else params[:info_password] == "password"
+      render :password_edit
+    end
   end
 
   def update
-    # user = current_user
-
-    if current_user.authenticate(params[:password])
-      attempt_update(current_user)
-    else
-      incorrect_password
+    if params[:update] == "password"
+      attempt_password_update
+    else params[:update] == "info"
+      attempt_info_update
     end
   end
 
@@ -51,17 +54,36 @@ class UsersController < ApplicationController
       else
         flash.now[:error] = user.errors.full_messages.to_sentence + ". Please fill out all required fields."
         @user = current_user
-        render :edit
+        render :info_edit
       end
     end
 
     def incorrect_password
       flash.now[:error] = "Password is incorrect. Please try again."
       @user = current_user
-      render :edit
-    end 
-  
+      render :info_edit
+    end
+
     def require_user
       render file: "/public/404" unless current_user
+    end
+
+    def attempt_password_update
+      if current_user.update(user_params)
+        flash[:success] = "Your password has been updated."
+        redirect_to '/profile'
+      else
+        @user = current_user
+        flash[:error] = "Passwords do not match. Please try again."
+        render :password_edit
+      end
+    end
+
+    def attempt_info_update
+      if current_user.authenticate(params[:password])
+        attempt_update(current_user)
+      else
+        incorrect_password
+      end
     end
 end
