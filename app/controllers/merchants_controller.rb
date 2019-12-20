@@ -1,5 +1,4 @@
 class MerchantsController <ApplicationController
-  # before_action :require_not_admin
 
   def index
     @merchants = Merchant.all
@@ -47,9 +46,5 @@ class MerchantsController <ApplicationController
   def merchant_params
     params.permit(:name,:address,:city,:state,:zip)
   end
-
-  # def require_not_admin
-  #   render file: '/public/404'unless !current_admin?
-  # end
 
 end
