@@ -52,7 +52,7 @@ class UsersController < ApplicationController
         flash[:success] = "Your information has been updated."
         redirect_to profile_path
       else
-        flash.now[:error] = user.errors.full_messages.to_sentence + ". Please fill out all required fields."
+        flash.now[:error] = user.errors.full_messages.to_sentence + "."
         @user = current_user
         render :info_edit
       end

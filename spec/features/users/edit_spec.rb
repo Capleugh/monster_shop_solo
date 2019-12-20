@@ -96,7 +96,22 @@ RSpec.describe "As a registered user" do
 
       expect(page).to have_button('Submit')
 
-      expect(page).to have_content("Address can't be blank. Please fill out all required fields.")
+      expect(page).to have_content("Address can't be blank.")
+    end
+
+    it "it displays an error message if I change my email to one that is already in use" do
+      user_2 = create(:user, role: 1)
+
+      visit profile_path
+
+      click_link 'Edit My Info'
+
+      fill_in :email, with: user_2.email
+      fill_in :password, with: "password"
+      click_button 'Submit'
+
+      expect(page).to have_button('Submit')
+      expect(page).to have_content("Email has already been taken.")
     end
   end
 
