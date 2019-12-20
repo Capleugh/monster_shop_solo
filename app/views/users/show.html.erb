@@ -17,8 +17,4 @@
 <% else %>
 <h3><%= link_to 'My Orders', '/profile/orders' %></h3>
 <% end %>
-<% @user.orders.each do |order| %>
-<li><%= order.name %></li>
-<% end %>
 </section>
-
