@@ -9,7 +9,12 @@ class CartController < ApplicationController
   end
 
   def show
-    @items = cart.items
+    if current_user
+      @items = cart.items
+    else
+      @items = cart.items
+      flash.now[:error] = "You must register or log in to checkout."
+    end
   end
 
   def empty
@@ -22,15 +27,15 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
-  # def increment_decrement
-  #   if params[:increment_decrement] == "increment"
-  #     cart.add_quantity(params[:item_id]) unless cart.limit_reached?(params[:item_id])
-  #   elsif params[:increment_decrement] == "decrement"
-  #     cart.subtract_quantity(params[:item_id])
-  #     return remove_item if cart.quantity_zero?(params[:item_id])
-  #   end
-  #   redirect_to "/cart"
-  # end
+  def update
+    if params[:increment_decrement] == "increment"
+      cart.add_quantity(params[:item_id]) unless cart.limit_reached?(params[:item_id])
+    elsif params[:increment_decrement] == "decrement"
+      cart.subtract_quantity(params[:item_id])
+      return remove_item if cart.quantity_zero?(params[:item_id])
+    end
+    redirect_to "/cart"
+  end
 
   private
 

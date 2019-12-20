@@ -17,9 +17,9 @@ RSpec.describe "As a registered user" do
       visit '/profile'
 
       expect(page).to have_content("Name: #{@user.name}")
-      expect(page).to have_content("Address: #{@original_address}")
-      expect(page).to have_content("City: #{@original_city}")
-      expect(page).to have_content("State: #{@original_state}")
+      expect(page).to have_content("Address: #{@user.address}")
+      expect(page).to have_content("City: #{@user.city}")
+      expect(page).to have_content("State: #{@user.state}")
       expect(page).to have_content("Zip: #{@user.zip}")
       expect(page).to have_content("Email: #{@user.email}")
 
@@ -96,7 +96,63 @@ RSpec.describe "As a registered user" do
 
       expect(page).to have_button('Submit')
 
-      expect(page).to have_content("Address can't be blank. Please fill out all required fields.")
+      expect(page).to have_content("Address can't be blank.")
+    end
+
+    it "it displays an error message if I change my email to one that is already in use" do
+      user_2 = create(:user, role: 1)
+
+      visit profile_path
+
+      click_link 'Edit My Info'
+
+      fill_in :email, with: user_2.email
+      fill_in :password, with: "password"
+      click_button 'Submit'
+
+      expect(page).to have_button('Submit')
+      expect(page).to have_content("Email has already been taken.")
+    end
+  end
+
+  describe "I can edit my password" do
+    before :each do
+      @user = create(:user, role: 0)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    end
+
+    it "by filling out the edit password form correctly" do
+
+      visit profile_path
+
+      click_link "Edit My Password"
+
+      expect(current_path).to eq('/profile/edit')
+
+      fill_in :password, with: "newpassword"
+      fill_in :password_confirmation, with: "newpassword"
+
+      click_button 'Submit'
+
+      expect(current_path). to eq(profile_path)
+      expect(page).to have_content("Your password has been updated.")
+    end
+
+    it "displays an error message if my new password and new password confirmation do not match" do
+      visit profile_path
+
+      click_link "Edit My Password"
+
+      expect(current_path).to eq('/profile/edit')
+
+      fill_in :password, with: "newpassword"
+      fill_in :password_confirmation, with: "notthesamepassword"
+
+      click_button 'Submit'
+
+      expect(page).to have_button('Submit')
+      expect(page).to have_content('Passwords do not match. Please try again.')
     end
   end
 end

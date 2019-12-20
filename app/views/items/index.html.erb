@@ -6,19 +6,25 @@
 <% end %>
 <section>
   <h3>Statistics</h3>
+  <section id = "top-sellers">
     Best Sellers:
-    <% x = 1 %>
-    <% @items.top_five_items.each do |item, quantity| %>
-    <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
-    <% x +=1 %>
-    <% end %>
+    <ol>
+      <% @items.top_five_items.each do |item| %>
+        <li><%= item.name %>, Quantity: <%= item.sum %></li>
+      <% end %>
+    </ol>
+  </section>
+
+  <section id = "worst-sellers">
     Worst Sellers:
-    <% x = 1 %>
-    <% @items.bottom_five_items.each do |item, quantity| %>
-    <li><%= x %>. <%= item.name %>  Quantity: <%= quantity %></li>
-    <% x +=1 %>
-    <% end %>
+    <ol>
+      <% @items.bottom_five_items.each do |item| %>
+        <li><%= item.name %>, Quantity: <%= item.sum %></li>
+      <% end %>
+    </ol>
+  </section>
 </section>
+
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
