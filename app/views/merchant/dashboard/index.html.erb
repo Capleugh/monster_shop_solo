@@ -1,1 +1,7 @@
 <h1> Hello, <%= current_user.name %>! Welcome to your Merchant Dashboard!</h1>
+<p><b>Store Name: </b><%= current_user.merchant.name %></p><br>
+<p><b>Address:</b></p>
+<p><b></b><%= current_user.merchant.address %>
+<%= current_user.merchant.city %>
+<%= current_user.merchant.state %>
+<%= current_user.merchant.zip %></p>
