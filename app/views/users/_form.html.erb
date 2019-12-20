@@ -11,12 +11,8 @@
   <%= text_field_tag :zip, user_zip %>
   <%= label_tag :email %>
   <%= text_field_tag :email, user_email %>
-
   <%= label_tag :password %>
   <%= password_field_tag :password %>
-
-  <%# <%= label_tag :password_confirmation %> %>
-  <%# <%= password_field_tag :password_confirmation %> %>
-
+  <%= hidden_field_tag(:update, "info")%>
   <%= submit_tag button_text %>
 <% end %>
