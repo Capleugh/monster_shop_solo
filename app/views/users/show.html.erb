@@ -7,10 +7,13 @@
 <p><b>Zip:</b> <%= @user.zip %> </p>
 <p><b>Email:</b> <%= @user.email %> </p>
 
-<% @user.orders.each do |order| %>
-<%= order.name %>
-<% end %>
 
 <%= link_to 'Edit My Info', "/profile/edit?info_password=info", method: :get %>
 <%= link_to 'Edit My Password', "/profile/edit?info_password=password", method: :get %>
 
+<section id="orders">
+<h3>My Orders</h3>
+<% @user.orders.each do |order| %>
+<li><%= order.name %></li>
+<% end %>
+</section>
