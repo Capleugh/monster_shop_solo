@@ -1,0 +1,12 @@
+<h1>All Orders For: <%= current_user.name %></h1>
+
+<% current_user.orders.each do |order| %>
+<section id = "order-<%= order.id %>">
+  <h3>Order ID: <%= order.id %></h3>
+  <p>Date Order Was Created: <%= order.created_at %></p>
+  <p>Date Order Was Created: <%= order.updated_at %></p>
+  <p>Order Status: <%= order.status %></p>
+  <p>Number Of All Items: <%= order.items.count %></p>
+  <p>Total Price Of All Items: <%= number_to_currency(order.grandtotal) %></p>
+</section>
+<% end %>
