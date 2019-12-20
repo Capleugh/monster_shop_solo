@@ -23,7 +23,7 @@
       <% elsif current_merchant_employee? || current_merchant_admin? %>
         <%= link_to "Log Out", '/logout', method: :delete %>
         <%= link_to 'My Profile', '/profile' %>
-        <%= link_to 'Merchant Dashboard', merchant_dashboard_path %>
+        <%= link_to 'Merchant Dashboard', merchant_path %>
         <%= link_to "Cart: #{cart.total_items}", "/cart" %>
         <%= link_to "Logged in as #{current_user.name}", '/profile' %>
       <% elsif current_admin? %>
