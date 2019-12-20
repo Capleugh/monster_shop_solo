@@ -22,7 +22,7 @@ RSpec.describe 'Logging in', type: :feature do
       expect(page).to have_content("Welcome back, #{@user.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@user.name}!")
     end
-    
+
     it "I cannot log in with invalid email and the flash message associated with this failure is intentionally vague" do
 
       visit '/login'
@@ -67,7 +67,8 @@ RSpec.describe 'Logging in', type: :feature do
 
   describe 'As a Merchant Employee User' do
     before :each do
-      @merchant_employee = create(:user, role: 1)
+      bike_shop = create(:merchant)
+      @merchant_employee = create(:user, role: 1, merchant: bike_shop)
     end
 
     it 'can login with valid credentials' do
@@ -116,7 +117,8 @@ RSpec.describe 'Logging in', type: :feature do
 
   describe 'As a Merchant Admin User' do
     before :each do
-      @merchant_admin = create(:user, role: 2)
+      bike_shop = create(:merchant)
+      @merchant_admin = create(:user, role: 2, merchant: bike_shop)
     end
 
     it 'can login with valid credentials' do

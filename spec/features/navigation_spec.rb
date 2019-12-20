@@ -97,7 +97,8 @@ RSpec.describe 'Site Navigation' do
     end
 
     it 'I see user links and  a link to merchant dashboard at /merchant' do
-      merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1)
+      bike_shop = create(:merchant)
+      merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1, merchant: bike_shop)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
