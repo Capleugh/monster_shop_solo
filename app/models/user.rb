@@ -6,7 +6,14 @@ class User < ApplicationRecord
   has_many :orders
 
 
+  has_many :orders
+
   has_secure_password
 
   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin']
+
+  def user_order_count
+    # binding.pry
+    self.orders.count
+  end
 end
