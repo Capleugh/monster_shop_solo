@@ -46,5 +46,5 @@ RSpec.describe 'As A User', type: :feature do
     click_on('My Orders')
 
     expect(current_path).to eq('/profile/orders')
-
   end
+end
