@@ -96,14 +96,24 @@ describe Item, type: :model do
           })
       end
       result = Item.top_five_items.to_a.first
-      expect(result).to eq([item_6, 15])
+
+      expect(result).to eq(item_6)
+      # result = Item.top_five_items.to_a.first
+      # expect(result).to eq([item_6, 15])
       result = Item.top_five_items.to_a.last
-      expect(result).to eq([item_4, 7])
+
+      # expect(result).to eq([item_4, 7])
+      expect(result).to eq(item_4)
 
       result = Item.bottom_five_items.to_a.first
-      expect(result).to eq([item_10, 1])
+
+      expect(result).to eq(item_10)
+      # expect(result).to eq([item_10, 1])
       result = Item.bottom_five_items.to_a.last
-      expect(result).to eq([item_5, 6])
+
+      expect(result).to eq(item_5)
+      # expect(result).to eq([item_5, 6])
+
     end
   end
 end
