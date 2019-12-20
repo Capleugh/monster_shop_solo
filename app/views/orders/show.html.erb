@@ -36,6 +36,9 @@
         <td><p><%= number_to_currency(item_order.price)%></p></td>
         <td><p><%= item_order.quantity%></p></td>
         <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
+        <td><a target="_blank" href=<%= item_order.item.image %>>
+                <img src=<%= item_order.item.image %> alt="Forest" style="width:150px">
+            </a></td>
       </section>
     </tr>
   <% end %>
