@@ -7,4 +7,9 @@
 <p><b>Zip:</b> <%= @user.zip %> </p>
 <p><b>Email:</b> <%= @user.email %> </p>
 
+
+<% @user.orders.each do |order| %>
+<%= order.name %>
+<% end %>
+
 <%= link_to 'Edit My Info', profile_edit_path %>

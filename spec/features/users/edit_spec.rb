@@ -17,9 +17,9 @@ RSpec.describe "As a registered user" do
       visit '/profile'
 
       expect(page).to have_content("Name: #{@user.name}")
-      expect(page).to have_content("Address: #{@original_address}")
-      expect(page).to have_content("City: #{@original_city}")
-      expect(page).to have_content("State: #{@original_state}")
+      expect(page).to have_content("Address: #{@user.address}")
+      expect(page).to have_content("City: #{@user.city}")
+      expect(page).to have_content("State: #{@user.state}")
       expect(page).to have_content("Zip: #{@user.zip}")
       expect(page).to have_content("Email: #{@user.email}")
 
