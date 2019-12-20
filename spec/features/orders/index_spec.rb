@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe 'As A User', type: :feature do
   before(:each) do
     @order = create(:order)
-          @user = User.last
-          @item_1 = create(:item)
-          @item_2 = create(:item)
-          @item_3 = create(:item)
-          @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
-          @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
-          @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
+    @user = User.last
+    @item_1 = create(:item)
+    @item_2 = create(:item)
+    @item_3 = create(:item)
+    @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
+    @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
+    @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
   end
 
   it 'When I visit  profile order page I see every order made ' do
@@ -36,8 +36,6 @@ RSpec.describe 'As A User', type: :feature do
     fill_in :state, with: @user.state
     fill_in :zip, with: @user.zip
     click_on('Create Order')
-
-    click_on 'My Orders'
 
     within "#order-#{@order.id}" do
       expect(page).to have_content(@order.created_at)
