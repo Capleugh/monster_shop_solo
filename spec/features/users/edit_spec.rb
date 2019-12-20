@@ -113,10 +113,10 @@ RSpec.describe "As a registered user" do
 
       click_link "Edit My Password"
 
-      expect(current_path).to eq('/profile/edit/password')
+      expect(current_path).to eq('/profile/edit')
 
-      fill_in :new_password, with: "newpassword"
-      fill_in :confirm_new_password, with: "newpassword"
+      fill_in :password, with: "newpassword"
+      fill_in :password_confirmation, with: "newpassword"
 
       click_button 'Submit'
 
@@ -124,15 +124,15 @@ RSpec.describe "As a registered user" do
       expect(page).to have_content("Your password has been updated.")
     end
 
-    xit "displays an error message if my new password and new password confirmation do not match" do
+    it "displays an error message if my new password and new password confirmation do not match" do
       visit profile_path
 
       click_link "Edit My Password"
 
-      expect(current_path).to eq('/profile/edit/password')
+      expect(current_path).to eq('/profile/edit')
 
-      fill_in :new_password, with: "newpassword"
-      fill_in :confirm_new_password, with: "notthesamepassword"
+      fill_in :password, with: "newpassword"
+      fill_in :password_confirmation, with: "notthesamepassword"
 
       click_button 'Submit'
 
