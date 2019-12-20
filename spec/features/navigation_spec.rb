@@ -31,7 +31,6 @@ RSpec.describe 'Site Navigation' do
       within 'nav' do
         expect(page).to have_content("Cart: 0")
       end
-
     end
 
     it 'can navigate through the navbar and cart increments' do
@@ -130,6 +129,43 @@ RSpec.describe 'Site Navigation' do
         expect(page).to_not have_link('Login')
 
         expect(page).to have_content("Logged in as #{merchant_employee.name}")
+      end
+    end
+
+    it 'I see user links and  a link to merchant dashboard at /merchant' do
+      bike_shop = create(:merchant)
+      merchant_admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1, merchant: bike_shop)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
+
+      visit '/'
+
+      within '.topnav' do
+        click_on('My Profile')
+        expect(current_path).to eq("/profile")
+
+        click_on('Log Out')
+        expect(current_path).to eq('/')
+
+        click_on('Home')
+        expect(current_path).to eq('/')
+
+        click_on('All Merchants')
+        expect(current_path).to eq('/merchants')
+
+        click_on('All Items')
+        expect(current_path).to eq('/items')
+
+        click_on('Cart:')
+        expect(current_path).to eq('/cart')
+
+        click_on('Merchant Dashboard')
+        expect(current_path).to eq(merchant_dashboard_path)
+
+        expect(page).to_not have_link('Register')
+        expect(page).to_not have_link('Login')
+
+        expect(page).to have_content("Logged in as #{merchant_admin.name}")
       end
     end
 

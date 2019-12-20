@@ -19,7 +19,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
   end
 
   describe "when I visit my merchant dashboard" do
-    xit "I see the name and full address of the merchant I work for" do
+    it "I see the name and full address of the merchant I work for" do
       bike_shop = create(:merchant)
       merchant_admin = create(:user, role: 2, merchant: bike_shop)
 
