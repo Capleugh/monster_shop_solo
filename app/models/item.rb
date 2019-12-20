@@ -30,6 +30,7 @@ class Item <ApplicationRecord
   end
 
   def self.top_five_items
+    require "pry"; binding.pry
     all_items = self.joins(:orders).where(active?: true).group('items.id').sum(:quantity)
     item_objects = {}
     all_items.each do |id, quantity|
