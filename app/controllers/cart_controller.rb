@@ -9,7 +9,12 @@ class CartController < ApplicationController
   end
 
   def show
-    @items = cart.items
+    if current_user
+      @items = cart.items
+    else
+      @items = cart.items
+      flash.now[:error] = "You must register or log in to checkout."
+    end
   end
 
   def empty
