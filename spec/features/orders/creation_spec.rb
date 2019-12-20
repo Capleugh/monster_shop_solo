@@ -41,7 +41,8 @@ RSpec.describe("Order Creation") do
       fill_in :zip, with: zip
 
       click_button "Create Order"
-      expect(current_path).to eq("/profile")
+
+      expect(current_path).to eq("/profile/orders")
 
       expect(page).to have_content("Order created!")
     end
