@@ -43,9 +43,10 @@ class Item <ApplicationRecord
     end
   end
 
-  def self.increase_item_inventory(cart)
-    cart.items.each do |item, quantity|
-      Item.where(id: item.id).update(inventory: (item.inventory + quantity))
+  def self.increase_item_inventory(order)
+    order.item_orders.each do |item_order|
+      current_inventory = Item.select(:inventory).where(id: item_order.item_id).pluck(:inventory).first
+      Item.where(id: item_order.item_id).update(inventory: (current_inventory + item_order.quantity))
     end
   end
 end

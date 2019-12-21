@@ -35,6 +35,7 @@ class OrdersController <ApplicationController
     order = Order.find(params[:order_id])
     change_order_status_to_cancelled(order)
     ItemOrder.change_items_status_to_unfilled(order)
+    Item.increase_item_inventory(order)
   end
 
 
