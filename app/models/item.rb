@@ -36,4 +36,16 @@ class Item <ApplicationRecord
   def self.bottom_five_items
     Item.select("items.*, sum(quantity)").joins(:item_orders).group(:id).order("sum").limit(5)
   end
+
+  def self.decrease_item_inventory(cart)
+    cart.items.each do |item, quantity|
+      Item.where(id: item.id).update(inventory: (item.inventory - quantity))
+    end
+  end
+
+  def self.increase_item_inventory(cart)
+    cart.items.each do |item, quantity|
+      Item.where(id: item.id).update(inventory: (item.inventory + quantity))
+    end
+  end
 end
