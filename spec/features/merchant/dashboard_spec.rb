@@ -9,7 +9,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
       visit merchant_path
-      # save_and_open_page
+      
       expect(page).to have_content(bike_shop.name)
       expect(page).to have_content(bike_shop.address)
       expect(page).to have_content(bike_shop.city)

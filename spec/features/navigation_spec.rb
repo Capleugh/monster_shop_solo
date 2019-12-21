@@ -271,32 +271,6 @@ RSpec.describe 'Site Navigation' do
           visit(merchant_path)
           expect(page).to have_content("The page you were looking for doesn't exist.")
         end
-
-        describe "when I visit the merchant index page" do
-          it "and I click on a merchant's name, my URI path should be '/admin/merchants/id' and I will be able to see everything that a merchant can see" do
-            admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
-            merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1)
-            bike_shop = create(:merchant)
-
-            allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-            allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
-
-            visit merchants_path
-
-            click_link "#{merchant_employee.name}"
-
-            expect(current_path).to eq("/admin/merchants/#{merchant_employee.id}")
-            expect(page).to have_content(bike_shop.name)
-            expect(page).to have_content(bike_shop.address)
-            expect(page).to have_content(bike_shop.city)
-            expect(page).to have_content(bike_shop.state)
-            expect(page).to have_content(bike_shop.zip)
-
-            click_link 'View Your Items'
-
-            expect(current_path).to eq(merchant_items_path)
-          end
-        end
       end
     end
   end
