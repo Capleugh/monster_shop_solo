@@ -32,8 +32,8 @@ class OrdersController <ApplicationController
 
   def destroy
     order = Order.find(params[:order_id])
-    change_status_to_cancelled(order)
-    #delete_item_orders(order)
+    change_order_status_to_cancelled(order)
+    ItemOrder.change_items_status_to_unfilled(order)
   end
 
 
@@ -43,7 +43,7 @@ class OrdersController <ApplicationController
     params.permit(:name, :address, :city, :state, :zip)
   end
 
-  def change_status_to_cancelled(order)
+  def change_order_status_to_cancelled(order)
     order.update(status: 3)
     flash[:success] = "#{order.id} has been cancelled."
     redirect_to profile_path
