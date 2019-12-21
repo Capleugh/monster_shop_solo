@@ -22,6 +22,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      Item.decrease_item_inventory(cart)
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
@@ -35,6 +36,7 @@ class OrdersController <ApplicationController
     order = Order.find(params[:order_id])
     change_order_status_to_cancelled(order)
     ItemOrder.change_items_status_to_unfilled(order)
+    Item.increase_item_inventory(order)
   end
 
 
