@@ -50,3 +50,5 @@
 <section id="datecreated">
   <p>Item Total:<%= @order.total_items %></p>
 </section>
+
+<p><%= link_to "Cancel Order", "/profile/orders/#{@order.id}", method: :delete %></p>

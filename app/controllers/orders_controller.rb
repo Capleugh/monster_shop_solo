@@ -12,8 +12,7 @@ class OrdersController <ApplicationController
   end
 
   def create
-    user = current_user
-    order = user.orders.create(order_params)
+    order = current_user.orders.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({
@@ -22,6 +21,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      Item.decrease_item_inventory(cart)
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
@@ -31,10 +31,24 @@ class OrdersController <ApplicationController
     end
   end
 
+  def destroy
+    order = Order.find(params[:order_id])
+    change_order_status_to_cancelled(order)
+    ItemOrder.change_items_status_to_unfilled(order)
+    Item.increase_item_inventory(order)
+  end
+
 
   private
 
   def order_params
     params.permit(:name, :address, :city, :state, :zip)
   end
+
+  def change_order_status_to_cancelled(order)
+    order.update(status: 3)
+    flash[:success] = "#{order.id} has been cancelled."
+    redirect_to profile_path
+  end
+
 end
