@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
       redirect_to(profile_path)
     elsif current_merchant?
       flash[:error] = "You are already logged in."
-      redirect_to(merchant_dashboard_path)
+      redirect_to(merchant_path)
     elsif current_admin?
       flash[:error] = "You are already logged in."
       redirect_to(admin_dashboard_path)
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
         redirect_to '/profile'
       elsif authenticated_merchant?(user)
         successful_login(user)
-        redirect_to '/merchant/dashboard'
+        redirect_to '/merchant_path'
       elsif authenticated_admin?(user)
         successful_login(user)
         redirect_to '/admin/dashboard'
