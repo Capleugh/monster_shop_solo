@@ -33,10 +33,12 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
 
   get "/orders/new", to: "orders#new"
-  get '/profile/orders', to: 'orders#index'
-  post "/profile/orders", to: "orders#create"
-  get "/profile/orders/:order_id", to: "orders#show"
   get "/orders/:id", to: "orders#show"
+
+  get '/profile/orders', to: 'user_orders#index'
+  get '/profile/orders', to: 'user_orders#index'
+  post "/profile/orders", to: "user_orders#create"
+  get "/profile/orders/:order_id", to: "user_orders#show"
 
   get "/users/register", to: "users#new"
   post "/users", to: "users#create"
@@ -49,11 +51,10 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  get '/merchant/orders/:order_id', to: 'orders#show'
-
   namespace :merchant do
     get '/', to: 'dashboard#show'
     get '/items', to: 'dashboard#index'
+    resources :orders, only: [:show]
   end
 
   namespace :admin do
