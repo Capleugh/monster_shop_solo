@@ -1,4 +1,5 @@
 class OrdersController <ApplicationController
+  before_action :order_status_monitor
 
   def index
   end

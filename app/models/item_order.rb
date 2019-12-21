@@ -7,4 +7,10 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
+
+  def self.update_order_status_if_all_fulfilled
+    
+  end
+
+
 end

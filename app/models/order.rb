@@ -12,4 +12,8 @@ class Order <ApplicationRecord
   def total_items
     item_orders.sum('quantity')
   end
+
+  def order_status_monitor
+    ItemOrder.update_order_status_if_all_fulfilled
+  end
 end
