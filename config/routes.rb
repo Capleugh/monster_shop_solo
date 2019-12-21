@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get "/profile", to: "users#show"
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
+
   get '/profile/orders', to: 'orders#index'
 
   get '/login', to: 'sessions#new'
@@ -49,7 +50,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   namespace :merchant do
-    get '/', to: 'dashboard#index'
+    get '/', to: 'dashboard#show'
   end
 
   namespace :admin do
