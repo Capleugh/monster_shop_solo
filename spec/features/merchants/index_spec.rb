@@ -24,4 +24,28 @@ RSpec.describe 'merchant index page', type: :feature do
       expect(current_path).to eq("/merchants/new")
     end
   end
+
+  describe"As an admin" do
+    it "when I click on a merchant's name, my URI path should be '/admin/merchants/id' and I will be able to see everything that a merchant can see" do
+      admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
+      bike_shop = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_merchants_path
+      expect(current_path).to eq(admin_merchants_path)
+
+      click_link "#{bike_shop.name}"
+
+      expect(current_path).to eq("/admin/merchants/#{bike_shop.id}")
+      expect(page).to have_content(bike_shop.name)
+      expect(page).to have_content(bike_shop.address)
+      expect(page).to have_content(bike_shop.city)
+      expect(page).to have_content(bike_shop.state)
+      expect(page).to have_content(bike_shop.zip)
+      expect(page).to have_link("All #{bike_shop.name} Items" )
+      expect(page).to have_link("Update Merchant")
+      expect(page).to have_link("Delete Merchant")
+    end
+  end
 end

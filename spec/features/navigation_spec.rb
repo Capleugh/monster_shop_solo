@@ -193,7 +193,7 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/items')
 
         click_on('Admin Dashboard')
-        expect(current_path).to eq(admin_dashboard_path)
+        expect(current_path).to eq(admin_path)
 
         click_on('All Users')
         expect(current_path).to eq('/admin/users')
@@ -213,7 +213,7 @@ RSpec.describe 'Site Navigation' do
         visit(merchant_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
-        visit('/admin/dashboard')
+        visit(admin_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
         visit('/profile')
@@ -228,10 +228,10 @@ RSpec.describe 'Site Navigation' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-        visit merchant_path
+        visit(merchant_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
-        visit '/admin/dashboard'
+        visit(admin_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
       end
     end
@@ -243,7 +243,7 @@ RSpec.describe 'Site Navigation' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-        visit '/admin/dashboard'
+        visit(admin_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
       end
     end
@@ -255,7 +255,7 @@ RSpec.describe 'Site Navigation' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-        visit '/admin/dashboard'
+        visit(admin_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
       end
 
@@ -268,7 +268,7 @@ RSpec.describe 'Site Navigation' do
           visit '/cart'
           expect(page).to have_content("The page you were looking for doesn't exist.")
 
-          visit merchant_path
+          visit(merchant_path)
           expect(page).to have_content("The page you were looking for doesn't exist.")
         end
       end
