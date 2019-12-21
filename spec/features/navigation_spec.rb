@@ -95,6 +95,7 @@ RSpec.describe 'Site Navigation' do
       end
     end
 
+  describe "As a merchant" do
     it 'I see user links and  a link to merchant dashboard at /merchant' do
       bike_shop = create(:merchant)
       merchant_employee = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1, merchant: bike_shop)
@@ -131,8 +132,9 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Logged in as #{merchant_employee.name}")
       end
     end
+  end
 
-    it 'I see user links and  a link to merchant dashboard at /merchant' do
+    it 'merchant admin see user links and  a link to merchant dashboard at /merchant' do
       bike_shop = create(:merchant)
       merchant_admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 1, merchant: bike_shop)
 
@@ -169,41 +171,42 @@ RSpec.describe 'Site Navigation' do
       end
     end
 
-    it 'I see user links, link to admin dashboard and link to see all users. No link to cart.' do
-      admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 3)
+    describe "as an admin" do
+      it 'I see user links, link to admin dashboard and link to see all users. No link to cart.' do
+        admin = User.create(name: 'user', address: 'address', city: 'city', state: 'state', zip: 12345, email: 'user', password: 'p', role: 3)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-      visit '/'
+        visit '/'
 
-      within '.topnav' do
-        click_on('My Profile')
-        expect(current_path).to eq("/profile")
+        within '.topnav' do
+          click_on('My Profile')
+          expect(current_path).to eq("/profile")
 
-        click_on('Log Out')
-        expect(current_path).to eq('/')
+          click_on('Log Out')
+          expect(current_path).to eq('/')
 
-        click_on('Home')
-        expect(current_path).to eq('/')
+          click_on('Home')
+          expect(current_path).to eq('/')
 
-        click_on('All Merchants')
-        expect(current_path).to eq('/merchants')
+          click_on('All Merchants')
+          expect(current_path).to eq('/admin/merchants')
 
-        click_on('All Items')
-        expect(current_path).to eq('/items')
+          click_on('All Items')
+          expect(current_path).to eq('/items')
 
-        click_on('Admin Dashboard')
-        expect(current_path).to eq(admin_path)
+          click_on('Admin Dashboard')
+          expect(current_path).to eq(admin_path)
 
-        click_on('All Users')
-        expect(current_path).to eq('/admin/users')
-          #consider testing for all users on this page here
+          click_on('All Users')
+          expect(current_path).to eq('/admin/users')
 
-        expect(page).to_not have_link('Register')
-        expect(page).to_not have_link('Login')
-        expect(page).to_not have_link('Cart:')
+          expect(page).to_not have_link('Register')
+          expect(page).to_not have_link('Login')
+          expect(page).to_not have_link('Cart:')
 
-        expect(page).to have_content("Logged in as #{admin.name}")
+          expect(page).to have_content("Logged in as #{admin.name}")
+        end
       end
     end
 
