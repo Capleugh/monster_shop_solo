@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
         redirect_to '/profile'
       elsif authenticated_merchant?(user)
         successful_login(user)
-        redirect_to '/merchant_path'
+        redirect_to merchant_path
       elsif authenticated_admin?(user)
         successful_login(user)
         redirect_to '/admin/dashboard'
