@@ -6,6 +6,7 @@ describe ItemOrder, type: :model do
     it { should validate_presence_of :item_id }
     it { should validate_presence_of :price }
     it { should validate_presence_of :quantity }
+    it { should validate_presence_of :status}
   end
 
   describe "relationships" do
@@ -23,6 +24,26 @@ describe ItemOrder, type: :model do
       item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
 
       expect(item_order_1.subtotal).to eq(200)
+    end
+
+    it 'self.change_items_status_to_unfilled(order)' do
+      order = create(:order)
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
+      item_order_1 = order.item_orders.create(item: item_1, quantity: 10, price: item_1.price)
+      item_order_2 = order.item_orders.create(item: item_2, quantity: 10, price: item_2.price)
+      item_order_3 = order.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
+      expect(item_order_1.status).to eq("unfulfilled")
+      expect(item_order_2.status).to eq("unfulfilled")
+      item_order_1.update(status: 1)
+      item_order_2.update(status: 1)
+      expect(item_order_1.status).to eq("fulfilled")
+      expect(item_order_2.status).to eq("fulfilled")
+      ItemOrder.change_items_status_to_unfilled(order)
+      expect(ItemOrder.find(item_order_1.id).status).to eq("unfulfilled")
+      expect(ItemOrder.find(item_order_2.id).status).to eq("unfulfilled")
+      expect(ItemOrder.find(item_order_3.id).status).to eq("unfulfilled")
     end
   end
 
