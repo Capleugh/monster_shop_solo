@@ -1,0 +1,17 @@
+<h1> Hello, <%= current_user.name %>! Welcome to your Merchant Dashboard!</h1>
+  <p><b>Store Name: </b><%= current_user.merchant.name %></p><br>
+  <p><b>Address:</b></p>
+  <p><b></b><%= current_user.merchant.address %>
+  <%= current_user.merchant.city %>
+  <%= current_user.merchant.state %>
+  <%= current_user.merchant.zip %></p>
+
+<h1>Pending Orders:</h1>
+  <% current_user.merchant.pending_orders.each do |order| %>
+    <section id = "order-<%= order.id %>">
+      <h3><%= link_to "Order Number: #{order.id}", "/merchant/orders/#{order.id}" %></h3>
+      <li>Created: <%= order.created_at %>  </li>
+      <li>Number of Items: <%= order.items.count %>  </li>
+      <li>Grandtotal: <%= number_to_currency(order.grandtotal) %>  </li>
+    </section>
+  <% end %>

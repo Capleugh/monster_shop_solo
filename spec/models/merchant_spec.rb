@@ -58,5 +58,22 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to match_array(["Hershey", "Denver"])
     end
+
+    it 'pending_orders' do
+      user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email_test', password: 'pp', password_confirmation: 'pp', role: 0)
+      chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
+      user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_1 = Order.last
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+
+      order_2 = create(:order)
+      order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2)
+
+      expect(@meg.pending_orders).to match_array([order_1, order_2])
+
+      order_2.update(status: "cancelled")
+
+      expect(@meg.pending_orders).to eq([order_1])
+    end
   end
 end

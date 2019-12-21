@@ -49,8 +49,10 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  get '/merchant/orders/:order_id', to: 'orders#show'
+
   namespace :merchant do
-    get '/dashboard', to: 'dashboard#index'
+    get '/', to: 'dashboard#show'
   end
 
   namespace :admin do
