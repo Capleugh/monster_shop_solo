@@ -182,7 +182,7 @@ RSpec.describe 'Logging in', type: :feature do
       fill_in :password, with: 'password'
       click_on('Submit')
 
-      expect(current_path).to eq('/admin/dashboard')
+      expect(current_path).to eq(admin_path)
       expect(page).to have_content("Welcome back, #{@admin.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@admin.name}! Welcome to your Admin Dashboard!")
     end
@@ -207,7 +207,7 @@ RSpec.describe 'Logging in', type: :feature do
 
         visit '/login'
 
-        expect(current_path).to eq(admin_dashboard_path)
+        expect(current_path).to eq(admin_path)
         expect(page).to have_content("You are already logged in.")
         expect(page).to have_content("Hello, #{@admin.name}! Welcome to your Admin Dashboard!")
       end

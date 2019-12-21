@@ -36,7 +36,7 @@ RSpec.describe 'merchant index page', type: :feature do
 
       visit merchants_path
 
-      click_link "#{merchant_employee.name}"
+      click_link "#{bike_shop.name}"
 
       expect(current_path).to eq("/admin/merchants/#{merchant_employee.id}")
       expect(page).to have_content(bike_shop.name)
