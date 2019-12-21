@@ -2,7 +2,10 @@ class Merchant::DashboardController < Merchant::BaseController
   before_action :require_not_admin
   before_action :require_not_default
 
-  def index
+  # def index
+  # end
+
+  def show
   end
 
   def show

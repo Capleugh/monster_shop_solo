@@ -6,11 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
 ItemOrder.destroy_all
 Order.destroy_all
 Merchant.destroy_all
 Item.destroy_all
-User.destroy_all
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -32,6 +32,18 @@ dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it
 # pull_toy8 = dog_shop.items.create(name: "Pull Toy8", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
 
 user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email', password: 'p', password_confirmation: 'p', role: 0)
+user_2 = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_2_email', password: 'p', password_confirmation: 'p', role: 0)
+
+order_1 = user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
+order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 3)
+order_1.item_orders.create!(item: dog_bone, price: pull_toy.price, quantity: 3)
+
+order_2 = user_2.orders.create(name: 'Ali', address: '123 Stang Ave', city: 'Hershey', state: 'WI', zip: 54701)
+order_2.item_orders.create!(item: tire, price: tire.price, quantity: 5)
+order_2.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 4)
+order_2.item_orders.create!(item: dog_bone, price: pull_toy.price, quantity: 1)
+
 merchant_employee = User.create(name: 'merchant_employee', address: 'merchant_employee_address', city: 'merchant_employee_city', state: 'merchant_employee_state', zip: 12345, email: 'merchant_employee_email', password: 'p', password_confirmation: 'p', role: 1, merchant: bike_shop)
 merchant_admin = User.create(name: 'merchant_admin', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email', password: 'p', password_confirmation: 'p', role: 2, merchant: bike_shop)
 merchant_employee_2 = User.create(name: 'merchant_employee_2', address: 'merchant_employee_address', city: 'merchant_employee_city', state: 'merchant_employee_state', zip: 12345, email: 'merchant_employee_email_2', password: 'p', password_confirmation: 'p', role: 1, merchant: dog_shop)

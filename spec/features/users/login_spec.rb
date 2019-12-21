@@ -157,6 +157,7 @@ RSpec.describe 'Logging in', type: :feature do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
 
         visit '/login'
+        
 
         expect(current_path).to eq(merchant_path)
         expect(page).to have_content("You are already logged in.")

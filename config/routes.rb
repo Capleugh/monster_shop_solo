@@ -49,6 +49,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  get '/merchant/orders/:order_id', to: 'orders#show'
+
   namespace :merchant do
     get '/', to: 'dashboard#show'
     get '/items', to: 'dashboard#index'
@@ -57,6 +59,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'dashboard#index'
     get '/users', to: 'users#index'
+    get '/merchants', to: 'merchants#index'
     get '/merchants/:id', to: 'merchants#show'
   end
 end
