@@ -15,7 +15,8 @@ class Order <ApplicationRecord
     item_orders.sum('quantity')
   end
 
-  def order_status_monitor
-    ItemOrder.update_order_status_if_all_fulfilled
+  def self.update_order_status_to_packaged
+    require "pry"; binding.pry
+    ItemOrder.group(:order_id).select('count(item_id)')
   end
 end

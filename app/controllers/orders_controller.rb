@@ -52,4 +52,7 @@ class OrdersController <ApplicationController
     redirect_to profile_path
   end
 
+  def order_status_monitor
+    Order.update_order_status_to_packaged
+  end
 end
