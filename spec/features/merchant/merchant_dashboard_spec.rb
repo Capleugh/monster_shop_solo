@@ -32,9 +32,19 @@ RSpec.describe "As a merchant employee or merchant admin" do
     expect(page).to have_content(bike_shop.city)
     expect(page).to have_content(bike_shop.state)
     expect(page).to have_content(bike_shop.zip)
+    # save_and_open_page
   end
 
   it "I see a link to view my own items and when I click that link, my URI route should be '/merchant/items'" do
+    bike_shop = create(:merchant)
+    merchant_employee = create(:user, role: 1, merchant: bike_shop)
 
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+
+    visit merchant_path
+    click_link 'View Your Items'
+
+    expect(current_path).to eq(merchant_items_path)
   end
 end
