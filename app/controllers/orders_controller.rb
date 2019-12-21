@@ -12,8 +12,7 @@ class OrdersController <ApplicationController
   end
 
   def create
-    user = current_user
-    order = user.orders.create(order_params)
+    order = current_user.orders.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({
@@ -31,10 +30,22 @@ class OrdersController <ApplicationController
     end
   end
 
+  def destroy
+    require "pry"; binding.pry
+    order = Order.find(params[:order_id])
+    delete_order(order)
+  end
+
 
   private
 
   def order_params
     params.permit(:name, :address, :city, :state, :zip)
+  end
+
+  def delete_order(order)
+    order.update(status: 3)
+    flash[:success] = "#{order.id} has been cancelled."
+    redirect_to profile_path
   end
 end
