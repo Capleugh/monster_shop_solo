@@ -42,7 +42,7 @@ RSpec.describe 'As A User', type: :feature do
       expect(page).to have_content(@order.updated_at)
       expect(page).to have_content(@order.status)
       expect(page).to have_content(@order.items.count)
-      expect(page).to have_content(480)
+      expect(page).to have_content("$570.00")
     end
   end
 end
