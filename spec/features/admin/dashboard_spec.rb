@@ -10,10 +10,10 @@ RSpec.describe "As an admin user" do
       user_2 = create(:user, role: 0)
       user_3 = create(:user, role: 0)
 
-      order_1 = create(:order, created_at: Date.today, user: user_1)
-      order_2 = create(:order, created_at: Date.today, user: user_2)
-      order_3 = create(:order, created_at: Date.today, user: user_3)
-      order_4 = create(:order, created_at: Date.today, user: user_1)
+      order_1 = create(:order, created_at: Date.today, user: user_1, status: 3) # cancelled
+      order_2 = create(:order, created_at: Date.today, user: user_2, status: 1) #packaged
+      order_3 = create(:order, created_at: Date.today, user: user_3, status: 2) # shipped
+      order_4 = create(:order, created_at: Date.today, user: user_1, status: 0) # pending
 
       item_1 = create(:item)
       item_2 = create(:item)
@@ -38,8 +38,9 @@ RSpec.describe "As an admin user" do
       order_2.item_orders.create(item: item_1, quantity: 10, price: item_1.price)
       order_2.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
       order_3.item_orders.create(item: item_4, quantity: 10, price: item_4.price)
-      order_4.item_orders.create(item: item_5, quantity: 10, price: item_5.price)
+      order_4.item_orders.create(item: item_5, quantity: 10, price: item_5.price) 
       order_4.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
+      require "pry"; binding.pry
 
       visit admin_path
 
@@ -70,7 +71,7 @@ RSpec.describe "As an admin user" do
         expect(page).to have_content(order_4.status)
         expect(page).to have_link(order_4.user.name)
       end
-      
+
       within "#order-#{order_1.id}" do
         click_link "#{order_1.user.name}"
       end
