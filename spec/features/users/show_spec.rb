@@ -14,7 +14,6 @@ RSpec.describe "As a user" do
       expect(page).to have_content("City: #{user.city}")
       expect(page).to have_content("State: #{user.state}")
       expect(page).to have_content("Zip: #{user.zip}")
-      # expect(page).to have_content(user.email)
       expect(page).to have_content("Email: #{user.email}")
       expect(page).to_not have_content(user.password)
 
