@@ -46,6 +46,8 @@ order_2.item_orders.create!(item: dog_bone, price: pull_toy.price, quantity: 1)
 
 merchant_employee = User.create(name: 'merchant_employee', address: 'merchant_employee_address', city: 'merchant_employee_city', state: 'merchant_employee_state', zip: 12345, email: 'merchant_employee_email', password: 'p', password_confirmation: 'p', role: 1, merchant: bike_shop)
 merchant_admin = User.create(name: 'merchant_admin', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email', password: 'p', password_confirmation: 'p', role: 2, merchant: bike_shop)
+
 merchant_employee_2 = User.create(name: 'merchant_employee_2', address: 'merchant_employee_address', city: 'merchant_employee_city', state: 'merchant_employee_state', zip: 12345, email: 'merchant_employee_email_2', password: 'p', password_confirmation: 'p', role: 1, merchant: dog_shop)
 merchant_admin_2 = User.create(name: 'merchant_admin_2', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email_2', password: 'p', password_confirmation: 'p', role: 2, merchant: dog_shop)
+
 admin = User.create(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', password_confirmation: 'p', role: 3)
