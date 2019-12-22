@@ -10,10 +10,12 @@
 
   <body>
     <nav class = "topnav">
-      <%= link_to 'Home', '/' %>
-      <%= link_to "All Merchants", "/merchants"%>
-      <%= link_to "All Items", "/items"%>
 
+      <%= link_to 'Home', '/' %>
+      <% if !current_user || !current_admin? %>
+        <%= link_to "All Merchants", "/merchants" %>
+        <%= link_to "All Items", "/items" %>
+      <% end %>
 
       <% if current_default? %>
         <%= link_to "Log Out", '/logout', method: :delete %>
@@ -30,6 +32,8 @@
         <%= link_to "Log Out", '/logout', method: :delete %>
         <%= link_to 'My Profile', '/profile' %>
         <%= link_to 'Admin Dashboard', admin_path %>
+        <%= link_to "All Merchants", admin_merchants_path %>
+        <%= link_to "All Items", "/items" %>
         <%= link_to 'All Users', '/admin/users' %>
         <%= link_to "Logged in as #{current_user.name}", '/profile' %>
       <% else %>
@@ -38,6 +42,7 @@
         <%= link_to "Cart: #{cart.total_items}", "/cart" %>
       <% end %>
     </nav>
+    
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
         <p><%= msg %></p>
