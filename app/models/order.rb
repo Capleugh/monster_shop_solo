@@ -5,7 +5,7 @@ class Order <ApplicationRecord
   has_many :items, through: :item_orders
   belongs_to :user
 
-  enum status: [:pending, :packaged, :shipped, :cancelled]
+  enum status: [:packaged, :pending, :shipped, :cancelled]
 
   def grandtotal
     item_orders.sum('price * quantity')
@@ -26,7 +26,11 @@ class Order <ApplicationRecord
     end
     ids.each do |id|
       order = self.find(id)
-      order.update(status: 1)
+      order.update(status: 0)
     end
+  end
+
+  def self.order_by_status
+    Order.order(:status)
   end
 end

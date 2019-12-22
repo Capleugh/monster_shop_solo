@@ -8,9 +8,6 @@ class Merchant::DashboardController < Merchant::BaseController
   def show
   end
 
-  def show
-  end
-
   private
     def require_not_admin
       render file: '/public/404'unless !current_admin?
