@@ -29,4 +29,8 @@ class Order <ApplicationRecord
       order.update(status: 1)
     end
   end
+
+  def self.order_by_status
+    Order.order(:status)
+  end
 end

@@ -40,7 +40,6 @@ RSpec.describe "As an admin user" do
       order_3.item_orders.create(item: item_4, quantity: 10, price: item_4.price)
       order_4.item_orders.create(item: item_5, quantity: 10, price: item_5.price)
       order_4.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
-      # require "pry"; binding.pry
 
       visit admin_path
 
