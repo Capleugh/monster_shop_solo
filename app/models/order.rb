@@ -24,7 +24,9 @@ class Order <ApplicationRecord
         ids << order_id
       end
     end
-    ids
-    require "pry"; binding.pry
+    ids.each do |id|
+      order = self.find(id)
+      order.update(status: 1)
+    end
   end
 end
