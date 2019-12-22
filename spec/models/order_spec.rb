@@ -54,12 +54,13 @@ describe Order, type: :model do
       expect(Order.find(@order_1.id).status).to eq('pending')
       @item_order_1.update(status: 'fulfilled')
       @item_order_2.update(status: 'fulfilled')
+      
       Order.update_order_status_to_packaged
       expect(Order.find(@order_1.id).status).to eq('packaged')
     end
 
     it 'orders should display in order of status enums on admin dashboard' do
-      expect(Order.order(:status)).to eq([@order_1, @order_5, @order_3, @order_4, @order_2])
+      expect(Order.order(:status)).to eq([@order_5, @order_1, @order_3, @order_4, @order_2])
     end
   end
 end
