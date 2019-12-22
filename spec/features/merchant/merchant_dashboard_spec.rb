@@ -60,23 +60,25 @@ RSpec.describe "As a merchant employee or merchant admin" do
         @order_2.update(status: "cancelled")
 
         visit merchant_path
-
-        within "#order-#{@order.id}" do
-          expect(page).to have_content(@order.created_at)
-          expect(page).to have_content(@order.items.count)
-          expect(page).to have_content(@order.grandtotal)
-          expect(page).to have_link(@order.id)
-          # click_link(@order.id)
+        within "#pending-orders" do
+          within "#order-#{@order.id}" do
+            expect(page).to have_content(@order.created_at)
+            expect(page).to have_content(@order.items.count)
+            expect(page).to have_content(@order.grandtotal)
+            click_link("Order Number: #{@order.id}")
+          end
         end
 
-        # expect(current_path).to eq("/merchant/orders/#{@order.id}")
+        expect(current_path).to eq("/merchant/orders/#{@order.id}")
 
         visit merchant_path
-
-        expect(page).to_not have_link(@order_2.id)
-        expect(page).to_not have_content(@order_2.created_at)
-        expect(page).to_not have_content("Number of Items: #{@order_2.items.count}")
-        expect(page).to_not have_content(@order_2.grandtotal)
+    
+        within "#pending-orders" do
+          expect(page).to_not have_link("Order Number: #{@order_2.id}")
+          expect(page).to_not have_content(@order_2.created_at)
+          expect(page).to_not have_content("Number of Items: #{@order_2.items.count}")
+          expect(page).to_not have_content(@order_2.grandtotal)
+        end
       end
     end
   end

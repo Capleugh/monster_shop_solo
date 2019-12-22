@@ -34,10 +34,12 @@ Rails.application.routes.draw do
 
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get "/orders/new", to: "orders#new"
+  get "/orders/:id", to: "orders#show"
+
+  delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/:order_id", to: "orders#show"
-  get "/orders/:id", to: "orders#show"
 
   get "/users/register", to: "users#new"
   post "/users", to: "users#create"
@@ -50,11 +52,10 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  get '/merchant/orders/:order_id', to: 'orders#show'
-
   namespace :merchant do
     get '/', to: 'dashboard#show'
     get '/items', to: 'dashboard#index'
+    resources :orders, only: [:show]
   end
 
   namespace :admin do
