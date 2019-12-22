@@ -14,4 +14,19 @@ class Order <ApplicationRecord
   def total_items
     item_orders.sum('quantity')
   end
+
+  def self.update_order_status_to_packaged
+    total_items_in_order = ItemOrder.group(:order_id).count
+    fulfilled_items_in_order = ItemOrder.where(status: 'fulfilled').group(:order_id).count
+    ids = []
+    fulfilled_items_in_order.each do |order_id, quantity|
+      if total_items_in_order[order_id] == quantity
+        ids << order_id
+      end
+    end
+    ids.each do |id|
+      order = self.find(id)
+      order.update(status: 1)
+    end
+  end
 end
