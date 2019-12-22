@@ -36,9 +36,9 @@ describe Order, type: :model do
       @user_2 = create(:user, role: 0)
       @user_3 = create(:user, role: 0)
 
-      @order_2 = create(:order, created_at: Date.today, user: @user_1, status: 3) # cancelled
-      @order_3 = create(:order, created_at: Date.today, user: @user_2, status: 1) #packaged
-      @order_4 = create(:order, created_at: Date.today, user: @user_3, status: 2) # shipped
+      @order_2 = create(:order, created_at: Date.today, user: @user_1, status: 3)
+      @order_3 = create(:order, created_at: Date.today, user: @user_2, status: 1)
+      @order_4 = create(:order, created_at: Date.today, user: @user_3, status: 2)
       @order_5 = create(:order, created_at: Date.today, user: @user_1, status: 0)
     end
 
@@ -54,7 +54,7 @@ describe Order, type: :model do
       expect(Order.find(@order_1.id).status).to eq('pending')
       @item_order_1.update(status: 'fulfilled')
       @item_order_2.update(status: 'fulfilled')
-      
+
       Order.update_order_status_to_packaged
       expect(Order.find(@order_1.id).status).to eq('packaged')
     end
