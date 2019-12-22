@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get "/orders/new", to: "orders#new"
   get "/orders/:id", to: "orders#show"
+  patch '/orders/update/:id', to: 'orders#update'
 
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
