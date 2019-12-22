@@ -10,10 +10,10 @@ RSpec.describe "As an admin user" do
       user_2 = create(:user, role: 0)
       user_3 = create(:user, role: 0)
 
-      order_1 = create(:order, created_at: Date.today, user: user_1, status: 3) # cancelled
-      order_2 = create(:order, created_at: Date.today, user: user_2, status: 1) #packaged
-      order_3 = create(:order, created_at: Date.today, user: user_3, status: 2) # shipped
-      order_4 = create(:order, created_at: Date.today, user: user_1, status: 0) # pending
+      order_1 = create(:order, created_at: Date.today, user: user_1, status: 3)
+      order_2 = create(:order, created_at: Date.today, user: user_2, status: 1)
+      order_3 = create(:order, created_at: Date.today, user: user_3, status: 2)
+      order_4 = create(:order, created_at: Date.today, user: user_1, status: 0)
 
       item_1 = create(:item)
       item_2 = create(:item)
@@ -70,6 +70,10 @@ RSpec.describe "As an admin user" do
         expect(page).to have_content(order_4.status)
         expect(page).to have_link(order_4.user.name)
       end
+
+      expect(page.body.index(order_4.status)).to be < page.body.index(order_2.status)
+      expect(page.body.index(order_2.status)).to be < page.body.index(order_3.status)
+      expect(page.body.index(order_3.status)).to be < page.body.index(order_1.status)
 
       within "#order-#{order_1.id}" do
         click_link "#{order_1.user.name}"
