@@ -30,6 +30,16 @@ describe Order, type: :model do
       @order_1 = Order.last
       @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @item_order_2 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+
+
+      @user_1 = create(:user, role: 0)
+      @user_2 = create(:user, role: 0)
+      @user_3 = create(:user, role: 0)
+
+      @order_2 = create(:order, created_at: Date.today, user: @user_1, status: 3) # cancelled
+      @order_3 = create(:order, created_at: Date.today, user: @user_2, status: 1) #packaged
+      @order_4 = create(:order, created_at: Date.today, user: @user_3, status: 2) # shipped
+      @order_5 = create(:order, created_at: Date.today, user: @user_1, status: 0)
     end
 
     it 'grandtotal' do
@@ -46,6 +56,10 @@ describe Order, type: :model do
       @item_order_2.update(status: 'fulfilled')
       Order.update_order_status_to_packaged
       expect(Order.find(@order_1.id).status).to eq('packaged')
+    end
+
+    it 'orders should display in order of status enums on admin dashboard' do
+      expect(Order.order(:status)).to eq([@order_1, @order_5, @order_3, @order_4, @order_2])
     end
   end
 end
