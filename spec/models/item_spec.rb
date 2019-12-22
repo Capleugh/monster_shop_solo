@@ -56,7 +56,7 @@ describe Item, type: :model do
       expect(result.count).to eq(1)
     end
 
-    it "finds top five items sold by quantity" do
+    it "finds top five items and bottom five items sold by quantity" do
       item_1 = create(:item)
       item_2 = create(:item)
       item_3 = create(:item)
@@ -95,24 +95,26 @@ describe Item, type: :model do
           price: item.price
           })
       end
-      result = Item.top_five_items.to_a.first
 
+      result = Item.top_five_items.first
       expect(result).to eq(item_6)
-      # result = Item.top_five_items.to_a.first
-      # expect(result).to eq([item_6, 15])
-      result = Item.top_five_items.to_a.last
 
-      # expect(result).to eq([item_4, 7])
+      result = Item.top_five_items.last
       expect(result).to eq(item_4)
 
-      result = Item.bottom_five_items.to_a.first
-
+      result = Item.bottom_five_items.first
       expect(result).to eq(item_10)
-      # expect(result).to eq([item_10, 1])
-      result = Item.bottom_five_items.to_a.last
 
+      result = Item.bottom_five_items.last
       expect(result).to eq(item_5)
-      # expect(result).to eq([item_5, 6])
+
+      item_6.update!(active?: false)
+      result = Item.top_five_items.include?(item_6)
+      expect(result).to eq(false)
+
+      item_10.update!(active?: false)
+      result = Item.bottom_five_items.include?(item_10)
+      expect(result).to eq(false)
     end
 
     it "decrease_item_inventory(cart)" do
