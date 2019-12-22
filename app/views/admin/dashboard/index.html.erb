@@ -1,1 +1,10 @@
 <h1> Hello, <%= current_user.name %>! Welcome to your Admin Dashboard!</h1>
+
+<% @orders.each do |order| %>
+<section id = "order-<%= order.id %>">
+  <%= link_to order.user.name %><br>
+  <%= order.id %><br>
+  <%= order.created_at %><br>
+  <%= order.status %>
+</section><br>
+<% end %>
