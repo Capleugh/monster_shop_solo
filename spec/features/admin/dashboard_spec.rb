@@ -38,9 +38,9 @@ RSpec.describe "As an admin user" do
       order_2.item_orders.create(item: item_1, quantity: 10, price: item_1.price)
       order_2.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
       order_3.item_orders.create(item: item_4, quantity: 10, price: item_4.price)
-      order_4.item_orders.create(item: item_5, quantity: 10, price: item_5.price) 
+      order_4.item_orders.create(item: item_5, quantity: 10, price: item_5.price)
       order_4.item_orders.create(item: item_3, quantity: 10, price: item_3.price)
-      require "pry"; binding.pry
+      # require "pry"; binding.pry
 
       visit admin_path
 
@@ -76,7 +76,7 @@ RSpec.describe "As an admin user" do
         click_link "#{order_1.user.name}"
       end
 
-      expect(current_path).to eq(admin_users_path)
+      expect(current_path).to eq("/admin/users/#{user_1.id}")
     end
   end
 end
