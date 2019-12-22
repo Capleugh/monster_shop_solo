@@ -70,8 +70,6 @@ RSpec.describe "As a merchant employee or merchant admin" do
       @item_3 = create(:item)
 
       merchant_3 = @item_1.merchant
-      # merchant_4 = @item_2.merchant
-      # merchant_5 = @item_3.merchant
 
       merchant_3_employee = create(:user, role: 1, merchant: merchant_3)
 
