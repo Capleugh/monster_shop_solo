@@ -30,11 +30,11 @@ class Item <ApplicationRecord
   end
 
   def self.top_five_items
-    Item.select("items.*, sum(quantity)").joins(:item_orders).group(:id).order("sum desc").limit(5)
+    Item.select("items.*, sum(quantity)").where(active?: true).joins(:item_orders).group(:id).order("sum desc").limit(5)
   end
 
   def self.bottom_five_items
-    Item.select("items.*, sum(quantity)").joins(:item_orders).group(:id).order("sum").limit(5)
+    Item.select("items.*, sum(quantity)").where(active?: true).joins(:item_orders).group(:id).order("sum").limit(5)
   end
 
   def self.decrease_item_inventory(cart)
