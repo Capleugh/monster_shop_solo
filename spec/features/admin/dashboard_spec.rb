@@ -70,12 +70,12 @@ RSpec.describe "As an admin user" do
         expect(page).to have_content(order_4.status)
         expect(page).to have_link(order_4.user.name)
       end
-# save_and_open_page
+      
       within "#order-#{order_1.id}" do
         click_link "#{order_1.user.name}"
       end
 
-      expect(current_path).to eq("/admin/users/#{user_1.id}")
+      expect(current_path).to eq(admin_users_path)
     end
   end
 end
