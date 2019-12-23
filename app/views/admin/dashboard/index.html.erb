@@ -2,7 +2,7 @@
 
 <p>Packaged Orders Ready To Ship</p>
 <% @orders.each do |order| %>
-  <% if order.status == 'packaged' || order.status == 'shipped' %>
+  <% if order.status == 'packaged' %>
       <p>Order Id: <%= order.id %></p>
       <p>Order Name: <%= order.name %></p>
       <p>Order Address: <%= order.address %></p>
@@ -16,9 +16,12 @@
       <br>
       <% if order.status == 'packaged'%>
       <%= button_to 'Ship Order', "/orders/update/#{order.id}", method: :patch %>
+      <% end %>
       <br>
     <% end %>
   <% end %>
+
+<section id = "all-orders">
 
 <h2>All Orders</h2>
 <% @orders.order_by_status.each do |order| %>
@@ -29,3 +32,4 @@
   <%= order.status %>
 </section><br>
 <% end %>
+</section>
