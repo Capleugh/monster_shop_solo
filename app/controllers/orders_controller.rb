@@ -65,7 +65,7 @@ class OrdersController <ApplicationController
     Order.update_order_status_to_packaged
   end
 
-  def update_status
-   params.permit(:status)
- end
+ #  def update_status
+ #   params.permit(:status)
+ # end
 end
