@@ -19,4 +19,13 @@
       <br>
     <% end %>
   <% end %>
+
+<h2>All Orders</h2>
+<% @orders.order_by_status.each do |order| %>
+<section id = "order-<%= order.id %>">
+  <%= link_to order.user.name, "/admin/users/#{order.user.id}" %><br>
+  <%= order.id %><br>
+  <%= order.created_at %><br>
+  <%= order.status %>
+</section><br>
 <% end %>
