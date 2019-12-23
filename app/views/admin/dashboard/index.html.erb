@@ -1,5 +1,25 @@
 <h1> Hello, <%= current_user.name %>! Welcome to your Admin Dashboard!</h1>
 
+<p>Packaged Orders Ready To Ship</p>
+<% @orders.each do |order| %>
+  <% if order.status == 'packaged' || order.status == 'shipped' %>
+      <p>Order Id: <%= order.id %></p>
+      <p>Order Name: <%= order.name %></p>
+      <p>Order Address: <%= order.address %></p>
+      <p>Order City: <%= order.city %></p>
+      <p>Order State: <%= order.state %></p>
+      <p>Order Zip: <%= order.zip %></p>
+      <p>Order Created At: <%= order.created_at %></p>
+      <p>Order Updated At: <%= order.updated_at %></p>
+      <p>Order User Id: <%= order.user_id %></p>
+      <p>Order Status: <%= order.status %></p>
+      <br>
+      <% if order.status == 'packaged'%>
+      <%= button_to 'Ship Order', "/orders/update/#{order.id}", method: :patch %>
+      <br>
+    <% end %>
+  <% end %>
+
 <h2>All Orders</h2>
 <% @orders.order_by_status.each do |order| %>
 <section id = "order-<%= order.id %>">

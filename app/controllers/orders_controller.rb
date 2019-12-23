@@ -39,6 +39,15 @@ class OrdersController <ApplicationController
     Item.increase_item_inventory(order)
   end
 
+  def update
+    # binding.pry
+    order = Order.find(params[:id])
+    order.status = 'shipped'
+    order.save
+    # order.update(update_status)
+    redirect_to '/admin'
+  end
+
 
   private
 
@@ -55,4 +64,8 @@ class OrdersController <ApplicationController
   def order_status_monitor
     Order.update_order_status_to_packaged
   end
+
+  def update_status
+   params.permit(:status)
+ end
 end
