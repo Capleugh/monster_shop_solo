@@ -1,10 +1,4 @@
 class Merchant::DashboardController < Merchant::BaseController
-  before_action :require_not_admin
-  before_action :require_not_default
-
-  def index
-    @items = Item.where(merchant_id: current_user.merchant_id)
-  end
 
   def show
   end
