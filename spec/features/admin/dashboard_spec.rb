@@ -70,7 +70,7 @@ RSpec.describe "As an admin user" do
         expect(page).to have_content(order_4.status)
         expect(page).to have_link(order_4.user.name)
       end
-
+ 
       expect(page.body.index(order_4.status)).to be < page.body.index(order_2.status)
       expect(page.body.index(order_2.status)).to be < page.body.index(order_3.status)
       expect(page.body.index(order_3.status)).to be < page.body.index(order_1.status)
@@ -81,5 +81,5 @@ RSpec.describe "As an admin user" do
 
       expect(current_path).to eq("/admin/users/#{user_1.id}")
     end
-  end 
+  end
 end
