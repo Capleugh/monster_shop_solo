@@ -16,7 +16,7 @@ RSpec.describe "As a merchant" do
       @merchant = create(:merchant)
       @item_1 = create(:item, merchant: @merchant)
       @item_2 = create(:item, merchant: @merchant)
-      # item_3 = create(:item)
+      @item_3 = create(:item, merchant: @merchant, active?: false)
       # item_4 = create(:item)
       # item_5 = create(:item)
       # item_6 = create(:item)
@@ -52,6 +52,16 @@ RSpec.describe "As a merchant" do
         expect(page).to have_css("img[src*='#{@item_2.image}']")
       end
 
+      within "#item-#{@item_3.id}" do
+        expect(page).to have_link(@item_3.name)
+        expect(page).to have_content(@item_3.description)
+        expect(page).to have_content("Price: $#{@item_3.price}")
+        expect(page).to have_content("Inactive")
+        expect(page).to have_content("Inventory: #{@item_3.inventory}")
+        expect(page).to have_link(@merchant.name)
+        expect(page).to have_css("img[src*='#{@item_3.image}']")
+      end
+
       expect(page).to_not have_css("#item-#{merchant_2_item_1.id}")
       expect(page).to_not have_link(merchant_2_item_1.name)
       expect(page).to_not have_content(merchant_2_item_1.description)
@@ -83,30 +93,23 @@ RSpec.describe "As a merchant" do
       end
 
       expect(current_path).to eq("/merchant/items/#{@item_1.id}")
-
     end
 
-
-    xit "I can click a button to deactivate the item if it is active" do
-      #make an item that is not active
-      visit merchant_items_path #????
+    it "I can click a button to deactivate the item if it is active" do
+      visit merchant_items_path
 
       within "#item-#{@item_1.id}" do
         expect(page).to have_content("Active")
         click_button "Deactivate"
       end
 
-      #expect the current page to still be the merchant_items
-      #expect page to have flash message "___ item is no longer for sale"
-      #
+      expect(current_path).to eq(merchant_items_path)
+      expect(page).to have_content("#{@item_1.name} is no longer for sale.")
+
       within "#item-#{@item_1.id}" do
         expect(page).to have_content("Inactive")
         expect(page).to_not have_button("Deactivate")
       end
-    end
-
-    xit "I do not see a button next to items that are inactive" do
-
     end
   end
 end
