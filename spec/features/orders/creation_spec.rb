@@ -1,12 +1,16 @@
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
-    it 'I can create a new order' do
+    it 'I can create a new order (AND TEST INVENTORY LEVEL)' do
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       paper = mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email_test', password: 'pp', password_confirmation: 'pp', role: 0)
+
+      expect(Item.find(paper.id).inventory).to eq(3)
+      expect(Item.find(tire.id).inventory).to eq(12)
+
       visit '/'
       click_link('Login')
       expect(current_path).to eq('/login')
@@ -45,9 +49,12 @@ RSpec.describe("Order Creation") do
       expect(current_path).to eq("/profile/orders")
 
       expect(page).to have_content("Order created!")
+
+      expect(Item.find(paper.id).inventory).to eq(1)
+      expect(Item.find(tire.id).inventory).to eq(11)
     end
 
-    it 'I can create a new order' do
+    it 'I can create a new order and see order info on order show page' do
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -90,7 +97,7 @@ RSpec.describe("Order Creation") do
       new_order = Order.last
 
       visit "/profile/orders/#{new_order.id}"
-      # 
+      #
       # within '.shipping-address' do
       #   expect(page).to have_content(name)
       #   expect(page).to have_content(address)
