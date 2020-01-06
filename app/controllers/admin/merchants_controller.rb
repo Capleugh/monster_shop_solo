@@ -15,15 +15,9 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   private
-
-    def merchant_params
-      params.permit(:name, :address, :city, :state, :zip, :enabled?)
-    end
-
     def change_status_of_merchant(merchant)
       merchant.update(enabled?: false)
 
-      flash[:notice] = "#{merchant.name} is now disabled."
-      # redirect_to admin_merchants_path
+      flash[:success] = "#{merchant.name} is now disabled."
     end
 end
