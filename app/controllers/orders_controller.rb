@@ -34,9 +34,14 @@ class OrdersController <ApplicationController
 
   def destroy
     order = Order.find(params[:order_id])
-    change_order_status_to_cancelled(order)
-    ItemOrder.change_items_status_to_unfilled(order)
-    Item.increase_item_inventory(order)
+    if order.status == 'pending'
+      ItemOrder.change_items_status_to_unfilled(order)
+      Item.increase_item_inventory(order)
+      change_order_status_to_cancelled(order)
+    else
+      flash[:error] = "Unable to cancel order."
+      redirect_back(fallback_location: profile_path)
+    end
   end
 
   def update
