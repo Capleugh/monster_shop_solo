@@ -6,4 +6,12 @@ class Merchant::OrdersController < Merchant::BaseController
     merchant = current_user
     @merchant_show = MerchantShow.new(order, merchant)
   end
+
+  def update
+    item = Item.find(params[:item_id])
+    Item.decrease_item_inventory(params[:item_id], params[:quantity])
+    ItemOrder.change_item_order_status_to_fulfilled(item.id, params[:id])
+    flash[:notice] = "#{item.name} has been fulfilled!"
+    redirect_to merchant_order_path(params[:id])
+  end
 end
