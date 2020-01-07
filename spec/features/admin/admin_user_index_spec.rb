@@ -32,27 +32,26 @@ RSpec.describe 'As an Admin', type: :feature do
     expect(page).to have_link(@admin.name)
 
     within "#user-#{@user_1.id}" do
+      expect(page).to have_content(@user_1.created_at)
+      expect(page).to have_content(@user_1.role)
       click_on(@user_1.name)
       expect(current_path).to eq("/admin/users/#{@user_1.id}")
     end
-    expect(page).to have_content(@user_1.created_at)
-    expect(page).to have_content(@user_1.role)
 
     visit('/admin/users')
     within "#user-#{@merchant_employee_1.id}" do
+      expect(page).to have_content(@merchant_employee_1.created_at)
+      expect(page).to have_content(@merchant_employee_1.role)
       click_on(@merchant_employee_1.name)
       expect(current_path).to eq("/admin/users/#{@merchant_employee_1.id}")
     end
-    expect(page).to have_content(@merchant_employee_1.created_at)
-    expect(page).to have_content(@merchant_employee_1.role)
 
     visit('/admin/users')
     within "#user-#{@admin.id}" do
+      expect(page).to have_content(@admin.created_at)
+      expect(page).to have_content(@admin.role)
       click_on(@admin.name)
       expect(current_path).to eq("/admin/users/#{@admin.id}")
     end
-    expect(page).to have_content(@admin.created_at)
-    expect(page).to have_content(@admin.role)
-
   end
 end
