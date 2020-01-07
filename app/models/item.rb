@@ -49,4 +49,8 @@ class Item <ApplicationRecord
       Item.where(id: item_order.item_id).update(inventory: (current_inventory + item_order.quantity))
     end
   end
+
+  def self.deactivate_all_items
+    update(active?: false)
+  end
 end
