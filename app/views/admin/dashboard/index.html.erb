@@ -27,11 +27,10 @@
 <% @orders.order_by_status.each_with_index do |order, index| %>
   <section id = "order-<%= order.id %>">
     <section id = "order-index-<%= index %>">
-
-    <%= link_to order.user.name, "/admin/users/#{order.user.id}" %><br>
-    <%= order.id %><br>
-    <%= order.created_at %><br>
-    <%= order.status %>
+      <%= link_to order.user.name, "/admin/users/#{order.user.id}" %><br>
+      <%= order.id %><br>
+      <%= order.created_at %><br>
+      <%= order.status %>
     </section>
   </section><br>
 <% end %>
