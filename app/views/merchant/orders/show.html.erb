@@ -2,15 +2,19 @@
 
 <p><b>Customer Name: </b><%= @merchant_show.find_customer.name %></p><br>
 <p><b>Address:</b></p>
-<p><b></b><%= @merchant_show.find_customer.address %>
-<%= @merchant_show.find_customer.state %>
-<%= @merchant_show.find_customer.city %>
-<%= @merchant_show.find_customer.zip %></p>
+<p><b></b><%= @merchant_show.find_customer.address %><br>
+<%= @merchant_show.find_customer.state %><br>
+<%= @merchant_show.find_customer.city %><br>
+<%= @merchant_show.find_customer.zip %><br>
 
 <section id = "items_order_merch">
   <h1>Items:</h1>
     <% @merchant_show.find_items.each do |item| %>
-      <section id = "order-<%= item.id %>">
+      <section id = "item-<%= item.id %>">
+        <h3><%= link_to "Item: #{item.name}", "/items/#{item.id}" %></h3>
+        <li>Price: $<%= item.price %></li>
+        <li>Quantity: <%= @merchant_show.find_quantity(item.id) %></li>
+        <div><img height=40px width=40px src= <%= item.image %> ></div>
       </section>
     <% end %>
 </section>
