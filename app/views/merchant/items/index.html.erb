@@ -16,6 +16,10 @@
         <p>Status: Inactive</p>
         <%= button_to 'Activate', "/merchant/items/#{item.id}?status=activate", method: :patch %>
       <% end %>
+      <%# <%= link_to_if(item.never_ordered?, "Delete", "/merchant/items/#{item.id}", method: :delete) %> %>
+      <% if item.no_orders? %>
+        <%= button_to 'Delete', "/merchant/items/#{item.id}", method: :delete %>
+      <% end %>
     </section>
   <% end %>
 </section>
