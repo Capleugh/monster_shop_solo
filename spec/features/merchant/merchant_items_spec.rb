@@ -1,15 +1,5 @@
 require 'rails_helper'
 
-# User Story 42, Merchant deactivates an item
-#
-# As a merchant
-# When I visit my items page
-# I see a link or button to deactivate the item next to each item that is active
-# And I click on the "deactivate" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is no longer for sale
-# I see the item is now inactive
-
 RSpec.describe "As a merchant" do
   describe "when I visit my items page" do
     before :each do
@@ -17,9 +7,6 @@ RSpec.describe "As a merchant" do
       @item_1 = create(:item, merchant: @merchant)
       @item_2 = create(:item, merchant: @merchant)
       @item_3 = create(:item, merchant: @merchant, active?: false)
-      # item_4 = create(:item)
-      # item_5 = create(:item)
-      # item_6 = create(:item)
 
       @merchant_employee = create(:user, role: 1, merchant: @merchant)
 
@@ -108,7 +95,27 @@ RSpec.describe "As a merchant" do
 
       within "#item-#{@item_1.id}" do
         expect(page).to have_content("Inactive")
+        expect(page).to_not have_content("Active")
         expect(page).to_not have_button("Deactivate")
+      end
+    end
+
+    it "I can click a button to activate the item if it is inactive" do
+      visit merchant_items_path
+
+      within "#item-#{@item_3.id}" do
+        expect(page).to have_content("Inactive")
+        click_button "Activate"
+      end
+
+      expect(current_path).to eq(merchant_items_path)
+      expect(page).to have_content("#{@item_3.name} is available for sale.")
+
+      within "#item-#{@item_3.id}" do
+        expect(page).to have_content("Active")
+        expect(page).to_not have_content("Inactive")
+        expect(page).to have_button("Deactivate")
+        expect(page).to_not have_button("Activate")
       end
     end
   end
