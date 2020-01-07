@@ -34,7 +34,7 @@ RSpec.describe "As a merchant employee I can cahnge the item order's status" do
     it "i see: name (as link), image, price, and quanity" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       visit "/merchant/orders/#{@order.id}"
-      save_and_open_page
+      
       within "#item-#{@item_1.id}" do
         expect(page).to have_link(@item_1.name)
         expect(page).to have_content("Price: $#{@item_1.price}")
@@ -49,5 +49,14 @@ RSpec.describe "As a merchant employee I can cahnge the item order's status" do
         expect(page).to have_css("img[src*='#{@item_2.image}']")
       end
     end
+
+    it "I see a button or link to 'fulfill' if not already fulfilled" do
+      #happy
+
+
+      #sad
+    end
+
+
   end
 end
