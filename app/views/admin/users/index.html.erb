@@ -1,0 +1,9 @@
+<h1 align = "center">Users</h1>
+<% @users.each do |user| %>
+  <section id = "user-<%= user.id %>">
+    <h2><%= link_to user.name,"/admin/users/#{user.id}", method: :get %></h2>
+    <p><b>Registered:</b> <%= user.created_at %> </p>
+    <p><b>User Type:</b> <%= user.role %> </p>
+  <br>
+  </section>
+<% end %>
