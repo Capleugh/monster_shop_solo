@@ -40,7 +40,7 @@ RSpec.describe "As an admin" do
 
 
     visit "/admin/merchants/#{bike_shop.id}/items"
-
+# save_and_open_page
     within "#item-#{item_3.id}" do
       expect(page).to have_content("Inactive")
       expect(page).to_not have_button("Deactivate")
