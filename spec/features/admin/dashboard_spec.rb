@@ -71,6 +71,7 @@ RSpec.describe "As an admin user" do
         expect(page).to have_link(order_4.user.name)
       end
 
+#each with index will generate an id tag for each item w/ a number in it, so make sure the item youe xpect to be index 1 is index 1
       # within "#all-orders" do
       #   expect(page.body.index("#{order_4.id}")).to be < page.body.index("#{order_2.id}")
       #   expect(page.body.index("#{order_2.id}")).to be < page.body.index("#{order_3.id}")
