@@ -18,4 +18,16 @@ class MerchantShow
     User.find(@order.user_id)
   end
 
+  def able_to_fulfill(item_id)
+    find_item_order_status(item_id) && inventory_check(item_id)
+  end
+
+  def inventory_check(item_id)
+    Item.find(item_id).inventory >= find_quantity(item_id)
+  end
+
+  def find_item_order_status(item_id)
+    ItemOrder.where(item_id: item_id).where(order_id: @order.id).pluck(:status).first == 'unfulfilled'
+  end
+
 end
