@@ -43,8 +43,7 @@ class MerchantsController <ApplicationController
 
   private
 
-  def merchant_params
-    params.permit(:name,:address,:city,:state,:zip)
-  end
-
+    def merchant_params
+      params.permit(:name, :address, :city, :state, :zip)
+    end
 end

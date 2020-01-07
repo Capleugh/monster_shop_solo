@@ -4,7 +4,7 @@ class ItemsController<ApplicationController
     if params[:merchant_id]
       @merchant = Merchant.find(params[:merchant_id])
       @items = @merchant.items
-    else  
+    else
       @items = Item.find_active_items
     end
   end
@@ -53,7 +53,7 @@ class ItemsController<ApplicationController
   private
 
   def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
+    params.permit(:name, :description, :price, :inventory, :image)
   end
 
 
