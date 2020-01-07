@@ -22,7 +22,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
-      Item.decrease_item_inventory(cart)
+      #Item.decrease_item_inventory(cart)
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
