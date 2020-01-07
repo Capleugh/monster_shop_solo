@@ -15,6 +15,13 @@
         <li>Price: $<%= item.price %></li>
         <li>Quantity: <%= @merchant_show.find_quantity(item.id) %></li>
         <div><img height=40px width=40px src= <%= item.image %> ></div>
+        <% if @merchant_show.able_to_fulfill(item.id) %>
+          <%= button_to "Fulfill", "/merchant/orders/#{@merchant_show.order.id}", method: :patch, params: {item_id: item.id, quantity: @merchant_show.find_quantity(item.id)} %>
+        <% elsif @merchant_show.inventory_check(item.id) %>
+          <p>Already Fulfilled</p>
+        <% else %>
+          <p>Inadequate Inventory Level</p>
+        <% end %>
       </section>
     <% end %>
 </section>
