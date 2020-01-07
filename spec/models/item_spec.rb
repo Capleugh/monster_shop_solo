@@ -117,13 +117,10 @@ describe Item, type: :model do
       expect(result).to eq(false)
     end
 
-    it "decrease_item_inventory(cart)" do
-      item_1 = create(:item, inventory: 10)
-      cart = Cart.new(Hash.new(0))
-      cart.add_item(item_1.id)
-      cart.add_item(item_1.id)
-      Item.decrease_item_inventory(cart)
-      expect(Item.find(item_1.id).inventory).to eq(8)
+    it "decrease_item_inventory(item_id, quantity)" do
+      item_1 = create(:item, inventory: 15)
+      Item.decrease_item_inventory(item_1.id, 10)
+      expect(Item.find(item_1.id).inventory).to eq(5)
     end
 
     it "increase_item_inventory(order)" do

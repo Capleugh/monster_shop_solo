@@ -13,21 +13,7 @@ RSpec.describe("Cancel and existing order from order show page") do
 
     it "cancel order and verify status changed on order page" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
-      expect(@item_1.inventory).to eq(20)
-      expect(@item_2.inventory).to eq(25)
-      expect(@item_3.inventory).to eq(30)
-      cart = Cart.new(Hash.new(0))
-      cart.add_item(@item_1.id)
-      cart.add_item(@item_1.id)
-      cart.add_item(@item_2.id)
-      cart.add_item(@item_3.id)
-      cart.add_item(@item_3.id)
-      cart.add_item(@item_3.id)
-      Item.decrease_item_inventory(cart)
       visit "/profile/orders/#{@order.id}"
-      expect(Item.find(@item_1.id).inventory).to eq(18)
-      expect(Item.find(@item_2.id).inventory).to eq(24)
-      expect(Item.find(@item_3.id).inventory).to eq(27)
       @item_order_1.update(status: 'fulfilled')
       expect(ItemOrder.find(@item_order_1.id).status).to eq('fulfilled')
       click_on "Cancel Order"
@@ -35,9 +21,6 @@ RSpec.describe("Cancel and existing order from order show page") do
       expect(page).to have_content("#{@order.id} has been cancelled.")
       visit "/profile/orders"
       expect(page).to have_content("Order Status: cancelled")
-      expect(Item.find(@item_1.id).inventory).to eq(20)
-      expect(Item.find(@item_2.id).inventory).to eq(25)
-      expect(Item.find(@item_3.id).inventory).to eq(30)
       expect(ItemOrder.find(@item_order_1.id).status).to eq('unfulfilled')
     end
 

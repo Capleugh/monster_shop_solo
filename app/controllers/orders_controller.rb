@@ -1,5 +1,4 @@
 class OrdersController <ApplicationController
-  before_action :order_status_monitor
 
   def index
   end
@@ -22,7 +21,6 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
-      Item.decrease_item_inventory(cart)
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
@@ -45,11 +43,9 @@ class OrdersController <ApplicationController
   end
 
   def update
-    # binding.pry
     order = Order.find(params[:id])
     order.status = 'shipped'
     order.save
-    # order.update(update_status)
     redirect_to '/admin'
   end
 
@@ -65,12 +61,4 @@ class OrdersController <ApplicationController
     flash[:success] = "#{order.id} has been cancelled."
     redirect_to profile_path
   end
-
-  def order_status_monitor
-    Order.update_order_status_to_packaged
-  end
-
- #  def update_status
- #   params.permit(:status)
- # end
 end
