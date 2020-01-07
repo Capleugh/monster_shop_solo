@@ -3,9 +3,9 @@ RSpec.describe("Order Show Page") do
     before :each do
       @order = create(:order)
       @user = User.last
-      @item_1 = create(:item)
-      @item_2 = create(:item)
-      @item_3 = create(:item)
+      @item_1 = create(:item, inventory: 20)
+      @item_2 = create(:item, inventory: 25)
+      @item_3 = create(:item, inventory: 30)
       @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
       @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
       @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
@@ -55,7 +55,7 @@ RSpec.describe("Order Show Page") do
         expect(page).to have_css("img[src*='#{@item_3.image}']")
       end
 
-      # expect(page).to have_content((@item_3.price * 10) + (@item_2.price * 10) + (@item_1.price * 10))
+      expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order.grandtotal))
       expect(page).to have_content("30")
     end
   end
