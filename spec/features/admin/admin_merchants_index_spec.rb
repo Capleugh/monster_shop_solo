@@ -60,5 +60,50 @@ RSpec.describe "As an admin" do
         expect(page).to_not have_button("Disable")
       end
     end
+
+    it "when I click on the 'disable' button, all of that merchant's items should be deactivated" do
+      admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
+      meg_shop = create(:merchant)
+
+      item_1 = create(:item, merchant: meg_shop)
+      item_2 = create(:item, merchant: meg_shop)
+
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+
+
+      visit "/admin/merchants/#{meg_shop.id}/items"
+
+      within "#item-#{item_1.id}" do
+        expect(page).to have_content("Active")
+      end
+
+      within "#item-#{item_2.id}" do
+        expect(page).to have_content("Active")
+      end
+
+
+
+      visit admin_merchants_path
+
+      within "#merchant-#{meg_shop.id}" do
+        click_button "Disable"
+      end
+
+
+
+      expect(current_path).to eq(admin_merchants_path)
+
+      visit "/admin/merchants/#{meg_shop.id}/items"
+
+      within "#item-#{item_1.id}" do
+        expect(page).to have_content("Inactive")
+      end
+
+      within "#item-#{item_2.id}" do
+        expect(page).to have_content("Inactive")
+      end
+    end
   end
 end
