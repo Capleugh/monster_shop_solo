@@ -28,7 +28,7 @@ class Merchant <ApplicationRecord
   end
 
   def pending_orders
-    Order.where(status: "pending").joins(:items).where("items.merchant_id = #{self.id}")
+    Order.where(status: "pending").joins(:items).where("items.merchant_id = #{self.id}").distinct
   end
 
 end

@@ -11,6 +11,7 @@ class Merchant::OrdersController < Merchant::BaseController
     item = Item.find(params[:item_id])
     Item.decrease_item_inventory(params[:item_id], params[:quantity])
     ItemOrder.change_item_order_status_to_fulfilled(item.id, params[:id])
+    Order.update_order_status_to_packaged
     flash[:notice] = "#{item.name} has been fulfilled!"
     redirect_to merchant_order_path(params[:id])
   end
