@@ -120,13 +120,3 @@ RSpec.describe "As a merchant" do
     end
   end
 end
-
-# User Story 43, Merchant activates an item
-#
-# As a merchant
-# When I visit my items page
-# I see a link or button to activate the item next to each item that is inactive
-# And I click on the "activate" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is now available for sale
-# I see the item is now active
