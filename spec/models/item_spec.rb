@@ -130,8 +130,30 @@ describe Item, type: :model do
       order = create(:order)
       item_1 = create(:item, inventory: 8)
       order.item_orders.create(item: item_1, quantity: 2, price: item_1.price)
+
       Item.increase_item_inventory(order)
+
       expect(Item.find(item_1.id).inventory).to eq(10)
+    end
+
+    it "deactivate_all_items(merchant)" do
+      dog_shop = create(:merchant)
+      item_1 = create(:item, merchant: dog_shop)
+      item_2 = create(:item, merchant: dog_shop)
+      item_3 = create(:item, merchant: dog_shop)
+
+      mike_shop = create(:merchant)
+      item_4 = create(:item, merchant: mike_shop)
+      item_5 = create(:item, merchant: mike_shop)
+
+      dog_shop.items.deactivate_all_items
+
+      expect(Item.find(item_1.id).active?).to eq(false)
+      expect(Item.find(item_2.id).active?).to eq(false)
+      expect(Item.find(item_3.id).active?).to eq(false)
+
+      expect(Item.find(item_4.id).active?).to eq(true)
+      expect(Item.find(item_5.id).active?).to eq(true)
     end
   end
 end
