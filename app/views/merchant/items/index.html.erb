@@ -9,6 +9,7 @@
         <p> <%= item.description %> </p>
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
+        
       <% if item.active? %>
         <p>Status: Active</p>
         <%= button_to 'Deactivate', "/merchant/items/#{item.id}?status=deactivate", method: :patch %>
@@ -16,7 +17,7 @@
         <p>Status: Inactive</p>
         <%= button_to 'Activate', "/merchant/items/#{item.id}?status=activate", method: :patch %>
       <% end %>
-      <%# <%= link_to_if(item.never_ordered?, "Delete", "/merchant/items/#{item.id}", method: :delete) %> %>
+
       <% if item.no_orders? %>
         <%= button_to 'Delete', "/merchant/items/#{item.id}", method: :delete %>
       <% end %>
