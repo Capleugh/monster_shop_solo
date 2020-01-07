@@ -1,6 +1,8 @@
+<h1>My Items</h1>
+
 <section class="grid-container">
   <% @items.each do |item| %>
-    <section class = "grid-item" id= 'item-<%=item.id%>'>
+    <section class = "grid-item" id = 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/merchant/items/#{item.id}" %> </h2>
         <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
         <a href=<%= "/merchant/items/#{item.id}" %>> <img alt="img" src= <%= item.image %>></a>
@@ -10,9 +12,10 @@
       <% if !@merchant %>
       <% end %>
       <% if item.active? %>
-        <p>Active</p>
+        <p>Status: Active</p>
+        <%= button_to 'Deactivate', merchant_item_path(item.id), method: :patch %>
       <% else %>
-        <p>Inactive</p>
+        <p>Status: Inactive</p>
       <% end %>
     </section>
     <% end %>
