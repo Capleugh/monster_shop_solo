@@ -18,10 +18,18 @@ class Admin::MerchantsController < Admin::BaseController
 
   private
     def change_status_of_merchant(merchant)
-      merchant.update(enabled?: false)
+      if merchant.enabled?
+        merchant.update(enabled?: false)
 
-      flash[:success] = "#{merchant.name} is now disabled."
+        flash[:success] = "#{merchant.name} is now disabled."
+      else
+        merchant.update(enabled?: true)
+
+        flash[:success] = "#{merchant.name} is now enabled."
+      end
     end
+
+
 end
 
 #
