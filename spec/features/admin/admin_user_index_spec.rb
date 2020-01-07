@@ -17,24 +17,42 @@ RSpec.describe 'As an Admin', type: :feature do
     password = @admin.password
 
     visit('/')
+    click_on('Login')
     fill_in :email, with: email
     fill_in :password, with: password
     click_on('Submit')
     visit('/admin/users')
-    save_and_open_page
   end
 
   it 'visit /admin/users you can see all user names which is a link to their page, date registered, and user type ' do
-    
-  end
+    expect(page).to have_link(@user_1.name)
+    expect(page).to have_link(@user_2.name)
+    expect(page).to have_link(@merchant_employee_1.name)
+    expect(page).to have_link(@merchant_employee_2.name)
+    expect(page).to have_link(@admin.name)
 
-#   User Story 53, Admin User Index Page
-# As an admin user
-# When I click the "Users" link in the nav (only visible to admins)
-# Then my current URI route is "/admin/users"
-# Only admin users can reach this path.
-# I see all users in the system
-# Each user's name is a link to a show page for that user ("/admin/users/5")
-# Next to each user's name is the date they registered
-# Next to each user's name I see what type of user they are
+    within "#user-#{@user_1.id}" do
+      click_on(@user_1.name)
+      expect(current_path).to eq("/admin/users/#{@user_1.id}")
+    end
+    expect(page).to have_content(@user_1.created_at)
+    expect(page).to have_content(@user_1.role)
+
+    visit('/admin/users')
+    within "#user-#{@merchant_employee_1.id}" do
+      click_on(@merchant_employee_1.name)
+      expect(current_path).to eq("/admin/users/#{@merchant_employee_1.id}")
+    end
+    expect(page).to have_content(@merchant_employee_1.created_at)
+    expect(page).to have_content(@merchant_employee_1.role)
+
+    visit('/admin/users')
+    within "#user-#{@admin.id}" do
+      click_on(@admin.name)
+      expect(current_path).to eq("/admin/users/#{@admin.id}")
+    end
+    expect(page).to have_content(@admin.created_at)
+    expect(page).to have_content(@admin.role)
+
+  end
 end
