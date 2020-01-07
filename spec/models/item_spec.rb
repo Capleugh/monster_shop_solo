@@ -117,7 +117,7 @@ describe Item, type: :model do
       expect(result).to eq(false)
     end
 
-    it "decrease_item_inventory(cart)" do
+    xit "decrease_item_inventory(cart)" do
       item_1 = create(:item, inventory: 10)
       cart = Cart.new(Hash.new(0))
       cart.add_item(item_1.id)

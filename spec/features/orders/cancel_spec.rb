@@ -11,7 +11,7 @@ RSpec.describe("Cancel and existing order from order show page") do
       @order.item_orders.create(item: @item_3, quantity: 3, price: @item_3.price)
     end
 
-    it "cancel order and verify status changed on order page" do
+    xit "cancel order and verify status changed on order page" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       expect(@item_1.inventory).to eq(20)
       expect(@item_2.inventory).to eq(25)
