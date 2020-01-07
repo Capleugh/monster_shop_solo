@@ -1,0 +1,16 @@
+<h1>Order: <%= @merchant_show.order.id %>, Show Page</h1>
+
+<p><b>Customer Name: </b><%= @merchant_show.find_customer.name %></p><br>
+<p><b>Address:</b></p>
+<p><b></b><%= @merchant_show.find_customer.address %>
+<%= @merchant_show.find_customer.state %>
+<%= @merchant_show.find_customer.city %>
+<%= @merchant_show.find_customer.zip %></p>
+
+<section id = "items_order_merch">
+  <h1>Items:</h1>
+    <% @merchant_show.find_items.each do |item| %>
+      <section id = "order-<%= item.id %>">
+      </section>
+    <% end %>
+</section>
