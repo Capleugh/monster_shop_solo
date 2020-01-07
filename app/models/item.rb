@@ -37,10 +37,15 @@ class Item <ApplicationRecord
     Item.select("items.*, sum(quantity)").where(active?: true).joins(:item_orders).group(:id).order("sum").limit(5)
   end
 
-  def self.decrease_item_inventory(cart)
-    cart.items.each do |item, quantity|
-      Item.where(id: item.id).update(inventory: (item.inventory - quantity))
-    end
+  # def self.decrease_item_inventory(cart)
+  #   cart.items.each do |item, quantity|
+  #     Item.where(id: item.id).update(inventory: (item.inventory - quantity))
+  #   end
+  # end
+
+  def self.decrease_item_inventory(item_id, quantity)
+    current_inventory = Item.find(item_id).inventory.to_i
+    Item.where(id: item_id).update(inventory: (current_inventory - quantity.to_i))
   end
 
   def self.increase_item_inventory(order)
