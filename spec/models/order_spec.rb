@@ -50,16 +50,7 @@ describe Order, type: :model do
       expect(@order_1.total_items).to eq(5)
     end
 
-    xit 'update order status when all item_orders fulfilled' do
-      cart = Cart.new(Hash.new(0))
-      cart.add_item(@pull_toy.id)
-      cart.add_item(@pull_toy.id)
-      cart.add_item(@pull_toy.id)
-      cart.add_item(@tire.id)
-      cart.add_item(@tire.id)
-      Item.decrease_item_inventory(cart)
-      expect(Item.find(@pull_toy.id).inventory).to eq(29)
-      expect(Item.find(@tire.id).inventory).to eq(10)
+    it 'update order status when all item_orders fulfilled' do
       expect(Order.find(@order_1.id).status).to eq('pending')
       @item_order_1.update(status: 'fulfilled')
       @item_order_2.update(status: 'fulfilled')
