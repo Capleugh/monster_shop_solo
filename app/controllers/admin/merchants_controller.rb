@@ -11,8 +11,8 @@ class Admin::MerchantsController < Admin::BaseController
     merchant = Merchant.find(params[:id])
     change_status_of_merchant(merchant)
     merchant.items.deactivate_all_items
-#merchant.items gets you all the items of that merchant
-# need a model method on merchant or items where you disable all items in one AR call.
+
+
     redirect_to admin_merchants_path
   end
 

@@ -91,9 +91,9 @@ RSpec.describe "As an admin" do
         click_button "Disable"
       end
 
-
-
       expect(current_path).to eq(admin_merchants_path)
+
+
 
       visit "/admin/merchants/#{meg_shop.id}/items"
 
