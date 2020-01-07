@@ -71,12 +71,24 @@ RSpec.describe "As an admin user" do
         expect(page).to have_link(order_4.user.name)
       end
 
-      # within "#all-orders" do
-      #   expect(page.body.index("#{order_4.id}")).to be < page.body.index("#{order_2.id}")
-      #   expect(page.body.index("#{order_2.id}")).to be < page.body.index("#{order_3.id}")
-      #   expect(page.body.index("#{order_3.id}")).to be < page.body.index("#{order_1.id}")
-      #   expect(page.body.index("#{order_3.id}")).to be < page.body.index("#{order_1.id}")
-      # end
+      within "#all-orders" do
+
+          within "#order-index-0" do
+            expect(page).to have_content(order_4.status)
+          end
+
+          within "#order-index-1" do
+            expect(page).to have_content(order_2.status)
+          end
+
+          within "#order-index-2" do
+            expect(page).to have_content(order_3.status)
+          end
+
+          within "#order-index-3" do
+            expect(page).to have_content(order_1.status)
+          end
+        end
 
       within "#order-#{order_1.id}" do
         click_link "#{order_1.user.name}"
