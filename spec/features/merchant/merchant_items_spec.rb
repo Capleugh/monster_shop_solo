@@ -118,5 +118,37 @@ RSpec.describe "As a merchant" do
         expect(page).to_not have_button("Activate")
       end
     end
+
+    it "I can delete an item that has never been ordered by clicking its delete button" do
+      visit merchant_items_path
+
+      within "#item-#{@item_1.id}" do
+        expect(page).to have_button("Delete")
+      end
+
+      within "#item-#{@item_2.id}" do
+        expect(page).to have_button("Delete")
+      end
+
+      within "#item-#{@item_3.id}" do
+        click_button "Delete"
+      end
+
+      expect(current_path).to eq(merchant_items_path)
+      expect(page).to have_content("#{@item_3.name} has been deleted.")
+
+      expect(page).to_not have_css("#item-#{@item_3.id}")
+    end
+
+    it "There is not a delete button for an item that has been ordered" do
+      order = create(:order)
+      order.item_orders.create(item: @item_1, quantity: 2, price: @item_1.price)
+
+      visit merchant_items_path
+      
+      within "#item-#{@item_1.id}" do
+        expect(page).to_not have_button("Delete")
+      end
+    end
   end
 end
