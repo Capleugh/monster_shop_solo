@@ -63,8 +63,8 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'dashboard#index'
     resources :users, only: [:index, :show]
-    resources :merchants, only: [:index, :show, :update]
-    get '/merchants/:merchant_id/items', to: 'items#index'
-    patch '/merchants/:merchant_id/items/:id', to: 'items#update'
+    resources :merchants, only: [:index, :show, :update] do
+      resources :items, only: [:index]
+    end
   end
 end
