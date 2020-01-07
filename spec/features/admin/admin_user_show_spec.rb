@@ -37,6 +37,12 @@ RSpec.describe 'As an Admin', type: :feature do
     end
     expect(page).to_not have_link('Edit My Info')
     expect(page).to have_link('Edit My Password')
+    # expect(page).to have_content(@user_1.name)
+    # expect(page).to have_content(@user_1.address)
+    # expect(page).to have_content(@user_1.city)
+    # expect(page).to have_content(@user_1.state)
+    # expect(page).to have_content(@user_1.zip)
+    # expect(page).to have_content(@user_1.email)
 
     visit('/admin/users')
     within "#user-#{@merchant_employee_1.id}" do
@@ -45,6 +51,13 @@ RSpec.describe 'As an Admin', type: :feature do
     end
     expect(page).to_not have_link('Edit My Info')
     expect(page).to have_link('Edit My Password')
+    # expect(page).to have_content(@merchant_employee_1.name)
+    # expect(page).to have_content(@merchant_employee_1.address)
+    # expect(page).to have_content(@merchant_employee_1.city)
+    # expect(page).to have_content(@merchant_employee_1.state)
+    # expect(page).to have_content(@merchant_employee_1.zip)
+    # expect(page).to have_content(@merchant_employee_1.email)
+    # expect(page).to have_content('You Have No Orders')
 
     visit('/admin/users')
     within "#user-#{@admin.id}" do
@@ -53,5 +66,12 @@ RSpec.describe 'As an Admin', type: :feature do
     end
     expect(page).to_not have_link('Edit My Info')
     expect(page).to have_link('Edit My Password')
+    # expect(page).to have_content(@admin.name)
+    # expect(page).to have_content(@admin.address)
+    # expect(page).to have_content(@admin.city)
+    # expect(page).to have_content(@admin.state)
+    # expect(page).to have_content(@admin.zip)
+    # expect(page).to have_content(@admin.email)
+    # expect(page).to have_content('You Have No Orders')
   end
 end
