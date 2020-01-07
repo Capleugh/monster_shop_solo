@@ -55,7 +55,7 @@ RSpec.describe("Order Show Page") do
         expect(page).to have_css("img[src*='#{@item_3.image}']")
       end
 
-      expect(page).to have_content("$1,080.00")
+      expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order.grandtotal))
       expect(page).to have_content("30")
     end
   end
