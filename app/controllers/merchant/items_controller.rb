@@ -14,6 +14,14 @@ class Merchant::ItemsController < Merchant::BaseController
     elsif activate?
       activate(item)
     end
+
+    redirect_to merchant_items_path
+  end
+
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    flash[:success] = "#{item.name} has been deleted."
     
     redirect_to merchant_items_path
   end

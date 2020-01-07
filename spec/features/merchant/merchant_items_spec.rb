@@ -6,7 +6,7 @@ RSpec.describe "As a merchant" do
       @merchant = create(:merchant)
       @item_1 = create(:item, merchant: @merchant)
       @item_2 = create(:item, merchant: @merchant)
-      @item_3 = create(:item, merchant: @merchant, active?: false)
+      @item_3 = create(:item, description: "Item 3 description", merchant: @merchant, active?: false, image: "https://cdn.shopify.com/s/files/1/0836/6919/products/thousand-helmet-rose-gold-1_2000x.jpg?v=1568244140")
 
       @merchant_employee = create(:user, role: 1, merchant: @merchant)
 
@@ -116,6 +116,57 @@ RSpec.describe "As a merchant" do
         expect(page).to_not have_content("Inactive")
         expect(page).to have_button("Deactivate")
         expect(page).to_not have_button("Activate")
+      end
+    end
+
+    it "I can delete an item that has never been ordered by clicking its delete button" do
+      visit merchant_items_path
+
+      within "#item-#{@item_1.id}" do
+        expect(page).to have_button("Delete")
+      end
+
+      within "#item-#{@item_2.id}" do
+        expect(page).to have_button("Delete")
+      end
+
+      within "#item-#{@item_3.id}" do
+        click_button "Delete"
+      end
+
+      expect(current_path).to eq(merchant_items_path)
+      expect(page).to have_content("#{@item_3.name} has been deleted.")
+
+      expect(page).to_not have_css("#item-#{@item_3.id}")
+      expect(page).to_not have_link(@item_3.name)
+      expect(page).to_not have_content(@item_3.description)
+      expect(page).to_not have_content("Price: $#{@item_3.price}")
+      expect(page).to_not have_content("Inventory: #{@item_3.inventory}")
+      expect(page).to_not have_css("img[src*='#{@item_3.image}']")
+    end
+
+    it "There is not a delete button for an item that has been ordered, regardles of order status" do
+      order_1 = create(:order)
+      order_1.item_orders.create(item: @item_1, quantity: 2, price: @item_1.price)
+
+      order_2 = create(:order, status: 1)
+      order_2.item_orders.create(item: @item_2, quantity: 2, price: @item_2.price)
+
+      order_3 = create(:order, status: 3)
+      order_3.item_orders.create(item: @item_3, quantity: 2, price: @item_3.price)
+
+      visit merchant_items_path
+
+      within "#item-#{@item_1.id}" do
+        expect(page).to_not have_button("Delete")
+      end
+
+      within "#item-#{@item_2.id}" do
+        expect(page).to_not have_button("Delete")
+      end
+
+      within "#item-#{@item_3.id}" do
+        expect(page).to_not have_button("Delete")
       end
     end
   end
