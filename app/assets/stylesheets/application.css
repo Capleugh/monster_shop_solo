@@ -165,3 +165,11 @@ td, th {
 tr:nth-child(even) {
   background-color: #F0F8FF;
 }
+
+#hl_img {
+  border: 1px solid black;
+  padding: 5px;
+  margin-top: 5px;
+  width: 200px;
+  height: 200px;
+}
