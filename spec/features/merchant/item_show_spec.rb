@@ -48,25 +48,25 @@ RSpec.describe "create an item as an Merchant" do
   end
 
   it 'I get an alert if I dont fully fill out the form' do
-    # visit "/merchants/#{@brian.id}/items"
-    #
-    # name = ""
-    # price = 18
-    # description = "No more chaffin'!"
-    # image_url = "https://images-na.ssl-images-amazon.com/images/I/51HMpDXItgL._SX569_.jpg"
-    # inventory = ""
-    #
-    # click_on "Add New Item"
-    #
-    # fill_in :name, with: name
-    # fill_in :price, with: price
-    # fill_in :description, with: description
-    # fill_in :image, with: image_url
-    # fill_in :inventory, with: inventory
-    #
-    # click_button "Create Item"
-    #
-    # expect(page).to have_content("Name can't be blank and Inventory can't be blank")
-    # expect(page).to have_button("Create Item")
+    visit "/merchant/items"
+    click_on("Add Item")
+    expect(current_path).to eq("/merchant/items/new")
+
+    name = ""
+    price = 18
+    description = "No more chaffin'!"
+    image_url = "https://images-na.ssl-images-amazon.com/images/I/51HMpDXItgL._SX569_.jpg"
+    inventory = ""
+
+    fill_in 'Name', with: name
+    fill_in 'Price', with: price
+    fill_in 'Description', with: description
+    fill_in 'Image', with: image_url
+    fill_in 'Inventory', with: inventory
+
+    click_button "Create Item"
+
+    expect(page).to have_content("Name can't be blank and Inventory can't be blank")
+    expect(page).to have_button("Create Item")
   end
 end
