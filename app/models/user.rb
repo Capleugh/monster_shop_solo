@@ -14,7 +14,6 @@ class User < ApplicationRecord
   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin']
 
   def user_order_count
-    # binding.pry
     self.orders.count
   end
 end
