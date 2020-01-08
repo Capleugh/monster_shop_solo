@@ -54,20 +54,20 @@ class OrdersController <ApplicationController
 
   private
 
-  def order_params
-    params.permit(:name, :address, :city, :state, :zip)
-  end
-
-  def change_order_status_to_cancelled(order)
-    order.update(status: 3)
-    flash[:success] = "#{order.id} has been cancelled."
-    redirect_to profile_path
-  end
-
-  def reset_inventory(order)
-    order.items.each do |item|
-      quantity = item.quantity_ordered(order)
-      item.increase_item_inventory(quantity)
+    def order_params
+      params.permit(:name, :address, :city, :state, :zip)
     end
-  end
+
+    def change_order_status_to_cancelled(order)
+      order.update(status: 3)
+      flash[:success] = "#{order.id} has been cancelled."
+      redirect_to profile_path
+    end
+
+    def reset_inventory(order)
+      order.items.each do |item|
+        quantity = item.quantity_ordered(order)
+        item.increase_item_inventory(quantity)
+      end
+    end
 end
