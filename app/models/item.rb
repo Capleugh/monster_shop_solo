@@ -52,4 +52,8 @@ class Item <ApplicationRecord
   def self.deactivate_all_items
     update(active?: false)
   end
+
+  def self.activate_all_items
+    update(active?: true)
+  end
 end

@@ -133,24 +133,38 @@ describe Item, type: :model do
       expect(Item.find(item_1.id).inventory).to eq(10)
     end
 
-    it "deactivate_all_items(merchant)" do
+    it "deactivate_all_items" do
       dog_shop = create(:merchant)
       item_1 = create(:item, merchant: dog_shop)
       item_2 = create(:item, merchant: dog_shop)
       item_3 = create(:item, merchant: dog_shop)
 
-      mike_shop = create(:merchant)
-      item_4 = create(:item, merchant: mike_shop)
-      item_5 = create(:item, merchant: mike_shop)
-
-      dog_shop.items.deactivate_all_items
+      Item.deactivate_all_items
 
       expect(Item.find(item_1.id).active?).to eq(false)
       expect(Item.find(item_2.id).active?).to eq(false)
       expect(Item.find(item_3.id).active?).to eq(false)
 
+
+      mike_shop = create(:merchant)
+      item_4 = create(:item, merchant: mike_shop)
+      item_5 = create(:item, merchant: mike_shop)
+
       expect(Item.find(item_4.id).active?).to eq(true)
       expect(Item.find(item_5.id).active?).to eq(true)
+    end
+
+    it "activate_all_items" do
+      dog_shop = create(:merchant, enabled?: false)
+      item_1 = create(:item, active?: false, merchant: dog_shop)
+      item_2 = create(:item, active?: false, merchant: dog_shop)
+      item_3 = create(:item, active?: false, merchant: dog_shop)
+
+      Item.activate_all_items
+
+      expect(Item.find(item_1.id).active?).to eq(true)
+      expect(Item.find(item_2.id).active?).to eq(true)
+      expect(Item.find(item_3.id).active?).to eq(true)
     end
   end
 end
