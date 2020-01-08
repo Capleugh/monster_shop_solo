@@ -26,7 +26,7 @@ RSpec.describe "create an item as an Merchant" do
     fill_in 'Image', with: image_url
     fill_in 'Inventory', with: inventory
 
-    click_button "Create Item"
+    click_button "Submit"
 
     new_item = Item.last
 
@@ -64,7 +64,7 @@ RSpec.describe "create an item as an Merchant" do
     fill_in 'Image', with: image_url
     fill_in 'Inventory', with: inventory
 
-    click_button "Create Item"
+    click_button "Submit"
 
     expect(page).to have_content("Name can't be blank, Inventory can't be blank, and Inventory is not a number")
     expect(find_field('Name').value).to eq(name)
@@ -72,6 +72,6 @@ RSpec.describe "create an item as an Merchant" do
     expect(find_field('Image').value).to eq(image_url)
     expect(find_field('Inventory').value).to eq(inventory)
     expect(find_field('Description').value).to eq(description)
-    expect(page).to have_button("Create Item")
+    expect(page).to have_button("Submit")
   end
 end
