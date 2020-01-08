@@ -9,14 +9,14 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def create
-    merchant = Merchant.find(current_user.merchant_id)
-    item = merchant.items.create(item_params)
-    if item.save
+    @merchant = Merchant.find(current_user.merchant_id)
+    @item = @merchant.items.create(item_params)
+    if @item.save
       flash[:success] = "Item added!"
       redirect_to merchant_items_path
     else
-      flash[:error] = item.errors.full_messages.to_sentence
-      redirect_to "/merchant/items/new"
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :new
     end
   end
 
