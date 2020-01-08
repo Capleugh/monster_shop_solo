@@ -109,6 +109,8 @@ RSpec.describe "As a merchant employee I can change the item order's status" do
       within "#pending-orders" do
         expect(page).to_not have_link("Order Number: #{@order.id}")
       end
+
+      expect(Order.find(@order.id).status).to eq("packaged")
     end
 
     it "I cannot see a button to 'fulfill' if inventory is too low" do
