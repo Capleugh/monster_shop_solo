@@ -48,7 +48,7 @@ RSpec.describe "create an item as an Merchant" do
     expect(page).to have_content("Inventory: #{new_item.inventory}")
   end
 
-  it 'I get an alert if I dont fully fill out the form' do
+  it 'I get an alert if I dont fully fill out the form -- data stays populated' do
     name = ""
     price = 18
     description = "No more chaffin'!"
@@ -58,7 +58,7 @@ RSpec.describe "create an item as an Merchant" do
     visit "/admin/merchants/#{@merchant.id}/items"
     click_on("Add Item")
     expect(current_path).to eq("/admin/merchants/#{@merchant.id}/items/new")
-    
+
     fill_in :name, with: name
     fill_in :price, with: price
     fill_in :description, with: description
@@ -67,7 +67,12 @@ RSpec.describe "create an item as an Merchant" do
 
     click_button "Create Item"
 
-    expect(page).to have_content("Name can't be blank and Inventory can't be blank")
+    expect(page).to have_content("Name can't be blank, Inventory can't be blank, and Inventory is not a number")
+    expect(find_field('Name').value).to eq(name)
+    expect(find_field('Price').value).to eq("$18.00")
+    expect(find_field('Image').value).to eq(image_url)
+    expect(find_field('Inventory').value).to eq(inventory)
+    expect(find_field('Description').value).to eq(description)
     expect(page).to have_button("Create Item")
   end
 end
