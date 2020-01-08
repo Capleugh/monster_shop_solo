@@ -53,8 +53,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  patch 'merchant/items/:id/update', to: 'merchant/items#status_update'
-  
+  # patch 'merchant/items/:id/update', to: 'merchant/items#status_update'
+
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]

@@ -12,7 +12,9 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
     @item = @merchant.items.create(item_params)
     if @item.save
-      if params.require(:item).permit(:image)[:image] == ""
+      # binding.pry
+      if params[:item][:image] == ""
+      # if params.require(:item).permit(:image)[:image] == ""
         @item.update(image: default_image)
       end
       flash[:success] = "Item added!"
@@ -31,30 +33,43 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
   end
 
-  def status_update
-    item = Item.find(params[:id])
-
-    if deactivate?
-      deactivate(item)
-    elsif activate?
-      activate(item)
-    end
-
-    redirect_to merchant_items_path
-  end
+  # def status_update
+  #   item = Item.find(params[:id])
+  #
+  #   if deactivate?
+  #     deactivate(item)
+  #   elsif activate?
+  #     activate(item)
+  #   end
+  #
+  #   redirect_to merchant_items_path
+  # end
 
   def update
-    @item = Item.find(params[:format])
-    @item.update(item_params)
-    if @item.save
-      if params.require(:item).permit(:image)[:image] == ""
-        @item.update(image: default_image)
+    if params[:status].nil?
+    #if there is no params[:status] (aka params[:status].nil?), proceed with all the code below.
+      @item = Item.find(params[:format])
+      @item.update(item_params)
+      if @item.save
+        if params[:item][:image] == ""
+          @item.update(image: default_image)
+        end
+        redirect_to "/merchant/items"
+        flash[:success] = 'Item Has Been Updated'
+      else
+        flash[:error] = @item.errors.full_messages.to_sentence
+        redirect_back(fallback_location: "/merchant/items")
       end
-      redirect_to "/merchant/items"
-      flash[:success] = 'Item Has Been Updated'
     else
-      flash[:error] = @item.errors.full_messages.to_sentence
-      redirect_back(fallback_location: "/merchant/items")
+      item = Item.find(params[:id])
+
+      if deactivate?
+        deactivate(item)
+      elsif activate?
+        activate(item)
+      end
+
+      redirect_to merchant_items_path
     end
   end
 
