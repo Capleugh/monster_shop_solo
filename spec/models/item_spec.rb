@@ -139,15 +139,16 @@ describe Item, type: :model do
       item_2 = create(:item, merchant: dog_shop)
       item_3 = create(:item, merchant: dog_shop)
 
-      mike_shop = create(:merchant)
-      item_4 = create(:item, merchant: mike_shop)
-      item_5 = create(:item, merchant: mike_shop)
-
-      dog_shop.items.deactivate_all_items
+      Item.deactivate_all_items
 
       expect(Item.find(item_1.id).active?).to eq(false)
       expect(Item.find(item_2.id).active?).to eq(false)
       expect(Item.find(item_3.id).active?).to eq(false)
+
+
+      mike_shop = create(:merchant)
+      item_4 = create(:item, merchant: mike_shop)
+      item_5 = create(:item, merchant: mike_shop)
 
       expect(Item.find(item_4.id).active?).to eq(true)
       expect(Item.find(item_5.id).active?).to eq(true)
@@ -159,7 +160,7 @@ describe Item, type: :model do
       item_2 = create(:item, active?: false, merchant: dog_shop)
       item_3 = create(:item, active?: false, merchant: dog_shop)
 
-      dog_shop.items.activate_all_items
+      Item.activate_all_items
 
       expect(Item.find(item_1.id).active?).to eq(true)
       expect(Item.find(item_2.id).active?).to eq(true)
