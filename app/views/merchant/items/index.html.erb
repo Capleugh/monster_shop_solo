@@ -22,6 +22,7 @@
       <% if item.no_orders? %>
         <%= button_to 'Delete', "/merchant/items/#{item.id}", method: :delete %>
       <% end %>
+      <%= button_to 'Edit Item', "/merchant/items/#{item.id}/edit", method: :get %>
     </section>
   <% end %>
 </section>
