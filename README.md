@@ -8,11 +8,13 @@ BE Mod 2 Group Project
 
 ## Background and Description
 write me!
+* uses PostgreSQL
+* Rails
+* Hosted on Heroku [Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
 
 ## Schema 
-We used a PostgreSQL for out database. It was composed of 6 separate tables. The schema is depicted below.
-
-![alt text](https://dbdiagram.io/d/5e16409cedf08a25543fc05c "Monster Shop Schema") 
+We used a PostgreSQL for out database. It was composed of 6 separate tables. The schema is depicted below:
+![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema") 
 
 ## Contributors:
 * [Alison Vermeil](https://github.com/mintona)
