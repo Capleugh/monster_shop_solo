@@ -67,7 +67,7 @@ RSpec.describe "create an item as an Merchant" do
 
     click_button "Create Item"
 
-    expect(page).to have_content("Name can't be blank and Inventory can't be blank")
+    expect(page).to have_content("Name can't be blank, Inventory can't be blank, and Inventory is not a number")
     expect(find_field('Name').value).to eq(name)
     expect(find_field('Price').value).to eq("$18.00")
     expect(find_field('Image').value).to eq(image_url)
