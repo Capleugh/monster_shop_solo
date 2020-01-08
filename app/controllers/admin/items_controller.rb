@@ -15,7 +15,7 @@ class Admin::ItemsController < Admin::BaseController
       redirect_to "/admin/merchants/#{merchant.id}/items"
     else
       flash[:error] = item.errors.full_messages.to_sentence
-      redirect_to "/admin/merchants/#{merchant.id}/items"
+      redirect_to "/admin/merchants/#{merchant.id}/items/new"
     end
   end
 

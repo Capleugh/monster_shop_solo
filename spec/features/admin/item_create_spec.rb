@@ -57,7 +57,8 @@ RSpec.describe "create an item as an Merchant" do
 
     visit "/admin/merchants/#{@merchant.id}/items"
     click_on("Add Item")
-
+    expect(current_path).to eq("/admin/merchants/#{@merchant.id}/items/new")
+    
     fill_in :name, with: name
     fill_in :price, with: price
     fill_in :description, with: description
