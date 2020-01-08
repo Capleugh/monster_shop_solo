@@ -9,14 +9,13 @@ class Admin::MerchantsController < Admin::BaseController
 
   def update
     merchant = Merchant.find(params[:id])
-    change_status_of_merchant(merchant)
-
+    change_merchant_status(merchant)
 
     redirect_to admin_merchants_path
   end
 
   private
-    def change_status_of_merchant(merchant)
+    def change_merchant_status(merchant)
       if merchant.enabled?
         merchant.update(enabled?: false)
         merchant.items.deactivate_all_items
