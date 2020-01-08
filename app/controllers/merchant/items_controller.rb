@@ -3,6 +3,23 @@ class Merchant::ItemsController < Merchant::BaseController
     @items = Item.where(merchant_id: current_user.merchant_id)
   end
 
+  def new
+    @merchant = Merchant.find(current_user.merchant_id)
+    @item = @merchant.items.new
+  end
+
+  def create
+    @merchant = Merchant.find(current_user.merchant_id)
+    @item = @merchant.items.create(item_params)
+    if @item.save
+      flash[:success] = "Item added!"
+      redirect_to merchant_items_path
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :new
+    end
+  end
+
   def show
   end
 
@@ -22,7 +39,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:id])
     item.destroy
     flash[:success] = "#{item.name} has been deleted."
-    
+
     redirect_to merchant_items_path
   end
 
@@ -45,5 +62,9 @@ class Merchant::ItemsController < Merchant::BaseController
       if item.toggle!(:active?)
         flash[:success] = "#{item.name} is available for sale."
       end
+    end
+
+    def item_params
+      params.require(:item).permit(:name, :description, :price, :image, :inventory)
     end
 end

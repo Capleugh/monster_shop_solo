@@ -7,10 +7,11 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        :image,
+                        #:image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
+  validates_numericality_of :inventory, greater_than_or_equal_to: 0
 
 
   def average_review
@@ -71,5 +72,9 @@ class Item <ApplicationRecord
 
   def self.deactivate_all_items
     update(active?: false)
+  end
+
+  def self.activate_all_items
+    update(active?: true)
   end
 end
