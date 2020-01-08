@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe("Cancel and existing order from order show page") do
   describe "cancel order" do
     before :each do
@@ -13,14 +15,23 @@ RSpec.describe("Cancel and existing order from order show page") do
 
     it "cancel order and verify status changed on order page" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
       visit "/profile/orders/#{@order.id}"
+      
       @item_order_1.update(status: 'fulfilled')
+
       expect(ItemOrder.find(@item_order_1.id).status).to eq('fulfilled')
+
       click_on "Cancel Order"
+
       expect(current_path).to eq("/profile")
+
       expect(page).to have_content("#{@order.id} has been cancelled.")
+
       visit "/profile/orders"
+
       expect(page).to have_content("Order Status: cancelled")
+
       expect(ItemOrder.find(@item_order_1.id).status).to eq('unfulfilled')
     end
 

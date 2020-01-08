@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "As a merchant employee I can cahnge the item order's status" do
+RSpec.describe "As a merchant employee I can change the item order's status" do
   describe "when I visit my merchant dashboard and click on an order" do
     before :each do
       @merchant = create(:merchant)
@@ -72,6 +72,45 @@ RSpec.describe "As a merchant employee I can cahnge the item order's status" do
         expect(page).to have_css("img[src*='#{@item_2.image}']")
         expect(page).to have_button("Fulfill")
       end
+    end
+
+    it "when the last merchant to fulfill all items in the order the order status changes from pending to packaged" do
+      #next line is accounting for the fact that all the items hae to be fulfilled and item 3 belongs to a different merchant
+      ItemOrder.where(item_id: @item_3.id).first.update(status: 'fulfilled')
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit merchant_path
+
+      within "#pending-orders" do
+        expect(page).to have_link("Order Number: #{@order.id}")
+      end
+
+      visit "/merchant/orders/#{@order.id}"
+
+      within "#item-#{@item_1.id}" do
+        click_button("Fulfill")
+      end
+
+      visit merchant_path
+
+      within "#pending-orders" do
+        expect(page).to have_link("Order Number: #{@order.id}")
+      end
+
+      visit "/merchant/orders/#{@order.id}"
+
+      within "#item-#{@item_2.id}" do
+        click_button("Fulfill")
+      end
+
+      visit merchant_path
+
+      within "#pending-orders" do
+        expect(page).to_not have_link("Order Number: #{@order.id}")
+      end
+
+      expect(Order.find(@order.id).status).to eq("packaged")
     end
 
     it "I cannot see a button to 'fulfill' if inventory is too low" do
