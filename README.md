@@ -1,3 +1,33 @@
+Documentation
+4: Final project has a well written README with pictures, schema design, code snippets, contributors names linked to their github profile, heroku link, and implementation instructions.
+
+3: Passing Students have a README with thorough implementation instructions and description of content.
+
+# Monster Shop
+BE Mod 2 Group Project
+
+## Background and Description
+write me!
+
+## Schema 
+We used a PostgreSQL for out database. It was composed of 6 separate tables. The schema is depicted below.
+
+![alt text](https://dbdiagram.io/d/5e16409cedf08a25543fc05c "Monster Shop Schema") 
+
+## Contributors:
+* [Alison Vermeil](https://github.com/mintona)
+* [Carleigh Crockett](https://github.com/Capleugh)
+* [David Barriga-Gomez](https://github.com/DavidBarriga-Gomez)
+* [Harrison Levin](https://github.com/hale4029)
+
+
+
+
+
+
+
+
+
 # Monster Shop
 BE Mod 2 Week 4/5 Group Project (Part 1)
 
