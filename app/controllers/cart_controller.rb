@@ -13,7 +13,7 @@ class CartController < ApplicationController
       @items = cart.items
     else
       @items = cart.items
-      flash.now[:error] = "You must register or log in to checkout."
+      flash.now[:error] = "You must #{view_context.link_to 'register', '/users/register'} or #{view_context.link_to 'log in', login_path} to checkout.".html_safe
     end
   end
 
@@ -42,16 +42,4 @@ class CartController < ApplicationController
   def require_not_admin
     render file: '/public/404'unless !current_admin?
   end
-
-  # def require_default
-  #   render file: "/public/404" unless current_default?
-  # end
-  #
-  # def require_merchant_employee
-  #   render file: "/public/404" unless current_merchant_employee?
-  # end
-  #
-  # def require_merchant_admin
-  #   render file: "/public/404" unless current_merchant_admin?
-  # end
 end
