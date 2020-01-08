@@ -50,13 +50,38 @@ describe Order, type: :model do
       expect(@order_1.total_items).to eq(5)
     end
 
-    it 'update order status when all item_orders fulfilled' do
-      expect(Order.find(@order_1.id).status).to eq('pending')
-      @item_order_1.update(status: 'fulfilled')
-      @item_order_2.update(status: 'fulfilled')
-      Order.update_order_status_to_packaged
-      expect(Order.find(@order_1.id).status).to eq('packaged')
+# new helper method so orders can check to see if all their items are fulfilled
+    it 'all_items_fulfilled?' do
+      order = Order.last
+      item_order_1 = order.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      item_order_2 = order.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+
+      expect(order.all_items_fulfilled?).to eq(false)
+
+      order.item_orders.first.update(status: "fulfilled")
+      expect(order.all_items_fulfilled?).to eq(false)
+
+      order.item_orders.last.update(status: "fulfilled")
+      expect(order.all_items_fulfilled?).to eq(true)
     end
+
+    it 'update_order_status_to_packaged' do
+      order = create(:order, user: @user_1, status: 1)
+
+      expect(order.status).to_not eq("packaged")
+
+      order.update_order_status_to_packaged
+
+      expect(order.status).to eq("packaged")
+    end
+
+    # it 'update order status when all item_orders fulfilled' do
+    #   expect(Order.find(@order_1.id).status).to eq('pending')
+    #   @item_order_1.update(status: 'fulfilled')
+    #   @item_order_2.update(status: 'fulfilled')
+    #   Order.update_order_status_to_packaged
+    #   expect(Order.find(@order_1.id).status).to eq('packaged')
+    # end
 
     it 'orders should display in order of status enums on admin dashboard' do
       expect(Order.order(:status)).to eq([@order_5, @order_1, @order_3, @order_4, @order_2])
