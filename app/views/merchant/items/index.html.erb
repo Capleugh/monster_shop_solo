@@ -1,4 +1,5 @@
 <h1>Items at My Shop</h1>
+<%= link_to "Add Item", new_merchant_item_path %>
 
 <section class="grid-container">
   <% @items.each do |item| %>
@@ -9,7 +10,7 @@
         <p> <%= item.description %> </p>
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
-        
+
       <% if item.active? %>
         <p>Status: Active</p>
         <%= button_to 'Deactivate', "/merchant/items/#{item.id}?status=deactivate", method: :patch %>
