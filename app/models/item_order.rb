@@ -10,8 +10,11 @@ class ItemOrder < ApplicationRecord
     price * quantity
   end
 
-  def self.change_items_status_to_unfilled(order)
-    self.where(order_id: order.id).update(status: 0)
+  # def self.change_items_status_to_unfilled(order)
+  #   self.where(order_id: order.id).update(status: 0)
+  # end
+  def self.change_status_to_unfulfilled
+    update(status: 0)
   end
 
   def self.change_item_order_status_to_fulfilled(item_id, order_id)
