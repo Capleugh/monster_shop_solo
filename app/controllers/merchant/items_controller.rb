@@ -45,7 +45,6 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:id])
     item.destroy
     flash[:success] = "#{item.name} has been deleted."
-
     redirect_to merchant_items_path
   end
 

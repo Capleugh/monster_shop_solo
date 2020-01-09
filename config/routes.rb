@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:show]
     end
     resources :merchants, only: [:index, :show, :update] do
-      resources :items, only: [:index, :new, :create]
+      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
 end
