@@ -4,19 +4,124 @@ Documentation
 3: Passing Students have a README with thorough implementation instructions and description of content.
 
 # Monster Shop
-BE Mod 2 Group Project
 
-## Background and Description
+## Description
+Monster Shop is an ecommerce application in which users can register, login, and buy and sell items. Users can occupy **come back to this** one of three roles: regular user (consumer), merchant, or administrator and access to functionality will change depending on these roles.
+
 write me!
-* uses PostgreSQL
-* Rails
-* Hosted on Heroku [Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+
+## Built With
+* Ruby on Rails - web framework (version)
+* PostgresQL - database manager
+* Heorku - cloud platform for app hosting
+
+## Use Monster Shop
+[Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+
+## Authentication
+Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt. 
+
+Upon registration, users are required to create and confirm a password, which is used in conjunction with their email address to log-in. Email address must be unique.
+
+```
+  validates :email, uniqueness: true, presence: true
+  validates_presence_of :password, require: true
+
+  has_secure_password
+```
+
+Proper credentials are required to log-in. We utilized flash messages for incorrect credentials.
+
+## Authorization
+We implemented namespacing to authorize specific users navigation and access to functionality throughout the site.
+``` 
+  namespace :merchant  do
+    get '/', to: 'dashboard#show'
+    resources :orders, only: [:show, :update]
+    resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
+  end
+
+
+  namespace :admin do
+    get '/', to: 'dashboard#index'
+    resources :users, only: [:index, :show] do
+      resources :orders, only: [:show]
+    end
+    resources :merchants, only: [:index, :show, :update] do
+      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
+  end
+  ```
+  
+## User Roles
+We used enums in our User model to differentiate user type.
+```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
+
+
+### Visitors 
+* Visitors are users browsing the site who are not logged in as a registered user.
+
+#### Permissions
+* Browse the site to see all merchants and all active items 
+* Visit individual show pages for merchants and items
+* Add and remove items from their cart
+#### Restrictions
+* Must register and log in before given more access.
+
+### Default Users
+* Default users are essentially consumers who are registered and logged in to the site.
+
+#### Permissions
+* Includes all permissions as a visitor
+* Edit profile and password
+* Checkout their cart by creating an order
+* View all of their orders and the order's individual show page
+* Cancel an order that has the status of "pending"
+
+#### Restrictions
+* They cannot visit any path starting with "/admin" or "/merchant"
+* They cannot add or update merchants or items
+
+### Merchant Employees
+* Users who are assigned a merchant to work for
+
+#### Permissions
+* Includes all permissions as default user
+* Add and update items to their shop
+* Enable and disable items in their shop
+* Delete items that have never been ordered
+* Fulfill items from their shop in a consumer's order (the last item to be fulfilled updates the order status to "packaged")
+
+#### Restrictions
+* They cannot visit any path starting with "/admin"
+* They cannot edit the details of the store they work at
+* They cannot edit a user's information, password, or cancel an order
+
+### Admin
+* Admins have the most permissions of any user and can perform nearly all actions on behalf of a default user or merchant employee.
+
+#### Permissions
+* Ship an order that is "packaged"
+
+#### Restrictions
+* They cannot visit any path starting with "/merchant"
+* They cannot edit a user's information.
+
+Admins have the most ability of any user. They can enable and disable merchants, cancel orders on behalf of a user, and ship orders. They do not have access to a cart or ordering items for themselves.
+
+
+## Testing
+* Rspec
+* Cabybara
+* Launchy
+
+
 
 ## Schema 
 We used a PostgreSQL for out database. It was composed of 6 separate tables. The schema is depicted below:
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema") 
 
-## Contributors:
+## Authors:
 * [Alison Vermeil](https://github.com/mintona)
 * [Carleigh Crockett](https://github.com/Capleugh)
 * [David Barriga-Gomez](https://github.com/DavidBarriga-Gomez)
