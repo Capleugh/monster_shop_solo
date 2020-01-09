@@ -13,7 +13,7 @@ RSpec.describe 'As an Admin', type: :feature do
 
     @admin = User.create(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', password_confirmation: 'p', role: 3)
 
-    order = @user_1.orders.create(name: 'name', address: 'address', city: 'city', state: 'state', zip: 80011)
+    @order = @user_1.orders.create(name: 'name', address: 'address', city: 'city', state: 'state', zip: 80011)
 
     email = @admin.email
     password = @admin.password
@@ -23,10 +23,10 @@ RSpec.describe 'As an Admin', type: :feature do
     fill_in :email, with: email
     fill_in :password, with: password
     click_on('Submit')
-    visit('/admin/users')
   end
 
   it 'When I go to a user show page I see all information besides a link to edit the user profile' do
+    visit('/admin/users')
     expect(page).to have_link(@user_1.name)
     expect(page).to have_link(@user_2.name)
     expect(page).to have_link(@merchant_employee_1.name)
@@ -77,4 +77,4 @@ RSpec.describe 'As an Admin', type: :feature do
     expect(page).to have_content(@admin.email)
     expect(page).to have_content('You Have No Orders')
   end
-end
+end 
