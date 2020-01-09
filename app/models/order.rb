@@ -15,21 +15,6 @@ class Order <ApplicationRecord
     item_orders.sum('quantity')
   end
 
-  # def self.update_order_status_to_packaged
-  #   total_items_in_order = ItemOrder.group(:order_id).count
-  #   fulfilled_items_in_order = ItemOrder.where(status: 'fulfilled').group(:order_id).count
-  #   ids = []
-  #   fulfilled_items_in_order.each do |order_id, quantity|
-  #     if total_items_in_order[order_id] == quantity
-  #       ids << order_id
-  #     end
-  #   end
-  #   ids.each do |id|
-  #     order = self.find(id)
-  #     order.update(status: 0)
-  #   end
-  # end
-#helper methods for the giant method above
   def all_items_fulfilled?
     item_orders.count == item_orders.where(status: 'fulfilled').count
   end
@@ -39,7 +24,6 @@ class Order <ApplicationRecord
   end
 
   def self.order_by_status
-    # Order.order(:status)
     order(:status)
   end
 end
