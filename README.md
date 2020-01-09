@@ -191,11 +191,6 @@ Only an admin has the ability to ship an order and only once that order has a st
 
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/admin_ship.png "Admin Ship")
 
-## Built With
-* Ruby on Rails - web framework (version)
-* PostgresQL - database manager
-* Heorku - cloud platform for app hosting
-
 ## Flash Notifications
 Flash notifications are used throughout the application to notify users if there is a failed attempt at creating or updating resources.
 ```
@@ -242,6 +237,11 @@ We used a PostgreSQL for out database. It was composed of 6 separate tables. Act
 
 The schema is depicted below:
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema") 
+
+## Built With
+* Ruby on Rails - web framework (version)
+* PostgresQL - database manager
+* Heorku - cloud platform for app hosting
 
 ## Authors:
 * [Alison Vermeil](https://github.com/mintona)
