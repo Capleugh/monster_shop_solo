@@ -53,8 +53,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  # patch 'merchant/items/:id/update', to: 'merchant/items#status_update'
-
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]
@@ -64,7 +62,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/', to: 'dashboard#index'
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show] do
+      resources :orders, only: [:show]
+    end
     resources :merchants, only: [:index, :show, :update] do
       resources :items, only: [:index, :new, :create]
     end
