@@ -9,8 +9,6 @@ class Merchant <ApplicationRecord
   has_many :item_orders, through: :items
   has_many :users
 
-
-
   def no_orders?
     item_orders.empty?
   end
@@ -30,5 +28,4 @@ class Merchant <ApplicationRecord
   def pending_orders
     Order.where(status: "pending").joins(:items).where("items.merchant_id = #{self.id}").distinct
   end
-
 end

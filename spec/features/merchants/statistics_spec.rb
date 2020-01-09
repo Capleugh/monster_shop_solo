@@ -1,9 +1,3 @@
-# As a visitor
-# When I visit a merchant's show page
-# I see statistics for that merchant, including:
-# - count of items for that merchant
-# - average price of that merchant's items
-# - Distinct cities where my items have been ordered
 require 'rails_helper'
 
 RSpec.describe 'merchant show page', type: :feature do

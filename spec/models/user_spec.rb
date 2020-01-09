@@ -47,4 +47,16 @@ RSpec.describe User do
       expect(user.admin?).to be_truthy
     end
   end
+
+  describe 'methods' do
+    it 'can get a count of total orders' do
+      user = create(:user)
+
+      order_1 = create(:order, user: user, status: 1)
+      order_2 = create(:order, user: user, status: 2)
+      order_3 = create(:order, user: user, status: 0)
+
+      expect(user.user_order_count).to eq(3)
+    end
+  end
 end

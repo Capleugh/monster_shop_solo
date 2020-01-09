@@ -59,7 +59,6 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
   end
 
-
   namespace :admin do
     get '/', to: 'dashboard#index'
     resources :users, only: [:index, :show] do

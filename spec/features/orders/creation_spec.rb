@@ -49,9 +49,6 @@ RSpec.describe("Order Creation") do
       expect(current_path).to eq("/profile/orders")
 
       expect(page).to have_content("Order created!")
-
-      #expect(Item.find(paper.id).inventory).to eq(1)
-      #expect(Item.find(tire.id).inventory).to eq(11)
     end
 
     it 'I can create a new order and see order info on order show page' do
@@ -97,14 +94,6 @@ RSpec.describe("Order Creation") do
       new_order = Order.last
 
       visit "/profile/orders/#{new_order.id}"
-      #
-      # within '.shipping-address' do
-      #   expect(page).to have_content(name)
-      #   expect(page).to have_content(address)
-      #   expect(page).to have_content(city)
-      #   expect(page).to have_content(state)
-      #   expect(page).to have_content(zip)
-      # end
 
       within "#item-#{paper.id}" do
         expect(page).to have_link(paper.name)
@@ -133,10 +122,6 @@ RSpec.describe("Order Creation") do
       within "#grandtotal" do
         expect(page).to have_content("Total: $142")
       end
-
-      # within "#datecreated" do
-      #   expect(page).to have_content(new_order.created_at)
-      # end
     end
 
     it 'i cant create order if info not filled out' do

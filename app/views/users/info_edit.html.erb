@@ -1,14 +1,14 @@
 <h1>Edit Profile Information For <%= @user.name %> </h1>
-<center>
-  <%= render partial: 'form', locals: {
-      path: profile_path,
-      method: :patch,
-      button_text: 'Submit',
-      user_name: @user.name,
-      user_address: @user.address,
-      user_city: @user.city,
-      user_state: @user.state,
-      user_zip: @user.zip,
-      user_email: @user.email
-  } %>
-</center>
+  <center>
+    <%= render partial: 'form', locals: {
+        path: profile_path,
+        method: :patch,
+        button_text: 'Submit',
+        user_name: @user.name,
+        user_address: @user.address,
+        user_city: @user.city,
+        user_state: @user.state,
+        user_zip: @user.zip,
+        user_email: @user.email
+    } %>
+  </center>

@@ -33,10 +33,8 @@ class OrdersController <ApplicationController
   def destroy
     order = Order.find(params[:order_id])
     if order.status == 'pending'
-      # ItemOrder.change_items_status_to_unfilled(order)
       order.item_orders.change_status_to_unfulfilled
       reset_inventory(order)
-      # Item.increase_item_inventory(order)
       change_order_status_to_cancelled(order)
     else
       flash[:error] = "Unable to cancel order."
@@ -51,9 +49,7 @@ class OrdersController <ApplicationController
     redirect_to '/admin'
   end
 
-
   private
-
     def order_params
       params.permit(:name, :address, :city, :state, :zip)
     end

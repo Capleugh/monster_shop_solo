@@ -1,37 +1,37 @@
 <h1> Hello, <%= current_user.name %>! Welcome to your Admin Dashboard!</h1>
 
-<p>Packaged Orders Ready To Ship</p>
-<% @orders.each do |order| %>
-  <% if order.status == 'packaged' %>
-      <p>Order Id: <%= order.id %></p>
-      <p>Order Name: <%= order.name %></p>
-      <p>Order Address: <%= order.address %></p>
-      <p>Order City: <%= order.city %></p>
-      <p>Order State: <%= order.state %></p>
-      <p>Order Zip: <%= order.zip %></p>
-      <p>Order Created At: <%= order.created_at %></p>
-      <p>Order Updated At: <%= order.updated_at %></p>
-      <p>Order User Id: <%= order.user_id %></p>
-      <p>Order Status: <%= order.status %></p>
-      <br>
-      <% if order.status == 'packaged'%>
-      <%= button_to 'Ship Order', "/orders/update/#{order.id}", method: :patch %>
+  <p>Packaged Orders Ready To Ship</p>
+    <% @orders.each do |order| %>
+      <% if order.status == 'packaged' %>
+          <p>Order Id: <%= order.id %></p>
+          <p>Order Name: <%= order.name %></p>
+          <p>Order Address: <%= order.address %></p>
+          <p>Order City: <%= order.city %></p>
+          <p>Order State: <%= order.state %></p>
+          <p>Order Zip: <%= order.zip %></p>
+          <p>Order Created At: <%= order.created_at %></p>
+          <p>Order Updated At: <%= order.updated_at %></p>
+          <p>Order User Id: <%= order.user_id %></p>
+          <p>Order Status: <%= order.status %></p>
+          <br>
+          <% if order.status == 'packaged'%>
+            <%= button_to 'Ship Order', "/orders/update/#{order.id}", method: :patch %>
+          <% end %>
+          <br>
+        <% end %>
       <% end %>
-      <br>
-    <% end %>
-  <% end %>
 
 <section id = "all-orders">
 
 <h2>All Orders</h2>
-<% @orders.order_by_status.each_with_index do |order, index| %>
-  <section id = "order-<%= order.id %>">
-    <section id = "order-index-<%= index %>">
-      User Name: <%= link_to order.user.name, "/admin/users/#{order.user.id}" %><br>
-      Order Id: <%= link_to order.id, "/admin/users/#{order.user.id}/orders/#{order.id}"  %><br>
-      Order Created At: <%= order.created_at %><br>
-      Order Status: <%= order.status %><br>
-    </section>
-  </section><br>
-<% end %>
+  <% @orders.order_by_status.each_with_index do |order, index| %>
+    <section id = "order-<%= order.id %>">
+      <section id = "order-index-<%= index %>">
+        User Name: <%= link_to order.user.name, "/admin/users/#{order.user.id}" %><br>
+        Order Id: <%= link_to order.id, "/admin/users/#{order.user.id}/orders/#{order.id}"  %><br>
+        Order Created At: <%= order.created_at %><br>
+        Order Status: <%= order.status %><br>
+      </section>
+    </section><br>
+  <% end %>
 </section>
