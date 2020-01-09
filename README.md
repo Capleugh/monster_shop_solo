@@ -6,26 +6,27 @@ Documentation
 # Monster Shop
 
 ## Description
-Monster Shop is an ecommerce application in which users can register, login, and buy and sell items. Users can occupy **come back to this** one of three roles: regular user (consumer), merchant, or administrator and access to functionality will change depending on these roles.
+Monster Shop is an ecommerce application in which users can register, login, and ficticiously buy and sell items. Users are differentiated by one of three roles: default user (consumer), merchant, or administrator and access to functionality will change depending on these roles.
 
 write me!
-
-## Built With
-* Ruby on Rails - web framework (version)
-* PostgresQL - database manager
-* Heorku - cloud platform for app hosting
 
 ## Use Monster Shop
 ### Via the Web
 [Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
 ### Access Locally
-* git clone this repo
-* versions of ruby
-* version of rails 
+* Clone this repo with: `git clone git@github.com:DavidBarriga-Gomez/monster_shop_part_1.git`
+* Install Ruby 2.4.1
+* Install Rails 5.1.7
 * gems for testing (rspec, etc.)
-* bundle install
-* bundle update
-* seeds are provided but feel free to add your own!
+* Run `$ bundle install`
+* Run `$ bundle update`
+* Run `$ rails db:setup`
+* Seeds are provided but feel free to add your own!
+* Note: This application uses the following gems for testing, which are included in the gemfile: 
+   * `rspec-rails`
+   * `capybara`
+   * `shoulda-matchers`
+   * `factory_bot_rails`
 
 ## Authentication
 Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt. 
@@ -39,19 +40,26 @@ Upon registration, users are required to create and confirm a password, which is
   has_secure_password
 ```
 
-Proper credentials are required to log-in. We utilized flash messages for incorrect credentials.
+Proper credentials are required to log-in. Flash messages are utilized to alert the user if they attempt to login with incorrect credentials.
 
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Screen%20Shot%202020-01-09%20at%2011.54.18%20AM.png)
 
+The use of sessions allows the storage of user information as they navigate the site via a `current_user` method in the Application Controller.
+
+```
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+```
+
 ## Authorization
-We implemented namespacing to authorize specific users navigation and access to functionality throughout the site.
+We implemented `before_action`s and namespacing as part of the authorization limit functionality to authorized users
 ``` 
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]
     resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
   end
-
 
   namespace :admin do
     get '/', to: 'dashboard#index'
@@ -62,10 +70,42 @@ We implemented namespacing to authorize specific users navigation and access to 
       resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
-  ```
+```
+
+```
+  class Admin::BaseController < ApplicationController
+    before_action :require_admin
+
+    def require_admin
+      render file: "/public/404" unless current_admin?
+    end
+  end
+```
   
+Namespacing also necessitated the use of nested `form_for` partials for new and edit views of nested resources.
+```
+<%= form_for([@merchant, @item]) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name%>
+
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+
+  <%= f.label :price %>
+  <%= f.text_field :price %>
+
+  <%= f.label :image %>
+  <%= f.text_field :image %>
+
+  <%= f.label :inventory %>
+  <%= f.text_field :inventory %>
+
+  <%= f.submit "Submit"  %>
+<% end %>
+```
+
 ## User Roles
-We used enums in our User model to differentiate user type.
+We used enums in our User model to differentiate user type. Different types of users have various CRUD functionality.
 ```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
 
 
@@ -76,8 +116,11 @@ We used enums in our User model to differentiate user type.
 * Browse the site to see all merchants and all active items 
 * Visit individual show pages for merchants and items
 * Add and remove items from their cart
+
 #### Restrictions
-* Must register and log in before given more access.
+* Must register and log in before given access to checking out their cart
+* A flash message provides links to register and login pages
+![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/visitor_checkout.png)
 
 ### Default Users
 * Default users are essentially consumers who are registered and logged in to the site.
@@ -112,19 +155,67 @@ We used enums in our User model to differentiate user type.
 * Admins have the most permissions of any user and can perform nearly all actions on behalf of a default user or merchant employee.
 
 #### Permissions
+* Enable and disable merchants
 * Ship an order that is "packaged"
+* Manage items on behalf of a merchant, ex: `/admin/merchant/1/items/3`
+* Access to an admin specific index and show pages for users, `/admin/users`
+* Access to an admin specific index and show pages for merchants
+* Access admin specific show pages for users orders, ex: `/admin/users/5/orders/15`
 
 #### Restrictions
 * They cannot visit any path starting with "/merchant"
-* They cannot edit a user's information.
+* They cannot edit a user's information
 
 Admins have the most ability of any user. They can enable and disable merchants, cancel orders on behalf of a user, and ship orders. They do not have access to a cart or ordering items for themselves.
 
 ## Orders
-Orders have enums to show their status 
+There are four possbile statuses for Orders: 
+   1. Packaged - all merchants have fulfilled their items for the order, and has been packaged and ready to ship
+   1. Pending - a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
+   1. Shipped - an admin has 'shipped' a package and can no longer be cancelled by a user
+   1. Cancelled - only 'pending' and 'packaged' orders can be cancelled
+   
+Orders are created with a status of "pending" by default.
+
+Orders are designated via an enum in the model.
 ```  enum status: [:packaged, :pending, :shipped, :cancelled]```
 
+
+When a merchant fulfills the last item in an order, that action changes an order's status from "pending" to "packaged" via the update action in the Merchant Orders Controller.
+
+```
+  order = Order.find(params[:id])
+    if order.all_items_fulfilled?
+      order.update_order_status_to_packaged
+    end
+```
+
+Only an admin has the ability to ship an order and only once that order has a status of "packaged".
+# pic here 
+
+## Built With
+* Ruby on Rails - web framework (version)
+* PostgresQL - database manager
+* Heorku - cloud platform for app hosting
+
+
 ## Testing
+Monster Shop was developed using Test Driven Development. We used RSpec, with the addition of Capybara and Shoulda Matchers. All models were tested at the model level and controllers at the feature level. We also utilized Factory Bot on all models to speed up testing.
+
+Factory Bot Merchant Example:
+```
+FactoryBot.define do
+  factory :item do
+    sequence(:name) { |n| "Toy #{n}"}
+    description { "Great pull toy!" }
+    sequence(:price, 5) { |n| "#{n}" }
+    image {"http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg" }
+    sequence(:inventory, 7 ) { |n| "#{n}" }
+    merchant
+  end
+end
+```
+
 * Rspec
 * Cabybara
 * Launchy
@@ -132,7 +223,19 @@ Orders have enums to show their status
 
 
 ## Schema 
-We used a PostgreSQL for out database. It was composed of 6 separate tables. The schema is depicted below:
+We used a PostgreSQL for out database. It was composed of 6 separate tables. ActiveRecord was used to join tables, calculate statistics and build collections of data. 
+
+```
+  def self.top_five_items
+    select("items.*, sum(quantity)").where(active?: true).joins(:item_orders).group(:id).order("sum desc").limit(5)
+  end
+
+  def self.bottom_five_items
+    select("items.*, sum(quantity)").where(active?: true).joins(:item_orders).group(:id).order("sum").limit(5)
+  end
+```
+
+The schema is depicted below:
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema") 
 
 ## Authors:
@@ -142,68 +245,6 @@ We used a PostgreSQL for out database. It was composed of 6 separate tables. The
 * [Harrison Levin](https://github.com/hale4029)
 
 
-
-
-
-
-
-
-
-# Monster Shop
-BE Mod 2 Week 4/5 Group Project (Part 1)
-
-## Background and Description
-
-"Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will automatically set the order status to "shipped". Each user role will have access to some or all CRUD functionality for application models.
-
-Students will be put into 3 or 4 person groups to complete the project.\n
-
-## Learning Goals
-
-### Rails
-* Create routes for namespaced routes
-* Implement partials to break a page into reusable components
-* Use Sessions to store information about a user and implement login/logout functionality
-* Use filters (e.g. `before_action`) in a Rails controller
-* Limit functionality to authorized users
-* Use BCrypt to hash user passwords before storing in the database
-
-### ActiveRecord
-* Use built-in ActiveRecord methods to join multiple tables of data, calculate statistics and build collections of data grouped by one or more attributes
-
-### Databases
-* Design and diagram a Database Schema
-* Write raw SQL queries (as a debugging tool for AR)
-
-## Requirements
-
-- must use Rails 5.1.x
-- must use PostgreSQL
-- must use 'bcrypt' for authentication
-- all controller and model code must be tested via feature tests and model tests, respectively
-- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like github projects
-- must include a thorough README to describe their project
-
-## Permitted
-
-- use FactoryBot to speed up your test development
-- use "rails generators" to speed up your app development
-
-## Not Permitted
-
-- do not use JavaScript for pagination or sorting controls
-
-## Permission
-
-- if there is a specific gem you'd like to use in the project, please get permission from your instructors first
-
-## User Roles
-
-1. Visitor - this type of user is anonymously browsing our site and is not logged in
-1. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
-1. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
-3. Merchant Admin - this user works for a merchant, and has additional capabilities than regular employees, such as changing merchant info.
-3. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
 
 ## Order Status
 
@@ -831,13 +872,3 @@ Then my URI route should be ("/admin/merchants/6")
 Then I see everything that merchant would see
 ```
 
-
-
-## Rubric
-
-| | **Feature Completeness** | **Rails** | **ActiveRecord** | **Testing and Debugging** | **Styling, UI/UX** |
-| --- | --- | --- | --- | --- | --- |
-| **4: Exceptional**  | All User Stories 100% complete including all sad paths and edge cases, and some extension work completed | Students implement strategies not discussed in class to effectively organize code and adhere to MVC. | Highly effective and efficient use of ActiveRecord beyond what we've taught in class. Even `.each` calls will not cause additional database lookups. | Very clear Test Driven Development. Test files are extremely well organized and nested. Students utilize `before :each` blocks. 100% coverage for features and models | Extremely well styled and purposeful layout. Excellent color scheme and font usage. All other rubric categories score 3 or 4. |
-| **3: Passing** | Students complete all User Stories. No more than 2 Stories fail to correctly implement sad path and edge case functionality. All 37 user stories from part 1 were completed on time. | Students use the principles of MVC to effectively organize code. Students can defend any of their design decisions. Students limit access to authorized users. | ActiveRecord is used in a clear and effective way to read/write data using no Ruby to process data. | 100% coverage for models. 98% coverage for features. Tests are well written and meaningful. | Purposeful styling pattern and layout using `application.html.erb`. Links or buttons to reach all areas of the site. |
-| **2: Passing with Concerns** | Students complete all but 1 - 3 User Stories | Students utilize MVC to organize code, but cannot defend some of their design decisions. Or some functionality is not limited to the appropriately authorized users. | Ruby is used to process data that could use ActiveRecord instead. | Feature test coverage between 90% and 98%, or model test coverage below 100%, or tests are not meaningfully written or have an unclear objective. | Styling is poor or incomplete. Incomplete navigation for some routes, i.e. users must manually type URLs. |
-| **1: Failing** | Students fail to complete 4 or more User Stories | Students do not effectively organize code using MVC. Or students do not authorize users. | Ruby is used to process data more often than ActiveRecord | Below 90% coverage for either features or models. | No styling or no buttons or links to navigate the site. |
