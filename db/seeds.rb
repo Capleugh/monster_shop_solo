@@ -26,14 +26,6 @@ helmet = bike_shop.items.create(name: "Helmet", description: "The hipster-ist he
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
-# pull_toy1 = dog_shop.items.create(name: "Pull Toy1", description: "Great pull toy!", price: 12, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 20)
-# pull_toy2 = dog_shop.items.create(name: "Pull Toy2", description: "Great pull toy!", price: 15, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 80)
-# pull_toy3 = dog_shop.items.create(name: "Pull Toy3", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
-# pull_toy4 = dog_shop.items.create(name: "Pull Toy4", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
-# pull_toy5 = dog_shop.items.create(name: "Pull Toy5", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
-# pull_toy6 = dog_shop.items.create(name: "Pull Toy6", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
-# pull_toy7 = dog_shop.items.create(name: "Pull Toy7", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
-# pull_toy8 = dog_shop.items.create(name: "Pull Toy8", description: "Great pull toy!", price: 18, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 24)
 
 user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email', password: 'p', password_confirmation: 'p', role: 0)
 user_2 = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_2_email', password: 'p', password_confirmation: 'p', role: 0)

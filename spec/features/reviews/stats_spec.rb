@@ -16,6 +16,7 @@ RSpec.describe 'Review statistics', type: :feature do
       visit "/items/#{@chain.id}"
 
       expect(page).to have_css(".review-stats")
+      
       within ".review-stats" do
         within ".top-three-reviews" do
           expect(page).to have_content(review_1.title)

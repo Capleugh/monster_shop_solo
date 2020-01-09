@@ -3,26 +3,26 @@
 
 <section class="grid-container">
   <% @merchant.items.each do |item| %>
-  <section class = "grid-item" id = 'item-<%=item.id%>'>
-    <h2> <%=link_to item.name, "/merchant/items/#{item.id}" %> </h2>
-      <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <a href=<%= "/merchant/items/#{item.id}" %>> <img alt="img" src= <%= item.image %>></a>
-      <p> <%= item.description %> </p>
-      <p>Price: <%=number_to_currency(item.price) %> </p>
-      <p>Inventory: <%= item.inventory %> </p>
+    <section class = "grid-item" id = 'item-<%=item.id%>'>
+      <h2> <%=link_to item.name, "/merchant/items/#{item.id}" %> </h2>
+        <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
+        <a href=<%= "/merchant/items/#{item.id}" %>> <img alt="img" src= <%= item.image %>></a>
+        <p> <%= item.description %> </p>
+        <p>Price: <%=number_to_currency(item.price) %> </p>
+        <p>Inventory: <%= item.inventory %> </p>
 
-      <% if item.active? %>
-        <p>Status: Active</p>
-        <%= button_to 'Deactivate', admin_merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "deactivate"} %>
-      <% else %>
-        <p>Status: Inactive</p>
-        <%= button_to 'Activate', admin_merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "activate"} %>
-      <% end %>
+        <% if item.active? %>
+          <p>Status: Active</p>
+          <%= button_to 'Deactivate', admin_merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "deactivate"} %>
+        <% else %>
+          <p>Status: Inactive</p>
+          <%= button_to 'Activate', admin_merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "activate"} %>
+        <% end %>
 
-      <% if item.no_orders? %>
-        <%= button_to 'Delete', admin_merchant_item_path(@merchant.id, item.id), method: :delete %>
-      <% end %>
-      <%= button_to 'Edit Item', edit_admin_merchant_item_path(@merchant.id, item.id), method: :get %>
-  </section>
-<% end %>
+        <% if item.no_orders? %>
+          <%= button_to 'Delete', admin_merchant_item_path(@merchant.id, item.id), method: :delete %>
+        <% end %>
+        <%= button_to 'Edit Item', edit_admin_merchant_item_path(@merchant.id, item.id), method: :get %>
+    </section>
+  <% end %>
 </section>

@@ -84,7 +84,6 @@ RSpec.describe "As an admin" do
       end
 
 
-
       visit admin_merchants_path
 
       within "#merchant-#{meg_shop.id}" do
@@ -92,7 +91,6 @@ RSpec.describe "As an admin" do
       end
 
       expect(current_path).to eq(admin_merchants_path)
-
 
 
       visit "/admin/merchants/#{meg_shop.id}/items"
@@ -132,7 +130,6 @@ RSpec.describe "As an admin" do
       within "#merchant-#{meg_shop.id}" do
         expect(page).to_not have_button("Enable")
       end
-
 
 
       within "#merchant-#{bike_shop.id}" do

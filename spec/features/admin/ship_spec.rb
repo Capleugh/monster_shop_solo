@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'As an Admin', type: :feature do
   before(:each) do
-    # @admin = create(:user, role: 3)
     @admin = User.create!(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
 
     bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)

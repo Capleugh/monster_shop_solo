@@ -57,6 +57,7 @@ RSpec.describe 'Cart show' do
       end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
@@ -71,6 +72,7 @@ RSpec.describe 'Cart show' do
       end
     end
   end
+  
     describe "i can increment/decrement items" do
       it "increments (only to inventory limit) and decrements to zero" do
         mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)

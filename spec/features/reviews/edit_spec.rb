@@ -70,6 +70,7 @@ RSpec.describe 'review edit and update', type: :feature do
       click_on "Update Review"
 
       expect(current_path).to eq("/items/#{@chain.id}")
+      
       within "#review-#{review_1.id}" do
         expect(page).to have_content(title)
         expect(page).to_not have_content(review_1.title)

@@ -13,7 +13,6 @@ RSpec.describe 'As an Admin', type: :feature do
     fill_in :email, with: email
     fill_in :password, with: password
     click_on('Submit')
-    # @bike_shop.toggle :enabled?
   end
 
   it 'On /admin/merchants I see all merchants names as links, their city, state, and enable and disabled buttons' do
