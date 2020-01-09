@@ -8,7 +8,7 @@ RSpec.describe 'As an Admin', type: :feature do
     @item_1 = create(:item, inventory: 20)
     @item_2 = create(:item, inventory: 25)
     @item_3 = create(:item, inventory: 30)
-    @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
+    @item_order_1 = @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
     @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
     @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
 
@@ -62,5 +62,35 @@ RSpec.describe 'As an Admin', type: :feature do
 
     expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order.grandtotal))
     expect(page).to have_content("30")
+  end
+
+  it "admin can cancel 'pending' orders on behalf of a user" do
+    visit "/admin/users/#{@order.user.id}/orders/#{@order.id}"
+
+    @item_order_1.update(status: 'fulfilled')
+    expect(ItemOrder.find(@item_order_1.id).status).to eq('fulfilled')
+    expect(Item.find(@item_1.id).inventory).to eq(20)
+#check inventory levels
+    click_on "Cancel Order"
+
+    expect(current_path).to eq("/admin")
+
+    expect(page).to have_content("#{@order.id} has been cancelled.")
+
+    visit "/admin/users/#{@order.user.id}/orders/#{@order.id}"
+
+    expect(page).to have_content("cancelled")
+    expect(ItemOrder.find(@item_order_1.id).status).to eq('unfulfilled')
+    expect(Item.find(@item_1.id).inventory).to eq(30)
+  end
+
+  it "cannot cancel order because order status isn't pending" do
+
+    @order.update(status: 0)
+    expect(Order.find(@order.id).status).to eq('packaged')
+
+    visit "/admin/users/#{@order.user.id}/orders/#{@order.id}"
+
+    expect(page).to_not have_link "Cancel Order"
   end
 end
