@@ -1,7 +1,7 @@
 # Monster Shop
 
 ## Description
-Monster Shop is an ecommerce application in which users can register, login, and ficticiously buy and sell items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
+Monster Shop is an e-commerce application in which users can register, login, and fictitiously buy and sell items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
 
 ## Use Monster Shop
 
@@ -27,7 +27,7 @@ Monster Shop is an ecommerce application in which users can register, login, and
 ## Authentication
 Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt and are not stored in the database.
 
-Upon registration, users are required to create and confirm a password, which is used in conjunction with their email address to log-in. Email address must be unique.
+Upon registration, users are required to create and confirm a password, which is used in conjunction with their email address to log-in. Email addresses must be unique.
 
 From the User model:
 ```
@@ -131,7 +131,7 @@ We used enums in our User model to differentiate user type. Different types of u
 * Cancel an order that has the status of "pending"
 
 #### Restrictions
-* They cannot visit any path starting with "/admin" or "/merchant", attempting will result in an 404 error
+* They cannot visit any path starting with "/admin" or "/merchant", attempting will result in a 404 error
 * They cannot add or update merchants or items
 
 ### Merchant Employees
@@ -167,11 +167,11 @@ We used enums in our User model to differentiate user type. Different types of u
 Admins have the most ability of any user. They can enable and disable merchants, cancel orders on behalf of a user, and ship orders. They do not have access to a cart or ordering items for themselves.
 
 ## Orders
-There are four possbile statuses for Orders: 
-   1. Packaged - all merchants have fulfilled their items for the order, and has been packaged and ready to ship
+There are four possible statuses for Orders: 
+   1. Packaged - all merchants have fulfilled their items for the order and has been packaged and ready to ship
    1. Pending - a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
-   1. Shipped - an admin has 'shipped' a package and can no longer be cancelled by a user
-   1. Cancelled - only 'pending' and 'packaged' orders can be cancelled
+   1. Shipped - an admin has 'shipped' a package and can no longer be canceled by a user
+   1. Canceled - only 'pending' and 'packaged' orders can be canceled
    
 Orders are created with a status of "pending" by default.
 
@@ -223,7 +223,7 @@ Utilization in test file:
 ```
 
 ## Schema 
-We used a PostgreSQL for out database. It was composed of 6 separate tables. ActiveRecord was used to join tables, calculate statistics and build collections of data. 
+We used a PostgreSQL for our database. It was composed of 6 separate tables. ActiveRecord was used to join tables, calculate statistics and build collections of data. 
 
 ```
   def self.top_five_items
