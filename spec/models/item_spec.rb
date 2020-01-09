@@ -5,7 +5,6 @@ describe Item, type: :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :description }
     it { should validate_presence_of :price }
-    #it { should validate_presence_of :image }
     it { should validate_presence_of :inventory }
     it { should validate_numericality_of(:inventory).is_greater_than_or_equal_to(0)}
     it { should validate_inclusion_of(:active?).in_array([true,false]) }
@@ -143,6 +142,17 @@ describe Item, type: :model do
       # expect(Item.find(item_1.id).inventory).to eq(10)
       expect(item_1.inventory).to eq(10)
       expect(item_2.inventory).to eq(10)
+    end
+
+    it "quantity_ordered(order)" do
+      order = create(:order)
+      item_1 = create(:item, inventory: 8)
+      item_2 = create(:item, inventory: 4)
+      item_order_1 = order.item_orders.create(item: item_1, quantity: 5, price: item_1.price)
+      item_order_2 = order.item_orders.create(item: item_2, quantity: 1, price: item_2.price)
+
+      expect(item_1.quantity_ordered(order)).to eq(5)
+      expect(item_2.quantity_ordered(order)).to eq(1)
     end
 
     it "deactivate_all_items" do
