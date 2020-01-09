@@ -51,8 +51,6 @@
   <p>Item Total:<%= @order.total_items %></p>
 </section>
 
-<% if @order.status == 'shipped' %>
-  <% nil %>
-<% else %>
-  <p><%= link_to "Cancel Order", "/profile/orders/#{@order.id}", method: :delete %></p>
+<% if @order.status == 'pending' %>
+  <p><%= link_to "Cancel Order", "/admin/users/#{@order.user.id}/orders/#{@order.id}", method: :delete %></p>
 <% end %>
