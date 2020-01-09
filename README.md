@@ -5,14 +5,12 @@ Monster Shop is an ecommerce application in which users can register, login, and
 
 ## Use Monster Shop
 
-### Via the Web
-[Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+### Implementation
 
-### Access Locally
+#### Access Locally
 * Clone this repo with: `git clone git@github.com:DavidBarriga-Gomez/monster_shop_part_1.git`
 * Install Ruby 2.4.1
 * Install Rails 5.1.7
-* gems for testing (rspec, etc.)
 * Run `$ bundle install`
 * Run `$ bundle update`
 * Run `$ rails db:setup`
@@ -23,11 +21,15 @@ Monster Shop is an ecommerce application in which users can register, login, and
    * `shoulda-matchers`
    * `factory_bot_rails`
 
+#### Via the Web
+[Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+
 ## Authentication
-Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt. 
+Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt and are not stored in the database.
 
 Upon registration, users are required to create and confirm a password, which is used in conjunction with their email address to log-in. Email address must be unique.
 
+From the User model:
 ```
   validates :email, uniqueness: true, presence: true
   validates_presence_of :password, require: true
@@ -48,7 +50,8 @@ The use of sessions allows the storage of user information as they navigate the 
 ```
 
 ## Authorization
-We implemented `before_action`s and namespacing as part of the authorization limit functionality to authorized users
+We implemented `before_action`s and namespacing as part of the authorization to limit functionality to authorized users.
+
 ``` 
   namespace :merchant  do
     get '/', to: 'dashboard#show'
@@ -100,9 +103,9 @@ Namespacing also necessitated the use of nested `form_for` partials for new and 
 ```
 
 ## User Roles
-We used enums in our User model to differentiate user type. Different types of users have various CRUD functionality.
-```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
+We used enums in our User model to differentiate user type. Different types of users have various CRUD functionality, which is described below.
 
+```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
 
 ### Visitors 
 * Visitors are users browsing the site who are not logged in as a registered user.
@@ -118,7 +121,7 @@ We used enums in our User model to differentiate user type. Different types of u
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/visitor_checkout.png)
 
 ### Default Users
-* Default users are essentially consumers who are registered and logged in to the site.
+* Default users are essentially consumers who are registered and logged in to the site. This type of user is created by a visitor registering for an account.
 
 #### Permissions
 * Includes all permissions as a visitor
@@ -174,7 +177,6 @@ Orders are created with a status of "pending" by default.
 
 Orders are designated via an enum in the model.
 ```  enum status: [:packaged, :pending, :shipped, :cancelled]```
-
 
 When a merchant fulfills the last item in an order, that action changes an order's status from "pending" to "packaged" via the update action in the Merchant Orders Controller.
 
