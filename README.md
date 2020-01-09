@@ -15,7 +15,7 @@ Monster Shop is an e-commerce application in which users can register, login, an
 * Run `$ bundle update`
 * Run `$ rails db:setup`
 * Seeds are provided but feel free to add your own!
-* Note: This application uses the following gems for testing, which are included in the gemfile: 
+* Note: This application uses the following gems for testing, which are included in the gemfile:
    * `rspec-rails`
    * `capybara`
    * `shoulda-matchers`
@@ -52,7 +52,7 @@ The use of sessions allows the storage of user information as they navigate the 
 ## Authorization
 We implemented `before_action`s and namespacing as part of the authorization to limit functionality to authorized users.
 
-``` 
+```
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]
@@ -79,7 +79,7 @@ We implemented `before_action`s and namespacing as part of the authorization to 
     end
   end
 ```
-  
+
 Namespacing also necessitated the use of nested `form_for` partials for new and edit views of nested resources.
 ```
 <%= form_for([@merchant, @item]) do |f| %>
@@ -107,11 +107,11 @@ We used enums in our User model to differentiate user type. Different types of u
 
 ```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
 
-### Visitors 
+### Visitors
 * Visitors are users browsing the site who are not logged in as a registered user.
 
 #### Permissions
-* Browse the site to see all merchants and all active items 
+* Browse the site to see all merchants and all active items
 * Visit individual show pages for merchants and items
 * Add and remove items from their cart
 
@@ -167,12 +167,12 @@ We used enums in our User model to differentiate user type. Different types of u
 Admins have the most ability of any user. They can enable and disable merchants, cancel orders on behalf of a user, and ship orders. They do not have access to a cart or ordering items for themselves.
 
 ## Orders
-There are four possible statuses for Orders: 
+There are four possible statuses for Orders:
    1. Packaged - all merchants have fulfilled their items for the order and has been packaged and ready to ship
    1. Pending - a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
    1. Shipped - an admin has 'shipped' a package and can no longer be canceled by a user
    1. Canceled - only 'pending' and 'packaged' orders can be canceled
-   
+
 Orders are created with a status of "pending" by default.
 
 Orders are designated via an enum in the model.
@@ -190,6 +190,28 @@ When a merchant fulfills the last item in an order, that action changes an order
 Only an admin has the ability to ship an order and only once that order has a status of "packaged".
 
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/admin_ship.png "Admin Ship")
+
+The Merchant Order Show page uses a PORO limiting the number of instance variables passed through the controller to one:
+
+```
+def show
+  order = Order.find(params[:id])
+  merchant = current_user
+  @merchant_show = MerchantShow.new(order, merchant)
+end
+
+-----
+
+class MerchantShow
+  attr_reader :order, :merchant
+
+  def initialize(order, merchant)
+    @order = order
+    @merchant = merchant
+  end
+
+```
+
 
 ## Flash Notifications
 Flash notifications are used throughout the application to notify users if there is a failed attempt at creating or updating resources.
@@ -222,8 +244,8 @@ Utilization in test file:
     @admin = create(:user, role: 3)
 ```
 
-## Schema 
-We used a PostgreSQL for our database. It was composed of 6 separate tables. ActiveRecord was used to join tables, calculate statistics and build collections of data. 
+## Schema
+We used a PostgreSQL for our database. It was composed of 6 separate tables. ActiveRecord was used to join tables, calculate statistics and build collections of data.
 
 ```
   def self.top_five_items
@@ -236,7 +258,7 @@ We used a PostgreSQL for our database. It was composed of 6 separate tables. Act
 ```
 
 The schema is depicted below:
-![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema") 
+![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema")
 
 ## Built With
 * Ruby on Rails - web framework (version)
