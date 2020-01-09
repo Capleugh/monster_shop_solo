@@ -16,7 +16,16 @@ write me!
 * Heorku - cloud platform for app hosting
 
 ## Use Monster Shop
+### Via the Web
 [Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+### Access Locally
+* git clone this repo
+* versions of ruby
+* version of rails 
+* gems for testing (rspec, etc.)
+* bundle install
+* bundle update
+* seeds are provided but feel free to add your own!
 
 ## Authentication
 Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt. 
@@ -31,6 +40,8 @@ Upon registration, users are required to create and confirm a password, which is
 ```
 
 Proper credentials are required to log-in. We utilized flash messages for incorrect credentials.
+
+![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Screen%20Shot%202020-01-09%20at%2011.54.18%20AM.png)
 
 ## Authorization
 We implemented namespacing to authorize specific users navigation and access to functionality throughout the site.
@@ -109,6 +120,9 @@ We used enums in our User model to differentiate user type.
 
 Admins have the most ability of any user. They can enable and disable merchants, cancel orders on behalf of a user, and ship orders. They do not have access to a cart or ordering items for themselves.
 
+## Orders
+Orders have enums to show their status 
+```  enum status: [:packaged, :pending, :shipped, :cancelled]```
 
 ## Testing
 * Rspec
