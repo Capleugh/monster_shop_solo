@@ -10,7 +10,7 @@ RSpec.describe "create an item as an Merchant" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
   end
 
-  it "ADMIN EMPLOYEE: click add item button and fill out create new item form" do
+  it "ADMIN: click add item button and fill out create new item form" do
     name = "Chamois Buttr"
     price = 18
     description = "No more chaffin'!"

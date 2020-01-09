@@ -33,7 +33,7 @@ RSpec.describe("Order Show Page") do
         expect(page).to have_content("#{@item_1.description}")
         expect(page).to have_content("10")
         expect(page).to have_content("#{@item_1.price}")
-        expect(page).to have_content(@item_1.price * 10)
+        expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@item_1.price * 10))
         expect(page).to have_css("img[src*='#{@item_1.image}']")
       end
 
@@ -42,7 +42,7 @@ RSpec.describe("Order Show Page") do
         expect(page).to have_content("#{@item_2.description}")
         expect(page).to have_content("10")
         expect(page).to have_content("#{@item_2.price}")
-        expect(page).to have_content(@item_2.price * 10)
+        expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@item_2.price * 10))
         expect(page).to have_css("img[src*='#{@item_2.image}']")
       end
 
@@ -51,7 +51,7 @@ RSpec.describe("Order Show Page") do
         expect(page).to have_content("#{@item_3.description}")
         expect(page).to have_content("10")
         expect(page).to have_content("#{@item_3.price}")
-        expect(page).to have_content(@item_3.price * 10)
+        expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@item_3.price * 10))
         expect(page).to have_css("img[src*='#{@item_3.image}']")
       end
 

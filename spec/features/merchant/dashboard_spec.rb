@@ -89,7 +89,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
         within "#order-#{@order.id}" do
           expect(page).to have_content(@order.created_at)
           expect(page).to have_content(@order.items.count)
-          expect(page).to have_content(@order.grandtotal)
+          expect(page).to have_content(ActionController::Base.helpers.number_to_currency(@order.grandtotal))
           click_link("Order Number: #{@order.id}")
         end
       end
