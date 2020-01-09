@@ -70,7 +70,7 @@ RSpec.describe 'As an Admin', type: :feature do
     @item_order_1.update(status: 'fulfilled')
     expect(ItemOrder.find(@item_order_1.id).status).to eq('fulfilled')
     expect(Item.find(@item_1.id).inventory).to eq(20)
-#check inventory levels
+
     click_on "Cancel Order"
 
     expect(current_path).to eq("/admin")

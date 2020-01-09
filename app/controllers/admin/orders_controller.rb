@@ -1,9 +1,5 @@
 class Admin::OrdersController < Admin::BaseController
 
-  def index
-    @user = current_user
-  end
-
   def show
     @order = Order.find(params[:id])
   end
@@ -14,9 +10,6 @@ class Admin::OrdersController < Admin::BaseController
       order.item_orders.change_status_to_unfulfilled
       reset_inventory(order)
       change_order_status_to_cancelled(order)
-    else
-      flash[:error] = "Unable to cancel order."
-      redirect_back(fallback_location: admin_path)
     end
   end
 
