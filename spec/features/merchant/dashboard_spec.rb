@@ -104,5 +104,59 @@ RSpec.describe "As a merchant employee or merchant admin" do
         expect(page).to_not have_content(@order_2.grandtotal)
       end
     end
+
+    it "as a merchant employee I see a link to manage my coupons" do
+      bike_shop = create(:merchant)
+      merchant_employee = create(:user, role: 1, merchant: bike_shop)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+      visit merchant_path
+
+      expect(page).to have_link("Manage Coupons")
+    end
+
+    it "as a merchant admin I see a link to manage my coupons" do
+      bike_shop = create(:merchant)
+      merchant_admin = create(:user, role: 2, merchant: bike_shop)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
+
+      visit merchant_path
+
+      expect(page).to have_link("Manage Coupons")
+    end
+
+    it "when I click a link to manage my coupons, I am taken to a coupons index page" do
+      bike_shop = create(:merchant)
+      merchant_employee = create(:user, role: 1, merchant: bike_shop)
+      coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+      coupon_2 = bike_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+      visit merchant_path
+
+      click_link "Manage Coupons"
+      expect(current_path).to eq("/merchant/coupons")
+
+      within "#coupon-#{coupon_1.id}" do
+        expect(page).to have_link(coupon_1.name)
+        expect(page).to have_content(coupon_1.code)
+        expect(page).to have_content(coupon_1.percent)
+      end
+
+      within "#coupon-#{coupon_2.id}" do
+        expect(page).to have_link(coupon_2.name)
+        expect(page).to have_content(coupon_2.code)
+        expect(page).to have_content(coupon_2.percent)
+      end
+    end
   end
 end
+
+# <% current_user.merchant.coupons.each do |coupon| %>
+#   <section id="coupon-<%= coupon.id %>">
+#     <%= link_to coupon.name, "/merchant/coupons/#{coupon.id}" %>
+#   </section>
+# <% end %>
