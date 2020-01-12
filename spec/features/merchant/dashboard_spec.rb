@@ -105,7 +105,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       end
     end
 
-    it "as a merchant employee I see a link to manage my coupons" do
+    it "I see a link to manage my coupons" do
       bike_shop = create(:merchant)
       merchant_employee = create(:user, role: 1, merchant: bike_shop)
 
@@ -116,7 +116,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       expect(page).to have_link("Manage Coupons")
     end
 
-    it "as a merchant admin I see a link to manage my coupons" do
+    it "I see a link to manage my coupons" do
       bike_shop = create(:merchant)
       merchant_admin = create(:user, role: 2, merchant: bike_shop)
 
@@ -127,7 +127,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       expect(page).to have_link("Manage Coupons")
     end
 
-    it "as a merchant employee, when I click a link to manage my coupons, I am taken to a coupons index page" do
+    it "when I click a link to manage my coupons, I am taken to a coupons index page" do
       bike_shop = create(:merchant)
       merchant_employee = create(:user, role: 1, merchant: bike_shop)
       coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
@@ -138,7 +138,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       visit merchant_path
 
       click_link "Manage Coupons"
-      expect(current_path).to eq("/merchant/coupons")
+      expect(current_path).to eq(merchant_coupons_path)
 
       within "#coupon-#{coupon_1.id}" do
         expect(page).to have_link(coupon_1.name)
@@ -153,7 +153,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       end
     end
 
-    it "as a merchant admin, when I click a link to manage my coupons, I am taken to a coupons index page" do
+    it "when I click a link to manage my coupons, I am taken to a coupons index page" do
       bike_shop = create(:merchant)
       merchant_admin = create(:user, role: 2, merchant: bike_shop)
       coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
@@ -164,7 +164,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
       visit merchant_path
 
       click_link "Manage Coupons"
-      expect(current_path).to eq("/merchant/coupons")
+      expect(current_path).to eq(merchant_coupons_path)
 
       within "#coupon-#{coupon_1.id}" do
         expect(page).to have_link(coupon_1.name)
