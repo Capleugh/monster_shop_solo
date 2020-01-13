@@ -1,6 +1,8 @@
-<h1><%= @coupon.name %></h1>
-<%= @coupon.code %><br>
-<%= @coupon.percent %>
+<center>
+  <h1><%= @coupon.name %></h1>
+  <p><%= @coupon.code %></p>
+  <p><%= @coupon.percent * 100 %>% </p>
 
-<%= link_to "Edit", "/merchant/coupons/#{@coupon.id}/edit" %>
-<%= button_to "Delete", "/merchant/coupons/#{@coupon.id}", method: :delete %>
+  <%= link_to "Edit", "/merchant/coupons/#{@coupon.id}/edit" %>
+  <%= button_to "Delete", "/merchant/coupons/#{@coupon.id}", method: :delete %>
+</center>
