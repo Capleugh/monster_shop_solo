@@ -8,6 +8,7 @@ class Merchant <ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
   has_many :users
+  has_many :coupons
 
   def no_orders?
     item_orders.empty?
