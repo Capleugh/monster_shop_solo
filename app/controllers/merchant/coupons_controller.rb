@@ -3,7 +3,6 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def show
-    # require "pry"; binding.pry
     @coupon = Coupon.find(params[:id])
   end
 
@@ -27,11 +26,32 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def edit
+    @merchant = Merchant.find(current_user.merchant_id)
+    @coupon = Coupon.find(params[:id])
+    # without merchant, form_for doesn't recognize the path
+  end
+
+  def update
+    @merchant = Merchant.find(current_user.merchant_id)
+    @coupon = Coupon.find(params[:format])
+    @coupon.update(coupon_params)
+      if @coupon.save
+        flash[:success] = "Coupon updated!"
+
+        redirect_to merchant_coupons_path
+      else
+        flash[:error] = @coupon.errors.full_messages.to_sentence
+        render :edit
+      end
+
+      # similarly to create, coupon requires an instance variable because of the render :edit
+      # merchant is necessary or it doesn't understand coupon_path maybe you can refactor later.
+
+    # this redirect was the only way I could get form_for to cooperate. Ask mel-rob about this
   end
 
   private
     def coupon_params
       params.require(:coupon).permit(:name, :code, :percent)
-      # why does this make the merchant.name nil class error go away?
     end
 end
