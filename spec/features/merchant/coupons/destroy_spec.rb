@@ -15,6 +15,7 @@ RSpec.describe "As a merchant" do
       click_button "Delete"
 
       expect(current_path).to eq(merchant_coupons_path)
+      expect(page).to have_content("Coupon deleted!")
       bike_shop.reload
       visit merchant_coupons_path
 

@@ -14,7 +14,7 @@ RSpec.describe "As a merchant"  do
 
       expect(page).to have_content(coupon_1.name)
       expect(page).to have_content(coupon_1.code)
-      expect(page).to have_content(coupon_1.percent)
+      expect(page).to have_content(coupon_1.percent * 100)
 
       click_link "Edit"
       expect(current_path).to eq("/merchant/coupons/#{coupon_1.id}/edit")
