@@ -12,6 +12,10 @@ RSpec.describe "As a merchant employee or admin"  do
 
       visit "/merchant/coupons/#{coupon_1.id}"
 
+      expect(page).to have_content(coupon_1.name)
+      expect(page).to have_content(coupon_1.code)
+      expect(page).to have_content(coupon_1.percent)
+
       click_link "Edit"
       expect(current_path).to eq("/merchant/coupons/#{coupon_1.id}/edit")
     end
