@@ -146,7 +146,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
     name = '35% weekend promo'
     code = 'WKD30'
-    percent = '30'
+    percent = '1.01'
 
     fill_in 'Name', with: name
     fill_in 'Code', with: code
