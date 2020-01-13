@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "As a merchant employee or admin"  do
   describe "when I visit a coupons show page" do
-    xit "I see all of that coupon's info and a button to edit a coupon" do
+    it "I see all of that coupon's info and a button to edit a coupon" do
       bike_shop = create(:merchant)
       merchant_admin = create(:user, role: 2, merchant: bike_shop)
       coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
@@ -12,8 +12,8 @@ RSpec.describe "As a merchant employee or admin"  do
 
       visit "/merchant/coupons/#{coupon_1.id}"
 
-
-      expect(page).to have_button("Edit Coupon")
+      click_link "Edit"
+      expect(current_path).to eq("/merchant/coupons/#{coupon_1.id}/edit")
     end
   end
 end
