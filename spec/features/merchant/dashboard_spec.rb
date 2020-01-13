@@ -138,6 +138,9 @@ RSpec.describe "As a merchant employee or merchant admin" do
       visit merchant_path
 
       click_link "Manage Coupons"
+
+      # should this be in nav bar?
+      
       expect(current_path).to eq(merchant_coupons_path)
 
       within "#coupon-#{coupon_1.id}" do
