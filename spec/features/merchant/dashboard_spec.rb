@@ -140,19 +140,15 @@ RSpec.describe "As a merchant employee or merchant admin" do
       click_link "Manage Coupons"
 
       # should this be in nav bar?
-      
+
       expect(current_path).to eq(merchant_coupons_path)
 
       within "#coupon-#{coupon_1.id}" do
         expect(page).to have_link(coupon_1.name)
-        expect(page).to have_content(coupon_1.code)
-        expect(page).to have_content(coupon_1.percent)
       end
 
       within "#coupon-#{coupon_2.id}" do
         expect(page).to have_link(coupon_2.name)
-        expect(page).to have_content(coupon_2.code)
-        expect(page).to have_content(coupon_2.percent)
       end
     end
 
@@ -171,14 +167,10 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
       within "#coupon-#{coupon_1.id}" do
         expect(page).to have_link(coupon_1.name)
-        expect(page).to have_content(coupon_1.code)
-        expect(page).to have_content(coupon_1.percent)
       end
 
       within "#coupon-#{coupon_2.id}" do
         expect(page).to have_link(coupon_2.name)
-        expect(page).to have_content(coupon_2.code)
-        expect(page).to have_content(coupon_2.percent)
       end
     end
   end
