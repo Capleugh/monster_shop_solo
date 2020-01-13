@@ -4,5 +4,5 @@ class Coupon < ApplicationRecord
   validates :name, uniqueness: true, presence: true
   validates :code, uniqueness: true, presence: true
 
-  validates_numericality_of :percent, less_than_or_equal_to: 1
+  validates_numericality_of :percent, less_than_or_equal_to: 1, greater_than: 0
 end
