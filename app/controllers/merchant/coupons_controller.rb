@@ -3,20 +3,13 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def show
+    # require "pry"; binding.pry
+    @coupon = Coupon.find(params[:id])
   end
 
   def new
     @merchant = Merchant.find(current_user.merchant_id)
     @coupon = @merchant.coupons.new
-    # @coupon = Coupon.new
-
-
-
-
-
-
-
-    # why do both work?
   end
 
   def create
@@ -30,6 +23,10 @@ class Merchant::CouponsController < Merchant::BaseController
         flash[:error] = @coupon.errors.full_messages.to_sentence
         render :new
       end
+    # this has to be here for the sake of rendering new and form_for
+  end
+
+  def edit
   end
 
   private
