@@ -3,7 +3,5 @@
 <% current_user.merchant.coupons.each do |coupon| %>
   <section id="coupon-<%= coupon.id %>"><br>
     <%= link_to coupon.name, "/merchant/coupons/#{coupon.id}" %><br>
-    <%= coupon.code %><br>
-    <%= coupon.percent %>
   </section>
 <% end %>
