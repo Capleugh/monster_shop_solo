@@ -3,3 +3,4 @@
 <%= @coupon.percent %>
 
 <%= link_to "Edit", "/merchant/coupons/#{@coupon.id}/edit" %>
+<%= button_to "Delete", "/merchant/coupons/#{@coupon.id}", method: :delete %>
