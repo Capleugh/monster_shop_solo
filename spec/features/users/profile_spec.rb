@@ -12,9 +12,12 @@ RSpec.describe 'As A User', type: :feature do
     @foxy_user = User.create!(name: 'Foxy', address: '4942 Willow Street', city: 'Denver', state: 'Colorado', zip:80238, email: 'foxy_email', password: 'david', role: 0)
 
     @order = @foxy_user.orders.create!(name: 'this', address: 'that', city: 'this', state: 'that', zip: 12345)
+
+    @coupon_1 = @meg.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
   end
 
   it 'As a registered user if i have orders there is a link to to My Orders to /profile/orders' do
+
     visit '/login'
 
     fill_in :email, with: @foxy_user.email
@@ -38,6 +41,7 @@ RSpec.describe 'As A User', type: :feature do
     fill_in :city, with: 'Denver'
     fill_in :state, with: 'Colorado'
     fill_in :zip, with: 80238
+    fill_in :coupon_code, with: ''
 
     click_on('Create Order')
 
