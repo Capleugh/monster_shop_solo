@@ -15,7 +15,7 @@ class Merchant::CouponsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
     @coupon = @merchant.coupons.create(coupon_params)
       if @coupon.save
-        flash[:success] = "Coupon added!"
+        flash[:success] = "Coupon has been added!"
 
         redirect_to "/merchant/coupons"
       else
@@ -37,7 +37,7 @@ class Merchant::CouponsController < Merchant::BaseController
     @coupon = Coupon.find(params[:format])
     @coupon.update(coupon_params)
       if @coupon.save
-        flash[:success] = "Coupon updated!"
+        flash[:success] = "Coupon has been updated!"
 
         redirect_to merchant_coupons_path
       else
@@ -46,15 +46,13 @@ class Merchant::CouponsController < Merchant::BaseController
       end
     # similarly to create, coupon requires an instance variable because of the render :edit
     # merchant is necessary or it doesn't understand coupon_path maybe you can refactor later.
-
-    # this redirect was the only way I could get form_for to cooperate. Ask mel-rob about this
   end
 
   def destroy
     coupon = Coupon.find(params[:id])
     coupon.destroy
 
-    flash[:success] = "Coupon deleted!"
+    flash[:success] = "Coupon has been deleted."
     redirect_to merchant_coupons_path
   end
 
