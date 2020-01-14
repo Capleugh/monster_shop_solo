@@ -37,9 +37,37 @@ class CartController < ApplicationController
     redirect_to "/cart"
   end
 
+  def add_coupon
+    items = cart.items
+    coupon = Coupon.where(coupon_params).first
+
+    session[:coupon_id] = coupon.id
+
+    flash[:success] = "Coupon has been applied to #{coupon.merchant.name}'s items."
+
+    # require "pry"; binding.pry
+
+    # how to join coupons to items...
+
+    # come back to this ish below
+    # if items.merchant_id == coupon.merchant_id, then apply coupon (figure out how to do this)
+
+    # items.where(items.merchant_id = coupons.merchant_id)
+
+
+    # could also be written this way:
+    # coupon = Coupon.find_by(code: params[:coupon_code])
+
+    redirect_to '/cart'
+  end
+
   private
 
-  def require_not_admin
-    render file: '/public/404'unless !current_admin?
-  end
+    def require_not_admin
+      render file: '/public/404'unless !current_admin?
+    end
+
+    def coupon_params
+      params.permit(:code)
+    end
 end
