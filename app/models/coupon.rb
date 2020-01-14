@@ -1,6 +1,5 @@
 class Coupon < ApplicationRecord
   belongs_to :merchant
-  belongs_to :order, optional: true
 
   validates :name, uniqueness: true, presence: true
   validates :code, uniqueness: true, presence: true

@@ -11,9 +11,10 @@ describe Order, type: :model do
   end
 
   describe "relationships" do
-    it {should have_many :item_orders}
-    it {should have_many(:items).through(:item_orders)}
-    it {should belong_to :user}
+    it { should have_many :item_orders }
+    it { should have_many(:items).through(:item_orders) }
+    it { should belong_to :user }
+    it { should belong_to(:coupon).optional }
   end
 
   describe 'instance methods' do
