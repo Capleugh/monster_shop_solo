@@ -41,7 +41,6 @@ RSpec.describe 'As A User', type: :feature do
     fill_in :city, with: 'Denver'
     fill_in :state, with: 'Colorado'
     fill_in :zip, with: 80238
-    fill_in :coupon_code, with: ''
 
     click_on('Create Order')
 

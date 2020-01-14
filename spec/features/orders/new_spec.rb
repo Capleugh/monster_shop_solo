@@ -63,7 +63,6 @@ RSpec.describe("New Order Page") do
       expect(page).to have_field(:city)
       expect(page).to have_field(:state)
       expect(page).to have_field(:zip)
-      expect(page).to have_field(:coupon_code)
       expect(page).to have_button("Create Order")
     end
   end

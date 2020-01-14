@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'As A User', type: :feature do
   before(:each) do
-    @order = create(:order)
-    @user = User.last
+    @user = create(:user, role: 0)
+    @order = create(:order, user: @user)
     @item_1 = create(:item)
     @item_2 = create(:item)
     @item_3 = create(:item)
@@ -12,7 +12,7 @@ RSpec.describe 'As A User', type: :feature do
     @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
   end
 
-  it 'When I visit  profile order page I see every order made ' do
+  it 'When I visit profile order page I see every order made ' do
     visit '/login'
     fill_in :email, with: @user.email
     fill_in :password, with: 'password'
@@ -37,7 +37,6 @@ RSpec.describe 'As A User', type: :feature do
     fill_in :city, with: @user.city
     fill_in :state, with: @user.state
     fill_in :zip, with: @user.zip
-    fill_in :coupon_code, with: coupon_code
 
     click_on('Create Order')
 

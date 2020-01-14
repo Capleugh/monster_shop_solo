@@ -37,14 +37,12 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
-      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
-      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 
@@ -84,14 +82,12 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
-      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
-      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 
@@ -128,7 +124,7 @@ RSpec.describe("Order Creation") do
       end
     end
 
-    it 'i cant create order if info not filled out' do
+    it "I can't create order if info not filled out with the exception of a coupon code" do
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -159,19 +155,67 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
-      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
-      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 
       expect(page).to have_content("Please complete address form to create an order.")
       expect(page).to have_button("Create Order")
     end
+
+    # it "A coupon is saved once I check out" do
+    #   user = create(:user, role: 0)
+    #   bike_shop = create(:merchant)
+    #
+    #   tire = create(:item, merchant: bike_shop)
+    #   bike_seat = create(:item, merchant: bike_shop)
+    #   basket = create(:item, merchant: bike_shop)
+    #   coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+    #   order = create(:order, user: user, coupon: coupon_1)
+    #
+    #   order.item_orders.create(item: bike_seat, quantity: 2, price: bike_seat.price)
+    #   order.item_orders.create(item: tire, quantity: 1, price: tire.price)
+    #   order.item_orders.create(item: basket, quantity: 1, price: basket.price)
+    #
+    #
+    #   allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    #
+    #   visit "/items/#{bike_seat.id}"
+    #   click_on "Add To Cart"
+    #   visit "/items/#{bike_seat.id}"
+    #   click_on "Add To Cart"
+    #   visit "/items/#{tire.id}"
+    #   click_on "Add To Cart"
+    #   visit "/items/#{basket.id}"
+    #   click_on "Add To Cart"
+    #
+    #   visit "/cart"
+    #
+    #   click_on "Checkout"
+    #
+    #   name = "Jean Ralphio"
+    #   address = "123 Sesame St."
+    #   city = "NYC"
+    #   state = "New York"
+    #   zip = 10001
+    #
+    #   fill_in :name, with: name
+    #   fill_in :address, with: address
+    #   fill_in :city, with: city
+    #   fill_in :state, with: state
+    #   fill_in :zip, with: zip
+    #
+    #   click_button "Create Order"
+    #
+    #   expect(current_path).to eq("/profile/orders")
+    #
+    #   expect(page).to have_content("Order created!")
+    #   expect(page).to have_content("Coupon code: WKD:25")
+    # end
   end
 end
