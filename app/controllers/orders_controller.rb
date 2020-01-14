@@ -13,8 +13,9 @@ class OrdersController <ApplicationController
 
   def create
     order = current_user.orders.create(order_params)
+
     if order.save
-      cart.items.each do |item,quantity|
+      cart.items.each do |item, quantity|
         order.item_orders.create({
           item: item,
           quantity: quantity,
@@ -51,7 +52,7 @@ class OrdersController <ApplicationController
 
   private
     def order_params
-      params.permit(:name, :address, :city, :state, :zip)
+      params.permit(:name, :address, :city, :state, :zip, :coupon_code)
     end
 
     def change_order_status_to_cancelled(order)
