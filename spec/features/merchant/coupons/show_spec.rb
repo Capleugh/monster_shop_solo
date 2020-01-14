@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "As a merchant"  do
   describe "when I visit a coupons show page" do
-    it "I see all of that coupon's info and a button to edit a coupon" do
+    it "I see all of that coupon's info and a link to edit a coupon" do
       bike_shop = create(:merchant)
       merchant = create(:user, role: 1, merchant: bike_shop)
       coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)

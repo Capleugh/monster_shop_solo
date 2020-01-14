@@ -26,7 +26,7 @@ RSpec.describe "As a merchant" do
     # come back and test for the event that a coupon has been used in an order
 
   describe "when I visit a the coupons index page" do
-    it "I see a button to delete a coupon" do
+    it "I see a button to delete a coupon next to each coupon name" do
       bike_shop = create(:merchant)
       merchant = create(:user, role: 1, merchant: bike_shop)
       coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
