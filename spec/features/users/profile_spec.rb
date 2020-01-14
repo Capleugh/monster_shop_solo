@@ -16,7 +16,7 @@ RSpec.describe 'As A User', type: :feature do
     @coupon_1 = @meg.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
   end
 
-  it 'As a registered user if i have orders there is a link to to My Orders to /profile/orders' do
+  it 'As a registered user if I have orders there is a link to to My Orders to /profile/orders' do
 
     visit '/login'
 
@@ -51,4 +51,6 @@ RSpec.describe 'As A User', type: :feature do
 
     expect(current_path).to eq('/profile/orders')
   end
+
+
 end

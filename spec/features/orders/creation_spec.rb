@@ -37,12 +37,14 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
+      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
+      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 
@@ -82,12 +84,14 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
+      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
+      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 
@@ -155,12 +159,14 @@ RSpec.describe("Order Creation") do
       city = "NYC"
       state = "New York"
       zip = 10001
+      coupon_code = ''
 
       fill_in :name, with: name
       fill_in :address, with: address
       fill_in :city, with: city
       fill_in :state, with: state
       fill_in :zip, with: zip
+      fill_in :coupon_code, with: coupon_code
 
       click_button "Create Order"
 

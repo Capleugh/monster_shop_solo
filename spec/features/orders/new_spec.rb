@@ -16,7 +16,7 @@ RSpec.describe("New Order Page") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
     end
-    
+
     it "I see all the information about my current cart" do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -63,6 +63,7 @@ RSpec.describe("New Order Page") do
       expect(page).to have_field(:city)
       expect(page).to have_field(:state)
       expect(page).to have_field(:zip)
+      expect(page).to have_field(:coupon_code)
       expect(page).to have_button("Create Order")
     end
   end

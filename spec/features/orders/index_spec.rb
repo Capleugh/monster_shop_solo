@@ -30,11 +30,15 @@ RSpec.describe 'As A User', type: :feature do
     visit '/cart'
     click_on('Checkout')
 
+    coupon_code = ''
+
     fill_in :name, with: @user.name
     fill_in :address, with: @user.address
     fill_in :city, with: @user.city
     fill_in :state, with: @user.state
     fill_in :zip, with: @user.zip
+    fill_in :coupon_code, with: coupon_code
+
     click_on('Create Order')
 
     within "#order-#{@order.id}" do
