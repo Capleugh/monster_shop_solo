@@ -29,7 +29,7 @@ RSpec.describe "As a merchant"  do
       click_button 'Submit'
 
       expect(current_path).to eq(merchant_coupons_path)
-      expect(page).to have_content("Coupon updated!")
+      expect(page).to have_content("Coupon has been updated!")
     end
 
     it "text fields cannot be left blank" do
