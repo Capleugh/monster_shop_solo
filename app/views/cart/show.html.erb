@@ -1,13 +1,5 @@
 <h1>Cart</h1>
 
-<p>Apply Coupon: <%= form_tag "/cart/apply" do %>
-  <%= label_tag :coupon_code %>
-  <%= text_field_tag :coupon_code %>
-
-  <%= submit_tag 'Submit' %>
-  <% end %>
-</p>
-
 <% if !@items.empty? %>
 <center>
 <table class = "cart-items">
@@ -35,7 +27,11 @@
       </td>
       <td>
 
-      <p><%=number_to_currency(item.price)%></p>
+      <% if coupon && item.applicable_coupon?(coupon) %>
+        <p><%=number_to_currency(item.discount_item(coupon))%></p>
+      <% else %>
+        <p><%=number_to_currency(item.price)%></p>
+      <% end %>
 
       </td>
       <td>
@@ -57,11 +53,19 @@
     <% end %>
 </table>
 
+<p>Apply Coupon: <%= form_tag "/cart/apply" do %>
+  <%= label_tag :coupon_code %>
+  <%= text_field_tag :coupon_code %>
+
+  <%= submit_tag 'Submit' %>
+  <% end %>
+</p>
+
 <p>Total: <%= number_to_currency(cart.total) %></p>
 
 <% if coupon %>
   <p> <%= coupon.code %> discount applied. </p>
-  <p> Discounted Total: </p>
+  <p> Discounted Total: <%= number_to_currency(cart.discounted_total(coupon)) %></p>
 <% end %>
 
 <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
