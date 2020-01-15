@@ -32,6 +32,12 @@ class Cart
     end
   end
 
+  def discounted_total(coupon)
+    @contents.sum do |item_id,quantity|
+      Item.find(item_id).discount_item(coupon) * quantity
+    end
+  end
+
   def add_quantity(item_id)
     @contents[item_id] += 1
   end

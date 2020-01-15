@@ -34,13 +34,13 @@ RSpec.describe Cart do
       expect(result.length).to eq(2)
     end
 
-    it 'subtotal(item, coupon)' do
+    it 'subtotal(item)' do
       cart = Cart.new(Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
 
-      result = cart.subtotal(@pencil)#, @coupon)
+      result = cart.subtotal(@pencil)
       expect(result).to eq(4)
     end
 
@@ -49,8 +49,19 @@ RSpec.describe Cart do
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
+
       result = cart.total
       expect(result).to eq(24)
+    end
+
+    it "discounted_total(item, coupon)" do
+      cart = Cart.new(Hash.new(0))
+      cart.add_item(@paper.id.to_s)
+      cart.add_item(@pencil.id.to_s)
+      cart.add_item(@pencil.id.to_s)
+
+      result = cart.discounted_total(@coupon)
+      expect(result).to eq(12)
     end
 
     it 'add_quantity(item_id)' do
