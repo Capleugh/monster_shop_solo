@@ -17,7 +17,7 @@ RSpec.describe("Order Show Page") do
       expect(page).to have_content(@user.orders.first.id)
     end
 
-    it "route to order show page and have order details" do
+    it "routes to order show page and have order details" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       visit "/profile/orders"
       click_on "#{@order.id}"

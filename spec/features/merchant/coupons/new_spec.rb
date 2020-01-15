@@ -27,7 +27,7 @@ RSpec.describe "As a merchant employee or admin"  do
     new_coupon = Coupon.last
 
     expect(current_path).to eq("/merchant/coupons")
-    expect(page).to have_content("Coupon added!")
+    expect(page).to have_content("Coupon has been added!")
     expect(new_coupon.name).to eq(name)
     expect(new_coupon.code).to eq(code)
     expect(new_coupon.percent).to eq(percent)
@@ -60,7 +60,7 @@ RSpec.describe "As a merchant employee or admin"  do
     new_coupon = Coupon.last
 
     expect(current_path).to eq("/merchant/coupons")
-    expect(page).to have_content("Coupon added!")
+    expect(page).to have_content("Coupon has been added!")
     expect(new_coupon.name).to eq(name)
     expect(new_coupon.code).to eq(code)
     expect(new_coupon.percent).to eq(percent)
@@ -146,7 +146,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
     name = '35% weekend promo'
     code = 'WKD30'
-    percent = '30'
+    percent = '1.01'
 
     fill_in 'Name', with: name
     fill_in 'Code', with: code

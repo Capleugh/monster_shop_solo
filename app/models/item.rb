@@ -58,4 +58,16 @@ class Item <ApplicationRecord
   def self.activate_all_items
     update(active?: true)
   end
+
+  def applicable_coupon?(coupon)
+     merchant_id == coupon.merchant_id
+  end
+
+  def discount_item(coupon)
+    if applicable_coupon?(coupon)
+      price - (price * coupon.percent)
+    else
+      price
+    end
+  end
 end

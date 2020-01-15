@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   delete "/reviews/:id", to: "reviews#destroy"
 
   get "/cart", to: "cart#show"
+  post "/cart/apply", to: "cart#add_coupon"
+  # fun fact, if you swap these two paths it will error because it will always look for item_id
   post "/cart/:item_id", to: "cart#add_item"
   patch "/cart/:item_id", to: "cart#update"
   delete "/cart", to: "cart#empty"
@@ -48,7 +50,6 @@ Rails.application.routes.draw do
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
 
-
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -57,7 +58,7 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]
     resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
-    resources :coupons, only: [:index, :show, :new, :create]
+    resources :coupons, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   end
 
   namespace :admin do

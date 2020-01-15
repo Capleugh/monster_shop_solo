@@ -66,6 +66,7 @@ RSpec.describe "As an admin" do
       end
 
       expect(current_path).to eq(admin_merchant_items_path(@merchant))
+      
       expect(page).to have_content("#{@item_3.name} has been deleted.")
 
       expect(page).to_not have_css("#item-#{@item_3.id}")

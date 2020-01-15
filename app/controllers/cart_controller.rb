@@ -37,9 +37,29 @@ class CartController < ApplicationController
     redirect_to "/cart"
   end
 
+  def add_coupon
+    coupon = Coupon.find_by(code: params[:coupon_code])
+
+    if coupon
+      session[:coupon_id] = coupon.id
+
+      flash[:success] = "Coupon has been applied to #{coupon.merchant.name}'s items."
+
+      redirect_to '/cart'
+    else
+      flash[:error] = "Please enter a valid coupon"
+
+      redirect_to '/cart'
+    end
+  end
+
   private
 
-  def require_not_admin
-    render file: '/public/404'unless !current_admin?
-  end
+    def require_not_admin
+      render file: '/public/404'unless !current_admin?
+    end
+
+    def coupon_params
+      params.permit(:code)
+    end
 end

@@ -1,4 +1,4 @@
-require 'rails_helper'
+ require 'rails_helper'
 
 RSpec.describe 'Cart show' do
   describe 'When I have added items to my cart' do
@@ -72,7 +72,7 @@ RSpec.describe 'Cart show' do
       end
     end
   end
-  
+
     describe "i can increment/decrement items" do
       it "increments (only to inventory limit) and decrements to zero" do
         mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -133,6 +133,168 @@ RSpec.describe 'Cart show' do
         click_on('Cart')
         click_on('log in')
         expect(current_path).to eq('/login')
+      end
+    end
+
+    describe "show page displays a form with which to add a coupon code as a visitor" do
+      it "when I enter that code, it is applied to my cart" do
+
+        bike_shop = create(:merchant)
+        doge_shop = create(:merchant)
+
+        tire = create(:item, merchant: bike_shop)
+        bike_seat = create(:item, merchant: bike_shop)
+        basket = create(:item, merchant: bike_shop)
+        bone = create(:item, merchant: doge_shop)
+        treats = create(:item, merchant: doge_shop)
+
+
+        coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+        coupon_2 = doge_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
+        coupon_3 = bike_shop.coupons.create(name: "40% weekend promo", code: "WKD40", percent: 0.40)
+
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'WKD25'
+
+        click_button 'Submit'
+
+        expect(current_path).to eq("/cart")
+
+        expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
+      end
+    end
+
+    describe "show page displays a form with which to add a coupon code as a user" do
+      it "when I enter that code, it is applied to my cart" do
+        user = create(:user, role: 0)
+
+        bike_shop = create(:merchant)
+
+        tire = create(:item, merchant: bike_shop)
+        bike_seat = create(:item, merchant: bike_shop)
+        basket = create(:item, merchant: bike_shop)
+
+        bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+        bike_shop.coupons.create(name: "40% weekend promo", code: "WKD40", percent: 0.40)
+
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'WKD25'
+
+        click_button 'Submit'
+
+        expect(current_path).to eq("/cart")
+
+        expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
+
+    # why is rspec weird? it works in rails
+        # visit "/items/#{bike_seat.id}"
+        # click_on "Add To Cart"
+        # visit "/items/#{basket.id}"
+        # click_on "Add To Cart"
+        #
+
+        fill_in :coupon_code, with: 'WKD40'
+
+        click_button 'Submit'
+
+        expect(current_path).to eq("/cart")
+
+        expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
+      end
+
+      it "when a coupon code which doesn't exist is entered, I see an error message" do
+        user = create(:user, role: 0)
+
+        bike_shop = create(:merchant)
+
+        tire = create(:item, merchant: bike_shop)
+        bike_seat = create(:item, merchant: bike_shop)
+        basket = create(:item, merchant: bike_shop)
+
+
+        bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'CODE78'
+
+        click_button 'Submit'
+
+        expect(page).to have_content("Please enter a valid coupon")
+      end
+
+      it "coupon only applies to items belonging to merchant that coupon belongs to and I see the discounted total" do
+        user = create(:user, role: 0)
+
+        bike_shop = create(:merchant)
+        doge_shop = create(:merchant)
+
+        tire = create(:item, merchant: bike_shop)
+        bike_seat = create(:item, merchant: bike_shop)
+        basket = create(:item, merchant: bike_shop)
+        bone = create(:item, merchant: doge_shop)
+        treats = create(:item, merchant: doge_shop)
+
+        coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bone.id}"
+        click_on "Add To Cart"
+        visit "/items/#{treats.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'WKD25'
+
+        click_button 'Submit'
+
+        expect(current_path).to eq("/cart")
+
+        expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
+        expect(page).to have_content("#{coupon_1.code} discount applied.")
+
+        expect(page).to have_content("Total: $270")
+        expect(page).to have_content("Discounted Total:")
+        # this only passes because I haven't gotten to the total calculation yet. factory bot has been weird...
       end
     end
   end
