@@ -293,8 +293,8 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("#{coupon_1.code} discount applied.")
 
         expect(page).to have_content("Total: $270")
-        expect(page).to have_content("Discounted Total:")
-        # this only passes because I haven't gotten to the total calculation yet. factory bot has been weird...
+        expect(page).to have_content("Discounted Total: $230.25")
+        # factory bot has been weird...
       end
     end
   end
