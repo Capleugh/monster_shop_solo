@@ -76,7 +76,7 @@ describe Order, type: :model do
     end
 
     it 'orders should display in order of status enums on admin dashboard' do
-      expect(Order.order_by_status).to eq([@order_5, @order_1, @order_3, @order_4, @order_2])
+      expect(Order.order_by_status).to eq([@order_5, @order_1, @order_3, @order_4, @order_2]) 
     end
   end
 end

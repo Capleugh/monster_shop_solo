@@ -1,4 +1,4 @@
-require 'rails_helper'
+ require 'rails_helper'
 
 RSpec.describe 'Cart show' do
   describe 'When I have added items to my cart' do
@@ -254,7 +254,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Please enter a valid coupon")
       end
 
-      it "coupon only applies to items belonging to merchant that coupon belongs to and I see the discounted total" do
+      xit "coupon only applies to items belonging to merchant that coupon belongs to and I see the discounted total" do
         user = create(:user, role: 0)
 
         bike_shop = create(:merchant)
@@ -291,7 +291,7 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
         expect(page).to have_content("#{coupon_1.code} discount applied.")
-        # save_and_open_pçage
+        # save_and_open_page
         expect(page).to have_content("Total: $90")
         expect(page).to have_content("Discounted Total:")
       end
