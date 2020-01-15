@@ -38,27 +38,19 @@ class CartController < ApplicationController
   end
 
   def add_coupon
-    items = cart.items
-    coupon = Coupon.where(coupon_params).first
+    coupon = Coupon.find_by(code: params[:coupon_code])
 
-    session[:coupon_id] = coupon.id
+    if coupon
+      session[:coupon_id] = coupon.id
 
-    flash[:success] = "Coupon has been applied to #{coupon.merchant.name}'s items."
+      flash[:success] = "Coupon has been applied to #{coupon.merchant.name}'s items."
 
-    # require "pry"; binding.pry
+      redirect_to '/cart'
+    else
+      flash[:error] = "Please enter a valid coupon"
 
-    # how to join coupons to items...
-
-    # come back to this ish below
-    # if items.merchant_id == coupon.merchant_id, then apply coupon (figure out how to do this)
-
-    # items.where(items.merchant_id = coupons.merchant_id)
-
-
-    # could also be written this way:
-    # coupon = Coupon.find_by(code: params[:coupon_code])
-
-    redirect_to '/cart'
+      redirect_to '/cart'
+    end
   end
 
   private
