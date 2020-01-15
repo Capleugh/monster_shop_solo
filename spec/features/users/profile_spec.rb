@@ -50,6 +50,4 @@ RSpec.describe 'As A User', type: :feature do
 
     expect(current_path).to eq('/profile/orders')
   end
-
-
 end

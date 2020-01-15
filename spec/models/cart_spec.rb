@@ -4,8 +4,12 @@ RSpec.describe Cart do
   describe "methods" do
     before(:each) do
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @coupon = @mike.coupons.create(name: '50% Labor day', code: 'LABOR50', percent: 0.50)
     end
 
     it 'add_item(item)' do
@@ -30,12 +34,13 @@ RSpec.describe Cart do
       expect(result.length).to eq(2)
     end
 
-    it 'subtotal(item)' do
+    it 'subtotal(item, coupon)' do
       cart = Cart.new(Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
-      result = cart.subtotal(@pencil)
+
+      result = cart.subtotal(@pencil)#, @coupon)
       expect(result).to eq(4)
     end
 
