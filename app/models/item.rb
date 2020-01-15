@@ -60,6 +60,14 @@ class Item <ApplicationRecord
   end
 
   def applicable_coupon?(coupon)
-    merchant_id == coupon.merchant_id
+     merchant_id == coupon.merchant_id
+  end
+
+  def discount_items(coupon)
+    if applicable_coupon?(coupon)
+      price - (price * coupon.percent)
+    else
+      price
+    end
   end
 end
