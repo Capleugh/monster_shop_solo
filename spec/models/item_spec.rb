@@ -180,5 +180,21 @@ describe Item, type: :model do
       expect(Item.find(item_2.id).active?).to eq(true)
       expect(Item.find(item_3.id).active?).to eq(true)
     end
+
+    describe "instance methods" do
+      describe "applicable_coupon(coupon)" do
+        it "can verify whether or not merchant ids match" do
+          meg = create(:merchant)
+          bike_shop = create(:merchant)
+          pull_toy = create(:item, merchant: meg)
+          tire = create(:item, merchant: bike_shop)
+
+          coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+
+          expect(tire.applicable_coupon?(coupon_1)).to eq(true)
+          expect(pull_toy.applicable_coupon?(coupon_1)).to eq(false)
+        end
+      end
+    end
   end
 end

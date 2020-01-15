@@ -58,4 +58,8 @@ class Item <ApplicationRecord
   def self.activate_all_items
     update(active?: true)
   end
+
+  def applicable_coupon?(coupon)
+    merchant_id == coupon.merchant_id
+  end
 end
