@@ -11,6 +11,7 @@ Order.destroy_all
 User.destroy_all
 Merchant.destroy_all
 Item.destroy_all
+Coupon.destroy_all
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -57,3 +58,6 @@ merchant_employee_2 = User.create(name: 'merchant_employee_2', address: 'merchan
 merchant_admin_2 = User.create(name: 'merchant_admin_2', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email_2', password: 'p', password_confirmation: 'p', role: 2, merchant: dog_shop)
 
 admin = User.create(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', password_confirmation: 'p', role: 3)
+
+coupon_1 = bike_shop.coupons.create(name: "75% everything must go", code: "EMG75", percent: 0.75)
+coupon_1 = dog_shop.coupons.create(name: "50% memorial day promo", code: "MEM50", percent: 0.50)
