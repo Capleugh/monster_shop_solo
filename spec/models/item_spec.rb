@@ -188,7 +188,7 @@ describe Item, type: :model do
           bike_shop = create(:merchant)
           pull_toy = create(:item, merchant: meg)
           tire = create(:item, merchant: bike_shop)
-
+# require "pry"; binding.pry
           coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
 
           expect(tire.applicable_coupon?(coupon_1)).to eq(true)
@@ -196,21 +196,20 @@ describe Item, type: :model do
         end
       end
 
-      describe "discount_items(coupon)" do
+      describe "discount_item(coupon)" do
         it "discounts items where coupon applicable" do
           meg = create(:merchant)
           bike_shop = create(:merchant)
           pull_toy = create(:item, merchant: meg)
           tire = create(:item, merchant: bike_shop)
-          # require "pry"; binding.pry
 
           coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
 
-          expect(pull_toy.price).to eq(30)
-          expect(tire.price).to eq(31)
+          expect(pull_toy.price).to eq(163)
+          expect(tire.price).to eq(164)
 
-          expect(pull_toy.discount_items(coupon_1)).to eq(30)
-          expect(tire.discount_items(coupon_1)).to eq(23.25)
+          expect(pull_toy.discount_item(coupon_1)).to eq(163)
+          expect(tire.discount_item(coupon_1)).to eq(123)
         end
       end
     end
