@@ -179,18 +179,14 @@ RSpec.describe 'Cart show' do
         user = create(:user, role: 0)
 
         bike_shop = create(:merchant)
-        doge_shop = create(:merchant)
 
         tire = create(:item, merchant: bike_shop)
         bike_seat = create(:item, merchant: bike_shop)
         basket = create(:item, merchant: bike_shop)
-        # bone = create(:item, merchant: doge_shop)
-        # treats = create(:item, merchant: doge_shop)
-
 
         bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
-        # coupon_2 = doge_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
         bike_shop.coupons.create(name: "40% weekend promo", code: "WKD40", percent: 0.40)
+
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
@@ -228,7 +224,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
       end
 
-      it "the same coupon cannot be applied more than once" do
+      it "when a coupon code which doesn't exist is entered, I see an error message" do
         user = create(:user, role: 0)
 
         bike_shop = create(:merchant)
@@ -237,11 +233,68 @@ RSpec.describe 'Cart show' do
         bike_seat = create(:item, merchant: bike_shop)
         basket = create(:item, merchant: bike_shop)
 
+
         bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'CODE78'
+
+        click_button 'Submit'
+
+        expect(page).to have_content("Please enter a valid coupon")
       end
-      # come back and test for what happens when you have items from different merchants
+
+      it "coupon only applies to items belonging to merchant that coupon belongs to and I see the discounted total" do
+        user = create(:user, role: 0)
+
+        bike_shop = create(:merchant)
+        doge_shop = create(:merchant)
+
+        tire = create(:item, merchant: bike_shop)
+        bike_seat = create(:item, merchant: bike_shop)
+        basket = create(:item, merchant: bike_shop)
+        bone = create(:item, merchant: doge_shop)
+        treats = create(:item, merchant: doge_shop)
+
+        coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+        visit "/items/#{tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bike_seat.id}"
+        click_on "Add To Cart"
+        visit "/items/#{basket.id}"
+        click_on "Add To Cart"
+        visit "/items/#{bone.id}"
+        click_on "Add To Cart"
+        visit "/items/#{treats.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        fill_in :coupon_code, with: 'WKD25'
+
+        click_button 'Submit'
+
+        expect(current_path).to eq("/cart")
+
+        expect(page).to have_content("Coupon has been applied to #{bike_shop.name}'s items.")
+        expect(page).to have_content("#{coupon_1.code} discount applied.")
+        # save_and_open_pçage
+        expect(page).to have_content("Total: $90")
+        expect(page).to have_content("Discounted Total:")
+      end
     end
   end
 end
