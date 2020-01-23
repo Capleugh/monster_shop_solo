@@ -17,7 +17,7 @@ RSpec.describe "As a merchant" do
       merchant_2 = create(:merchant)
       merchant_2_item_1 = create(:item, description: "Item 2 description", image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588")
 
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         expect(page).to have_link(@item_1.name)
@@ -65,7 +65,7 @@ RSpec.describe "As a merchant" do
     end
 
     it "the item name and image both link to my merchant item show page" do
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         click_on('img')
@@ -73,7 +73,7 @@ RSpec.describe "As a merchant" do
 
       expect(current_path).to eq("/merchant/items/#{@item_1.id}")
 
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         click_on(@item_1.name)
@@ -83,14 +83,14 @@ RSpec.describe "As a merchant" do
     end
 
     it "I can click a button to deactivate the item if it is active" do
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         expect(page).to have_content("Active")
         click_button "Deactivate"
       end
 
-      expect(current_path).to eq(merchant_items_path)
+      expect(current_path).to eq(merchant_user_items_path)
       expect(page).to have_content("#{@item_1.name} is no longer for sale.")
 
       within "#item-#{@item_1.id}" do
@@ -101,14 +101,14 @@ RSpec.describe "As a merchant" do
     end
 
     it "I can click a button to activate the item if it is inactive" do
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_3.id}" do
         expect(page).to have_content("Inactive")
         click_button "Activate"
       end
 
-      expect(current_path).to eq(merchant_items_path)
+      expect(current_path).to eq(merchant_user_items_path)
       expect(page).to have_content("#{@item_3.name} is available for sale.")
 
       within "#item-#{@item_3.id}" do
@@ -120,7 +120,7 @@ RSpec.describe "As a merchant" do
     end
 
     it "I can delete an item that has never been ordered by clicking its delete button" do
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         expect(page).to have_button("Delete")
@@ -134,7 +134,7 @@ RSpec.describe "As a merchant" do
         click_button "Delete"
       end
 
-      expect(current_path).to eq(merchant_items_path)
+      expect(current_path).to eq(merchant_user_items_path)
       expect(page).to have_content("#{@item_3.name} has been deleted.")
 
       expect(page).to_not have_css("#item-#{@item_3.id}")
@@ -155,7 +155,7 @@ RSpec.describe "As a merchant" do
       order_3 = create(:order, status: 3)
       order_3.item_orders.create(item: @item_3, quantity: 2, price: @item_3.price)
 
-      visit merchant_items_path
+      visit merchant_user_items_path
 
       within "#item-#{@item_1.id}" do
         expect(page).to_not have_button("Delete")

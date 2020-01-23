@@ -80,7 +80,7 @@ RSpec.describe "As a merchant employee I can change the item order's status" do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
-      visit merchant_path
+      visit merchant_user_path
 
       within "#pending-orders" do
         expect(page).to have_link("Order Number: #{@order.id}")
@@ -92,7 +92,7 @@ RSpec.describe "As a merchant employee I can change the item order's status" do
         click_button("Fulfill")
       end
 
-      visit merchant_path
+      visit merchant_user_path
 
       within "#pending-orders" do
         expect(page).to have_link("Order Number: #{@order.id}")
@@ -104,7 +104,7 @@ RSpec.describe "As a merchant employee I can change the item order's status" do
         click_button("Fulfill")
       end
 
-      visit merchant_path
+      visit merchant_user_path
 
       within "#pending-orders" do
         expect(page).to_not have_link("Order Number: #{@order.id}")
@@ -146,7 +146,7 @@ RSpec.describe "As a merchant employee I can change the item order's status" do
         click_button("Fulfill")
       end
 
-      expect(current_path).to eq(merchant_order_path(@order.id))
+      expect(current_path).to eq(merchant_user_order_path(@order.id))
       expect(page).to have_content("#{@item_1.name} has been fulfilled!")
 
       within "#item-#{@item_1.id}" do

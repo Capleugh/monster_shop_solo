@@ -1,5 +1,22 @@
 <h1>Edit <%=link_to @item.name, "/items/#{@item.id}" %></h1>
 
 <center>
-  <%= render partial: 'form' %>
+  <%= form_for [@merchant, @item], url: "/merchant/items/#{@item.id}" do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name%>
+
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+
+    <%= f.label :image %>
+    <%= f.text_field :image %>
+
+    <%= f.label :inventory %>
+    <%= f.text_field :inventory %>
+
+    <%= f.submit "Submit" %>
+  <% end %>
 </center>

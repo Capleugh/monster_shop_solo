@@ -50,7 +50,7 @@ RSpec.describe 'Log Out', type: :feature do
 
       click_on('Submit')
 
-      expect(current_path).to eq(merchant_path)
+      expect(current_path).to eq(merchant_user_path)
       expect(page).to have_content("Welcome back, #{merchant_user.name} you are now logged in!")
       expect(page).to have_content("Hello, #{merchant_user.name}!")
 
@@ -68,7 +68,7 @@ RSpec.describe 'Log Out', type: :feature do
       expect(page).to have_content("Goodbye, you are now logged out.")
       expect(page).to have_content("Cart: 0")
 
-      visit (merchant_path)
+      visit (merchant_user_path)
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end

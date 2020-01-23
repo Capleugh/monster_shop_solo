@@ -12,11 +12,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     fill_in 'Name', with: name
     fill_in 'Code', with: code
@@ -41,11 +41,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     name = "Amaze wow 5% off"
     code = "AMAZE5"
@@ -74,11 +74,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     name = ''
     code = ''
@@ -106,11 +106,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     name = '25% weekend promo'
     code = 'WKD25'
@@ -138,11 +138,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     name = '35% weekend promo'
     code = 'WKD30'
@@ -165,11 +165,11 @@ RSpec.describe "As a merchant employee or admin"  do
 
 
 
-    visit merchant_coupons_path
+    visit merchant_user_coupons_path
 
     click_link "Add Coupon"
 
-    expect(current_path).to eq(new_merchant_coupon_path)
+    expect(current_path).to eq(new_merchant_user_coupon_path)
 
     name = '35% weekend promo'
     code = 'WKD30'

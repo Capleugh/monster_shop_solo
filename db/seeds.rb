@@ -60,4 +60,4 @@ merchant_admin_2 = User.create(name: 'merchant_admin_2', address: 'merchant_admi
 admin = User.create(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', password_confirmation: 'p', role: 3)
 
 coupon_1 = bike_shop.coupons.create(name: "75% everything must go", code: "EMG75", percent: 0.75)
-coupon_1 = dog_shop.coupons.create(name: "50% memorial day promo", code: "MEM50", percent: 0.50)
+coupon_2 = dog_shop.coupons.create(name: "50% memorial day promo", code: "MEM50", percent: 0.50)

@@ -14,10 +14,10 @@ RSpec.describe "As a merchant" do
 
       click_button "Delete"
 
-      expect(current_path).to eq(merchant_coupons_path)
+      expect(current_path).to eq(merchant_user_coupons_path)
       expect(page).to have_content("Coupon has been deleted.")
       bike_shop.reload
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       expect(page).to_not have_content(coupon_1.name)
       expect(page).to have_content(coupon_2.name)
@@ -34,17 +34,17 @@ RSpec.describe "As a merchant" do
 
      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       within "#coupon-#{coupon_1.id}" do
         click_button "Delete"
       end
 
-      expect(current_path).to eq(merchant_coupons_path)
+      expect(current_path).to eq(merchant_user_coupons_path)
       expect(page).to have_content("Coupon has been deleted.")
 
       bike_shop.reload
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       expect(page).to_not have_content(coupon_1.name)
       expect(page).to have_content(coupon_2.name)
@@ -53,11 +53,11 @@ RSpec.describe "As a merchant" do
         click_button "Delete"
       end
 
-      expect(current_path).to eq(merchant_coupons_path)
+      expect(current_path).to eq(merchant_user_coupons_path)
       expect(page).to have_content("Coupon has been deleted.")
 
       bike_shop.reload
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       expect(page).to_not have_content(coupon_1.name)
       expect(page).to_not have_content(coupon_2.name)

@@ -15,7 +15,7 @@
           <p>Order Status: <%= order.status %></p>
           <br>
           <% if order.status == 'packaged'%>
-            <%= button_to 'Ship Order', "/orders/update/#{order.id}", method: :patch %>
+            <%= button_to 'Ship Order', "/orders/#{order.id}", method: :patch %>
           <% end %>
           <br>
         <% end %>
