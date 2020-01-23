@@ -10,7 +10,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       within "#coupon-#{coupon_1.id}" do
         click_link "#{coupon_1.name}"
@@ -18,7 +18,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       expect(current_path).to eq("/merchant/coupons/#{coupon_1.id}")
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       within "#coupon-#{coupon_2.id}" do
         click_link "#{coupon_2.name}"
@@ -35,7 +35,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       within "#coupon-#{coupon_1.id}" do
         click_link "#{coupon_1.name}"
@@ -43,7 +43,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       expect(current_path).to eq("/merchant/coupons/#{coupon_1.id}")
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       within "#coupon-#{coupon_2.id}" do
         click_link "#{coupon_2.name}"
@@ -60,7 +60,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       expect(page).to have_link("Add Coupon")
     end
@@ -73,7 +73,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-      visit merchant_coupons_path
+      visit merchant_user_coupons_path
 
       expect(page).to have_link("Add Coupon")
     end
@@ -86,7 +86,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
-     visit merchant_coupons_path
+     visit merchant_user_coupons_path
 
      within "#coupon-#{coupon_1.id}" do
        click_link "Edit"
@@ -108,7 +108,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
      click_button 'Submit'
 
-     expect(current_path).to eq(merchant_coupons_path)
+     expect(current_path).to eq(merchant_user_coupons_path)
      expect(page).to have_content("Coupon has been updated!")
 
 
@@ -133,7 +133,7 @@ RSpec.describe "As a merchant employee or admin"  do
 
      click_button 'Submit'
 
-     expect(current_path).to eq(merchant_coupons_path)
+     expect(current_path).to eq(merchant_user_coupons_path)
      expect(page).to have_content("Coupon has been updated!")
     end
   end

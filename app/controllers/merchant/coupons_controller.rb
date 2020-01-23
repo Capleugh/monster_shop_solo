@@ -32,14 +32,15 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def update
+    # require "pry"; binding.pry
     @merchant = Merchant.find(current_user.merchant_id)
     # is there another way to do this? ^
-    @coupon = Coupon.find(params[:format])
+    @coupon = Coupon.find(params[:id])
     @coupon.update(coupon_params)
       if @coupon.save
         flash[:success] = "Coupon has been updated!"
 
-        redirect_to merchant_coupons_path
+        redirect_to merchant_user_coupons_path
       else
         flash[:error] = @coupon.errors.full_messages.to_sentence
         render :edit
@@ -53,7 +54,7 @@ class Merchant::CouponsController < Merchant::BaseController
     coupon.destroy
 
     flash[:success] = "Coupon has been deleted."
-    redirect_to merchant_coupons_path
+    redirect_to merchant_user_coupons_path
   end
 
   private

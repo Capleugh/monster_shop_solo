@@ -28,7 +28,7 @@ RSpec.describe "As a merchant"  do
 
       click_button 'Submit'
 
-      expect(current_path).to eq(merchant_coupons_path)
+      expect(current_path).to eq(merchant_user_coupons_path)
       expect(page).to have_content("Coupon has been updated!")
     end
 

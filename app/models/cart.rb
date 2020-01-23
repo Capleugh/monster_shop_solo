@@ -36,6 +36,7 @@ class Cart
     @contents.sum do |item_id,quantity|
       Item.find(item_id).discount_item(coupon) * quantity
     end
+    # there's a way to do this in active record once you get to storing in db (anywhere there's ruby)
   end
 
   def add_quantity(item_id)

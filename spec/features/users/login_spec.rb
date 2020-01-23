@@ -83,7 +83,7 @@ RSpec.describe 'Logging in', type: :feature do
       fill_in :password, with: 'password'
       click_on('Submit')
 
-      expect(current_path).to eq(merchant_path)
+      expect(current_path).to eq(merchant_user_path)
       expect(page).to have_content("Welcome back, #{@merchant_employee.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@merchant_employee.name}! Welcome to your Merchant Dashboard!")
     end
@@ -108,7 +108,7 @@ RSpec.describe 'Logging in', type: :feature do
 
         visit '/login'
 
-        expect(current_path).to eq(merchant_path)
+        expect(current_path).to eq(merchant_user_path)
         expect(page).to have_content("You are already logged in.")
         expect(page).to have_content("Hello, #{@merchant_employee.name}! Welcome to your Merchant Dashboard!")
       end
@@ -133,7 +133,7 @@ RSpec.describe 'Logging in', type: :feature do
       fill_in :password, with: 'password'
       click_on('Submit')
 
-      expect(current_path).to eq(merchant_path)
+      expect(current_path).to eq(merchant_user_path)
       expect(page).to have_content("Welcome back, #{@merchant_admin.name} you are now logged in!")
       expect(page).to have_content("Hello, #{@merchant_admin.name}! Welcome to your Merchant Dashboard!")
     end
@@ -157,9 +157,9 @@ RSpec.describe 'Logging in', type: :feature do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
 
         visit '/login'
-        
 
-        expect(current_path).to eq(merchant_path)
+
+        expect(current_path).to eq(merchant_user_path)
         expect(page).to have_content("You are already logged in.")
         expect(page).to have_content("Hello, #{@merchant_admin.name}! Welcome to your Merchant Dashboard!")
       end

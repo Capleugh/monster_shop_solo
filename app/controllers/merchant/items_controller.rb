@@ -16,7 +16,7 @@ class Merchant::ItemsController < Merchant::BaseController
         @item.update(image: default_image)
       end
       flash[:success] = "Item added!"
-      redirect_to merchant_items_path
+      redirect_to merchant_user_items_path
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :new
@@ -33,7 +33,7 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def update
     if params[:status].nil?
-      @item = Item.find(params[:format])
+      @item = Item.find(params[:id])
       update_item_info(@item)
     else
       item = Item.find(params[:id])
@@ -45,7 +45,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:id])
     item.destroy
     flash[:success] = "#{item.name} has been deleted."
-    redirect_to merchant_items_path
+    redirect_to merchant_user_items_path
   end
 
   private
@@ -84,7 +84,7 @@ class Merchant::ItemsController < Merchant::BaseController
         activate(item)
       end
 
-      redirect_to merchant_items_path
+      redirect_to merchant_user_items_path
     end
 
     def update_item_info(item)
@@ -92,7 +92,7 @@ class Merchant::ItemsController < Merchant::BaseController
         if params[:item][:image] == ""
           item.update(image: default_image)
         end
-        redirect_to "/merchant/items"
+        redirect_to merchant_user_items_path
         flash[:success] = 'Item Has Been Updated'
       else
         flash[:error] = item.errors.full_messages.to_sentence

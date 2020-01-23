@@ -2,72 +2,59 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/", to: "welcome#index"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants do
+    resources :items, only: [:index, :new, :create]
+  end
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
+  resources :items, only: [:index, :show, :edit, :update, :destroy] do
+    resources :reviews, only: [:new, :create]
+  end
 
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
+  resources :reviews, only: [:edit, :update, :destroy]
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :orders, only: [:new, :show, :update]
 
-  get "/cart", to: "cart#show"
-  post "/cart/apply", to: "cart#add_coupon"
-  # fun fact, if you swap these two paths it will error because it will always look for item_id
-  post "/cart/:item_id", to: "cart#add_item"
-  patch "/cart/:item_id", to: "cart#update"
-  delete "/cart", to: "cart#empty"
-  delete "/cart/:item_id", to: "cart#remove_item"
+  namespace :merchant, as: :merchant_user  do
+    get '/', to: 'dashboard#show'
 
-  delete "/profile/orders/:order_id", to: "orders#destroy"
-  get "/orders/new", to: "orders#new"
-  get "/orders/:id", to: "orders#show"
-  patch '/orders/update/:id', to: 'orders#update'
+    resources :orders, only: [:show, :update]
+    resources :items
+    resources :coupons
+  end
+
+  namespace :admin, as: :admin do
+    get '/', to: 'dashboard#index'
+
+    resources :users, only: [:index, :show] do
+      resources :orders, only: [:show, :destroy]
+    end
+
+    resources :merchants, only: [:index, :show, :update] do
+      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
+  end
+
+  get "/users/register", to: "users#new"
+  post "/users", to: "users#create"
+
+
+  get "/profile", to: "users#show"
+  get "/profile/edit", to: "users#edit"
+  patch "/profile", to: "users#update"
 
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/:order_id", to: "orders#show"
 
-  get "/users/register", to: "users#new"
-  post "/users", to: "users#create"
-  get "/profile", to: "users#show"
-  get "/profile/edit", to: "users#edit"
-  patch "/profile", to: "users#update"
+  get "/cart", to: "cart#show"
+  post "/cart/apply", to: "cart#add_coupon"
+  post "/cart/:item_id", to: "cart#add_item"
+  patch "/cart/:item_id", to: "cart#update"
+  delete "/cart", to: "cart#empty"
+  delete "/cart/:item_id", to: "cart#remove_item"
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-
-  namespace :merchant  do
-    get '/', to: 'dashboard#show'
-    resources :orders, only: [:show, :update]
-    resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
-    resources :coupons, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  end
-
-  namespace :admin do
-    get '/', to: 'dashboard#index'
-    resources :users, only: [:index, :show] do
-      resources :orders, only: [:show, :destroy]
-    end
-    resources :merchants, only: [:index, :show, :update] do
-      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
-    end
-  end
 end

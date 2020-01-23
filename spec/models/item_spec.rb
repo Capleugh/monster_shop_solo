@@ -209,8 +209,15 @@ describe Item, type: :model do
           expect(tire.price).to eq(164)
 
           expect(pull_toy.discount_item(coupon_1)).to eq(163)
-          expect(tire.discount_item(coupon_1)).to eq(123)
+          expect(tire.discount_item(coupon_1)).to eq(123.0)
+
+          # expect(pull_toy.price).to eq(36)
+          # expect(tire.price).to eq(37)
+          #
+          # expect(pull_toy.discount_item(coupon_1)).to eq(36)
+          # expect(tire.discount_item(coupon_1)).to eq(27.75)
         end
+        # not sure what's going on with rspec here
       end
     end
   end

@@ -18,6 +18,6 @@ class Merchant::OrdersController < Merchant::BaseController
     end
 
     flash[:notice] = "#{item.name} has been fulfilled!"
-    redirect_to merchant_order_path(params[:id])
+    redirect_to merchant_user_order_path(params[:id])
   end
 end

@@ -1,9 +1,9 @@
-<%= link_to "Add Coupon", new_merchant_coupon_path %><br>
+<%= link_to "Add Coupon", new_merchant_user_coupon_path %><br>
 
 <% current_user.merchant.coupons.each do |coupon| %>
   <section id="coupon-<%= coupon.id %>"><br>
     <%= link_to coupon.name, "/merchant/coupons/#{coupon.id}" %><br>
-    <%= link_to "Edit", "/merchant/coupons/#{coupon.id}/edit" %>
+    <%= link_to "Edit", edit_merchant_user_coupon_path(coupon) %>
     <%= button_to "Delete", "/merchant/coupons/#{coupon.id}", method: :delete %>
   </section>
 <% end %>

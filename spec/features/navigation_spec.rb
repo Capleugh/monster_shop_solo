@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe 'Site Navigation' do
@@ -124,7 +123,7 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
 
         click_on('Merchant Dashboard')
-        expect(current_path).to eq(merchant_path)
+        expect(current_path).to eq(merchant_user_path)
 
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
@@ -140,7 +139,8 @@ RSpec.describe 'Site Navigation' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-      visit '/'
+      # visit '/'
+      visit merchant_user_path
 
       within '.topnav' do
         click_on('My Profile')
@@ -162,7 +162,7 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
 
         click_on('Merchant Dashboard')
-        expect(current_path).to eq(merchant_path)
+        expect(current_path).to eq(merchant_user_path)
 
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
@@ -213,7 +213,7 @@ RSpec.describe 'Site Navigation' do
     describe "As a visitor" do
       it "when I try to access any path that begins with /merchant, /admin, or /profile as a visitor, I see a 404 error" do
 
-        visit(merchant_path)
+        visit(merchant_user_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
         visit(admin_path)
@@ -231,7 +231,7 @@ RSpec.describe 'Site Navigation' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-        visit(merchant_path)
+        visit(merchant_user_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
         visit(admin_path)
@@ -261,66 +261,66 @@ RSpec.describe 'Site Navigation' do
         visit(admin_path)
         expect(page).to have_content("The page you were looking for doesn't exist.")
       end
+    end
 
-      describe "As an Admin User" do
-        it 'does not allow an Admin User to navigate to any path that begins with /cart or /merchant' do
-          admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
+    describe "As an Admin User" do
+      it 'does not allow an Admin User to navigate to any path that begins with /cart or /merchant' do
+        admin = User.create(name: 'admin', address: 'admin address', city: 'admin city', state: 'admin state', zip: 12345, email: 'admin_email', password: 'p', role: 3)
 
-          allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-          visit '/cart'
-          expect(page).to have_content("The page you were looking for doesn't exist.")
+        visit '/cart'
+        expect(page).to have_content("The page you were looking for doesn't exist.")
 
-          visit(merchant_path)
-          expect(page).to have_content("The page you were looking for doesn't exist.")
+        visit(merchant_user_path)
+        expect(page).to have_content("The page you were looking for doesn't exist.")
+      end
+    end
+
+    describe "As a merchant employee" do
+      it "when I click a link in nav bar to manage my coupons, I am taken to a coupons index page" do
+        bike_shop = create(:merchant)
+        merchant_employee = create(:user, role: 1, merchant: bike_shop)
+        coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+        coupon_2 = bike_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+        visit merchant_user_path
+
+        click_link "Manage Coupons"
+        expect(current_path).to eq(merchant_user_coupons_path)
+
+        within "#coupon-#{coupon_1.id}" do
+          expect(page).to have_link(coupon_1.name)
+        end
+
+        within "#coupon-#{coupon_2.id}" do
+          expect(page).to have_link(coupon_2.name)
         end
       end
+    end
 
-      describe "As a merchant employee" do
-        it "when I click a link in nav bar to manage my coupons, I am taken to a coupons index page" do
-          bike_shop = create(:merchant)
-          merchant_employee = create(:user, role: 1, merchant: bike_shop)
-          coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
-          coupon_2 = bike_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
+    describe "As a merchant admin" do
+      it "when I click a link in nav bar to manage my coupons, I am taken to a coupons index page" do
+        bike_shop = create(:merchant)
+        merchant_admin = create(:user, role: 2, merchant: bike_shop)
+        coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
+        coupon_2 = bike_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
 
-          allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-          visit merchant_path
+        visit merchant_user_path
 
-          click_link "Manage Coupons"
-          expect(current_path).to eq(merchant_coupons_path)
+        click_link "Manage Coupons"
+        expect(current_path).to eq(merchant_user_coupons_path)
 
-          within "#coupon-#{coupon_1.id}" do
-            expect(page).to have_link(coupon_1.name)
-          end
-
-          within "#coupon-#{coupon_2.id}" do
-            expect(page).to have_link(coupon_2.name)
-          end
+        within "#coupon-#{coupon_1.id}" do
+          expect(page).to have_link(coupon_1.name)
         end
-      end
 
-      describe "As a merchant admin" do
-        it "when I click a link in nav bar to manage my coupons, I am taken to a coupons index page" do
-          bike_shop = create(:merchant)
-          merchant_admin = create(:user, role: 2, merchant: bike_shop)
-          coupon_1 = bike_shop.coupons.create(name: "25% weekend promo", code: "WKD25", percent: 0.25)
-          coupon_2 = bike_shop.coupons.create(name: "50% labor day promo", code: "LABOR50", percent: 0.5)
-
-          allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
-
-          visit merchant_path
-
-          click_link "Manage Coupons"
-          expect(current_path).to eq(merchant_coupons_path)
-
-          within "#coupon-#{coupon_1.id}" do
-            expect(page).to have_link(coupon_1.name)
-          end
-
-          within "#coupon-#{coupon_2.id}" do
-            expect(page).to have_link(coupon_2.name)
-          end
+        within "#coupon-#{coupon_2.id}" do
+          expect(page).to have_link(coupon_2.name)
         end
       end
     end

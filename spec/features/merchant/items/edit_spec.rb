@@ -12,7 +12,8 @@ RSpec.describe 'As a Merchant', type: :feature do
 
     email = merchant_employee.email
     password = merchant_employee.password
-    visit('/')
+    # visit('/')
+    visit merchant_user_path
     click_on('Login')
     fill_in :email, with: email
     fill_in :password, with: password

@@ -15,10 +15,10 @@ RSpec.describe "create an item as an Merchant" do
     description = "No more chaffin'!"
     inventory = 25
 
-    visit "/merchant/items"
+    visit merchant_user_items_path
     click_on("Add Item")
 
-    expect(current_path).to eq("/merchant/items/new")
+    expect(current_path).to eq(new_merchant_user_item_path)
     fill_in 'Name', with: name
     fill_in 'Price', with: price
     fill_in 'Description', with: description
@@ -29,7 +29,7 @@ RSpec.describe "create an item as an Merchant" do
 
     new_item = Item.last
 
-    expect(current_path).to eq("/merchant/items")
+    expect(current_path).to eq(merchant_user_items_path) 
     expect(page).to have_content("Item added!")
     expect(new_item.name).to eq(name)
     expect(new_item.price).to eq(price)
@@ -48,9 +48,9 @@ RSpec.describe "create an item as an Merchant" do
   end
 
   it 'I get an alert if I dont fully fill out the form -- data stays populated' do
-    visit "/merchant/items"
+    visit merchant_user_items_path
     click_on("Add Item")
-    expect(current_path).to eq("/merchant/items/new")
+    expect(current_path).to eq(new_merchant_user_item_path)
 
     name = ""
     price = 18
