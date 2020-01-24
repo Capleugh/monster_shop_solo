@@ -1,7 +1,7 @@
 <h1>Edit <%=link_to @item.name, "/items/#{@item.id}" %></h1>
 
 <center>
-  <%= form_for [@merchant, @item], url: "/merchant/items/#{@item.id}" do |f| %>
+  <%= form_for @item, url: "/merchant/items/#{@item.id}" do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name%>
 
