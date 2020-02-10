@@ -1,7 +1,7 @@
 # Monster Shop
 
 ## Description
-Monster Shop is an e-commerce application in which users can register, login, and fictitiously buy and sell items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
+Monster Shop is an e-commerce application in which users can register, login, apply discount codes, and fictitiously buy and sell items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
 
 ## Use Monster Shop
 
