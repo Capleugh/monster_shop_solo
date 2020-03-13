@@ -22,7 +22,7 @@ Monster Shop is an e-commerce application in which users can register, login, an
    * `factory_bot_rails`
 
 #### Via the Web
-[Click Here to Use Our App](https://powerful-castle-36304.herokuapp.com/)
+[Click Here to Use Our App](https://carleigh-monster-shop-solo.herokuapp.com/)
 
 ## Authentication
 Monster Shop requires authentication of users to log-in to the site. Passwords are encrypted using BCrypt and are not stored in the database.
