@@ -1,15 +1,15 @@
 # Monster Shop
 
 ## Description
-Monster Shop is an e-commerce application in which users can register, login, and fictitiously buy and sell items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
+Monster Shop is an e-commerce application in which users can register, login, and fictitiously buy, sell, and add coupons to items. Users are differentiated by one of three roles: default user, merchant, or administrator and access to functionality will change depending on these roles.
 
 ## Use Monster Shop
 
 ### Implementation
 
 #### Access Locally
-* Clone this repo with: `git clone git@github.com:DavidBarriga-Gomez/monster_shop_part_1.git`
-* Install Ruby 2.4.1
+* Clone this repo with: `git clone git@github.com:Capleugh/monster_shop_solo.git`
+* Install Ruby 2.5.1
 * Install Rails 5.1.7
 * Run `$ bundle install`
 * Run `$ bundle update`
@@ -103,7 +103,7 @@ Namespacing also necessitated the use of nested `form_for` partials for new and 
 ```
 
 ## User Roles
-We used enums in our User model to differentiate user type. Different types of users have various CRUD functionality, which is described below.
+We used enums in our User model to differentiate user type. Different types of users have varying degrees of CRUD functionality, described below.
 
 ```   enum role: ['default', 'merchant_employee', 'merchant_admin', 'admin'] ```
 
@@ -260,10 +260,11 @@ We used a PostgreSQL for our database. It was composed of 6 separate tables. Act
 The schema is depicted below:
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema")
 
-## Built With
-* Ruby on Rails - web framework (version)
-* PostgresQL - database manager
-* Heorku - cloud platform for app hosting
+## Technologies
+* Ruby 2.5.1
+* Rails 5.1.7
+* Database: PostgreSQL
+* Hosting: Heroku
 
 ## Authors:
 * [Alison Vermeil](https://github.com/mintona)
